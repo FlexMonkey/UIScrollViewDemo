@@ -38,9 +38,7 @@ class ViewController: UIViewController, UIScrollViewDelegate
         // long press adds new node....
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         scrollView.addGestureRecognizer(longPress)
-        
-        centerScrollViewContents()
-        
+
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
     }
 
@@ -79,39 +77,7 @@ class ViewController: UIViewController, UIScrollViewDelegate
     {
         return backgroundControl
     }
-    
-    func scrollViewDidZoom(scrollView: UIScrollView!)
-    {
-        centerScrollViewContents()
-    }
-    
-    func centerScrollViewContents()
-    {
-        let boundsSize = scrollView.bounds.size
-        var contentsFrame = backgroundControl.frame
-        
-        if contentsFrame.size.width < boundsSize.width
-        {
-            contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0
-        }
-        else
-        {
-            contentsFrame.origin.x = 0.0
-        }
-        
-        if contentsFrame.size.height < boundsSize.height
-        {
-            contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0
-        }
-        else
-        {
-            contentsFrame.origin.y = 0.0
-        }
-        
-        backgroundControl.frame = contentsFrame
-    }
-    
-    
+
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
     {
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: size.width, height: size.height - topLayoutGuide.length)
