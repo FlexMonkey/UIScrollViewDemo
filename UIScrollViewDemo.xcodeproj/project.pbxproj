@@ -13,6 +13,9 @@
 		BEA67DD619D7D0DB005979EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD519D7D0DB005979EA /* Images.xcassets */; };
 		BEA67DD919D7D0DB005979EA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD719D7D0DB005979EA /* LaunchScreen.xib */; };
 		BEA67DE519D7D0DB005979EA /* UIScrollViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DE419D7D0DB005979EA /* UIScrollViewDemoTests.swift */; };
+		BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DEE19D7D101005979EA /* BackgroundControl.swift */; };
+		BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */; };
+		BEA67DF419D7E183005979EA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DF319D7E183005979EA /* Node.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		BEA67DDE19D7D0DB005979EA /* UIScrollViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIScrollViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA67DE319D7D0DB005979EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA67DE419D7D0DB005979EA /* UIScrollViewDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewDemoTests.swift; sourceTree = "<group>"; };
+		BEA67DEE19D7D101005979EA /* BackgroundControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundControl.swift; sourceTree = "<group>"; };
+		BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundGrid.swift; sourceTree = "<group>"; };
+		BEA67DF319D7E183005979EA /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,7 @@
 		BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BEA67DF019D7D154005979EA /* background */,
 				BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */,
 				BEA67DD019D7D0DB005979EA /* ViewController.swift */,
 				BEA67DD219D7D0DB005979EA /* Main.storyboard */,
@@ -110,6 +117,16 @@
 				BEA67DE319D7D0DB005979EA /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEA67DF019D7D154005979EA /* background */ = {
+			isa = PBXGroup;
+			children = (
+				BEA67DEE19D7D101005979EA /* BackgroundControl.swift */,
+				BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */,
+				BEA67DF319D7E183005979EA /* Node.swift */,
+			);
+			name = background;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +230,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */,
+				BEA67DF419D7E183005979EA /* Node.swift in Sources */,
+				BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */,
+				BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */,
 				BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +361,7 @@
 				INFOPLIST_FILE = UIScrollViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -351,6 +372,7 @@
 				INFOPLIST_FILE = UIScrollViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
