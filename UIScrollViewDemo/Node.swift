@@ -15,6 +15,9 @@ class Node: UIControl
     {
         backgroundColor = UIColor.blueColor()
         
+        layer.borderColor = UIColor.blackColor().CGColor
+        layer.borderWidth = 2
+        
         layer.cornerRadius = 10
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");

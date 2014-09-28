@@ -29,9 +29,4 @@ class BackgroundControl: UIControl
     {
         super.init(coder: aDecoder)
     }
-
-    override func layoutSubviews()
-    {
-
-    }
 }

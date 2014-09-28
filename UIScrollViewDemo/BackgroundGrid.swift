@@ -12,8 +12,6 @@ class BackgroundGrid: CALayer
 {
     override func drawInContext(ctx: CGContext!)
     {
-        println("DRAW GRID!!!")
-        
         let hGap = Int(frame.width / 50)
         let vGap = Int(frame.height / 50)
         
@@ -25,16 +23,16 @@ class BackgroundGrid: CALayer
             path.addLineToPoint((CGPoint(x: i * hGap, y: Int(frame.height))))
             
             CGContextAddPath(ctx, path.CGPath)
-            CGContextSetStrokeColorWithColor(ctx, UIColor.grayColor().CGColor)
-            CGContextSetLineWidth(ctx, 2)
+            CGContextSetStrokeColorWithColor(ctx, UIColor.darkGrayColor().CGColor)
+            CGContextSetLineWidth(ctx, 3)
             CGContextStrokePath(ctx)
             
             path.moveToPoint(CGPoint(x: 0, y: i * vGap))
             path.addLineToPoint((CGPoint(x: Int(frame.width), y: i * vGap)))
             
             CGContextAddPath(ctx, path.CGPath)
-            CGContextSetStrokeColorWithColor(ctx, UIColor.grayColor().CGColor)
-            CGContextSetLineWidth(ctx, 2)
+            CGContextSetStrokeColorWithColor(ctx, UIColor.darkGrayColor().CGColor)
+            CGContextSetLineWidth(ctx, 3)
             CGContextStrokePath(ctx)
         }
     }
