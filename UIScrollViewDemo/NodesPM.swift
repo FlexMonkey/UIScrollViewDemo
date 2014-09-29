@@ -40,10 +40,31 @@ struct NodesPM
         
         selectedNode = newNode
     }
+    
+    static func moveSelectedNode(position: CGPoint)
+    {
+        selectedNode?.position = position
+        
+        let notification = NSNotification(name: NodeNotificationTypes.NodeMoved.toRaw(), object: selectedNode)
+        
+        notificationCentre.postNotification(notification)
+    }
+    
+    static var isDragging: Bool = false
+    {
+        didSet
+        {
+            let notification = NSNotification(name: NodeNotificationTypes.DraggingChanged.toRaw(), object: isDragging)
+            
+            notificationCentre.postNotification(notification)
+        }
+    }
 }
 
 enum NodeNotificationTypes: String
 {
     case NodeSelected = "nodeSelected"
     case NodeCreated = "nodeCreated"
+    case NodeMoved = "nodeMoved"
+    case DraggingChanged = "draggingChanged"
 }

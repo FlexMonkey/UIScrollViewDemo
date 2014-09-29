@@ -41,7 +41,7 @@ class NodeWidget: UIControl
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
         addGestureRecognizer(pan)
      
-        NodesPM.notificationCentre.addObserver(self, selector: "selectedNodeChanged:", name: NodeNotificationTypes.NodeSelected.toRaw(), object: nil)
+        NodesPM.notificationCentre.addObserver(self, selector: "nodeSelected:", name: NodeNotificationTypes.NodeSelected.toRaw(), object: nil)
         NodesPM.notificationCentre.addObserver(self, selector: "nodeCreated:", name: NodeNotificationTypes.NodeCreated.toRaw(), object: nil)
     }
     
@@ -55,7 +55,7 @@ class NodeWidget: UIControl
        label.text = "Node: \(node.name)\n\nTotal: \(NodesPM.nodes.count)" 
     }
     
-    func selectedNodeChanged(value : AnyObject)
+    func nodeSelected(value : AnyObject)
     {
         let selectedNode = value.object as NodeVO
         
@@ -65,13 +65,21 @@ class NodeWidget: UIControl
     
     func panHandler(recognizer: UIPanGestureRecognizer)
     {
-        if recognizer.state == UIGestureRecognizerState.Changed
+        if recognizer.state == UIGestureRecognizerState.Began
+        {
+            NodesPM.isDragging = true
+        }
+        else if recognizer.state == UIGestureRecognizerState.Changed
         {
             let gestureLocation = recognizer.locationInView(self)
             
             frame.offset(dx: gestureLocation.x - frame.width / 2, dy: gestureLocation.y - frame.height / 2)
             
-            node.position = CGPoint(x: frame.origin.x, y: frame.origin.y)
+            NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
+        }
+        else if recognizer.state == UIGestureRecognizerState.Ended
+        {
+            NodesPM.isDragging = false
         }
     }
   
