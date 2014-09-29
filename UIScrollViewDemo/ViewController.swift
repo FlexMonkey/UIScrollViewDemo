@@ -14,12 +14,11 @@ import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate
 {
-
     let scrollView = UIScrollView(frame: CGRectZero)
     let backgroundControl = BackgroundControl(frame: CGRect(x: 0, y: 0, width: 5000, height: 5000))
     
     override func viewDidLoad()
-    {
+    {        
         super.viewDidLoad()
         
         view.addSubview(scrollView)
@@ -35,44 +34,11 @@ class ViewController: UIViewController, UIScrollViewDelegate
  
         scrollView.delegate = self
 
-        // long press adds new node....
-        let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
-        scrollView.addGestureRecognizer(longPress)
-
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
+        
+        // NodesPM.notificationCentre.addObserver(self, selector: "nodeCreated:", name: NodeNotificationTypes.NodeCreated.toRaw(), object: nil)
     }
 
-    func longHoldHandler(recognizer: UILongPressGestureRecognizer)
-    {
-        if recognizer.state == UIGestureRecognizerState.Began
-        {
-            let gestureLocation = recognizer.locationInView(backgroundControl)
-            
-            if backgroundControl.hitTest(gestureLocation, withEvent: nil) is BackgroundControl
-            {
-                let originX = Int( gestureLocation.x - 75 )
-                let originY = Int( gestureLocation.y - 75 )
-                
-                let node = Node(frame: CGRect(x: originX, y: originY, width: 150, height: 150))
-
-                node.addTarget(self, action: "disableScrolling", forControlEvents: .TouchDown)
-                node.addTarget(self, action: "enableScrolling", forControlEvents: .TouchUpInside)
-                
-                backgroundControl.addSubview(node)
-            }
-        }
-    }
-    
-    func disableScrolling()
-    {
-        scrollView.scrollEnabled = false
-    }
-
-    func enableScrolling()
-    {
-        scrollView.scrollEnabled = true
-    }
-    
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView!
     {
         return backgroundControl

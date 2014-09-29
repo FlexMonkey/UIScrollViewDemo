@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7199E19D93D2700388328 /* NodesPM.swift */; };
+		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
 		BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */; };
 		BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DD019D7D0DB005979EA /* ViewController.swift */; };
 		BEA67DD419D7D0DB005979EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD219D7D0DB005979EA /* Main.storyboard */; };
@@ -15,7 +17,7 @@
 		BEA67DE519D7D0DB005979EA /* UIScrollViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DE419D7D0DB005979EA /* UIScrollViewDemoTests.swift */; };
 		BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DEE19D7D101005979EA /* BackgroundControl.swift */; };
 		BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */; };
-		BEA67DF419D7E183005979EA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DF319D7E183005979EA /* Node.swift */; };
+		BEA67DF419D7E183005979EA /* NodeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DF319D7E183005979EA /* NodeWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3ED7199E19D93D2700388328 /* NodesPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesPM.swift; sourceTree = "<group>"; };
+		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
 		BEA67DC919D7D0DA005979EA /* UIScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA67DCD19D7D0DB005979EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +45,7 @@
 		BEA67DE419D7D0DB005979EA /* UIScrollViewDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewDemoTests.swift; sourceTree = "<group>"; };
 		BEA67DEE19D7D101005979EA /* BackgroundControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundControl.swift; sourceTree = "<group>"; };
 		BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundGrid.swift; sourceTree = "<group>"; };
-		BEA67DF319D7E183005979EA /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		BEA67DF319D7E183005979EA /* NodeWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3ED7199D19D93D0600388328 /* presentationModel */ = {
+			isa = PBXGroup;
+			children = (
+				3ED7199E19D93D2700388328 /* NodesPM.swift */,
+			);
+			name = presentationModel;
+			sourceTree = "<group>";
+		};
+		3ED719A019D9E46700388328 /* node */ = {
+			isa = PBXGroup;
+			children = (
+				BEA67DF319D7E183005979EA /* NodeWidget.swift */,
+				3EF374A319D9F43F004DC90F /* NodeVO.swift */,
+			);
+			name = node;
+			sourceTree = "<group>";
+		};
 		BEA67DC019D7D0DA005979EA = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +104,8 @@
 		BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3ED719A019D9E46700388328 /* node */,
+				3ED7199D19D93D0600388328 /* presentationModel */,
 				BEA67DF019D7D154005979EA /* background */,
 				BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */,
 				BEA67DD019D7D0DB005979EA /* ViewController.swift */,
@@ -124,7 +147,6 @@
 			children = (
 				BEA67DEE19D7D101005979EA /* BackgroundControl.swift */,
 				BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */,
-				BEA67DF319D7E183005979EA /* Node.swift */,
 			);
 			name = background;
 			sourceTree = "<group>";
@@ -229,8 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */,
+				3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */,
 				BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */,
-				BEA67DF419D7E183005979EA /* Node.swift in Sources */,
+				BEA67DF419D7E183005979EA /* NodeWidget.swift in Sources */,
 				BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */,
 				BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */,
 				BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */,
@@ -429,6 +453,7 @@
 				BEA67DEA19D7D0DB005979EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BEA67DEB19D7D0DB005979EA /* Build configuration list for PBXNativeTarget "UIScrollViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +462,7 @@
 				BEA67DED19D7D0DB005979EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

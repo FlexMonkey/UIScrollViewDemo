@@ -23,10 +23,40 @@ class BackgroundControl: UIControl
         
         backgroundLayer.frame = bounds.rectByInsetting(dx: 0, dy: 0)
         backgroundLayer.setNeedsDisplay()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
+        addGestureRecognizer(longPress)
+        
+        NodesPM.notificationCentre.addObserver(self, selector: "nodeCreated:", name: NodeNotificationTypes.NodeCreated.toRaw(), object: nil)
     }
     
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+    }
+    
+    func longHoldHandler(recognizer: UILongPressGestureRecognizer)
+    {
+        if recognizer.state == UIGestureRecognizerState.Began
+        {
+            let gestureLocation = recognizer.locationInView(self)
+            
+            if self.hitTest(gestureLocation, withEvent: nil) is BackgroundControl
+            {
+                NodesPM.createNewNode(gestureLocation)
+            }
+        }
+    }
+    
+    func nodeCreated(value : AnyObject)
+    {
+        let newNode = value.object as NodeVO
+        
+        let originX = Int( newNode.position.x - 75 )
+        let originY = Int( newNode.position.y - 75 )
+        
+        let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: 150, height: 150), node: newNode)
+        
+        addSubview(nodeWidget)
     }
 }
