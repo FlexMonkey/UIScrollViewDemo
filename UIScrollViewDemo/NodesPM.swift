@@ -22,16 +22,17 @@ struct NodesPM
         {
             if let node = selectedNode
             {
-                postNotification(NodeNotificationTypes.NodeSelected, payload: node)
+                postNotification(.NodeSelected, payload: node)
             }
         }
     }
     
-    private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject)
+    static var isDragging: Bool = false
     {
-        let notification = NSNotification(name: notificationType.toRaw(), object: payload)
-        
-        notificationCentre.postNotification(notification)
+        didSet
+        {
+            postNotification(.DraggingChanged, payload: isDragging)
+        }
     }
     
     static func addObserver(observer: AnyObject, selector: Selector, notificationType: NodeNotificationTypes)
@@ -45,7 +46,7 @@ struct NodesPM
         
         nodes.append(newNode)
         
-        postNotification(NodeNotificationTypes.NodeCreated, payload: newNode)
+        postNotification(.NodeCreated, payload: newNode)
         
         selectedNode = newNode
     }
@@ -54,15 +55,14 @@ struct NodesPM
     {
         selectedNode?.position = position
         
-        postNotification(NodeNotificationTypes.NodeMoved, payload: selectedNode!)
+        postNotification(.NodeMoved, payload: selectedNode!)
     }
     
-    static var isDragging: Bool = false
+    private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject)
     {
-        didSet
-        {
-            postNotification(NodeNotificationTypes.DraggingChanged, payload: isDragging)
-        }
+        let notification = NSNotification(name: notificationType.toRaw(), object: payload)
+        
+        notificationCentre.postNotification(notification)
     }
 }
 
