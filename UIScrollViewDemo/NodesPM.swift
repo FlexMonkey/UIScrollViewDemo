@@ -13,7 +13,8 @@ struct NodesPM
 {
     static var nodes = [NodeVO]()
     static let instance = NodesPM()
-    static let notificationCentre = NSNotificationCenter.defaultCenter()
+    
+    private static let notificationCentre = NSNotificationCenter.defaultCenter()
     
     static var selectedNode: NodeVO? = nil
     {
@@ -21,11 +22,21 @@ struct NodesPM
         {
             if let node = selectedNode
             {
-                let notification = NSNotification(name: NodeNotificationTypes.NodeSelected.toRaw(), object: selectedNode)
-            
-                notificationCentre.postNotification(notification)
+                postNotification(NodeNotificationTypes.NodeSelected, payload: node)
             }
         }
+    }
+    
+    private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject)
+    {
+        let notification = NSNotification(name: notificationType.toRaw(), object: payload)
+        
+        notificationCentre.postNotification(notification)
+    }
+    
+    static func addObserver(observer: AnyObject, selector: Selector, notificationType: NodeNotificationTypes)
+    {
+        notificationCentre.addObserver(observer, selector: selector, name: notificationType.toRaw(), object: nil)
     }
     
     static func createNewNode(origin: CGPoint)
@@ -34,9 +45,7 @@ struct NodesPM
         
         nodes.append(newNode)
         
-        let notification = NSNotification(name: NodeNotificationTypes.NodeCreated.toRaw(), object: newNode)
-        
-        notificationCentre.postNotification(notification)
+        postNotification(NodeNotificationTypes.NodeCreated, payload: newNode)
         
         selectedNode = newNode
     }
@@ -45,18 +54,14 @@ struct NodesPM
     {
         selectedNode?.position = position
         
-        let notification = NSNotification(name: NodeNotificationTypes.NodeMoved.toRaw(), object: selectedNode)
-        
-        notificationCentre.postNotification(notification)
+        postNotification(NodeNotificationTypes.NodeMoved, payload: selectedNode!)
     }
     
     static var isDragging: Bool = false
     {
         didSet
         {
-            let notification = NSNotification(name: NodeNotificationTypes.DraggingChanged.toRaw(), object: isDragging)
-            
-            notificationCentre.postNotification(notification)
+            postNotification(NodeNotificationTypes.DraggingChanged, payload: isDragging)
         }
     }
 }

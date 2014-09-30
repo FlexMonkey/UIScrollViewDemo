@@ -41,8 +41,8 @@ class NodeWidget: UIControl
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
         addGestureRecognizer(pan)
      
-        NodesPM.notificationCentre.addObserver(self, selector: "nodeSelected:", name: NodeNotificationTypes.NodeSelected.toRaw(), object: nil)
-        NodesPM.notificationCentre.addObserver(self, selector: "nodeCreated:", name: NodeNotificationTypes.NodeCreated.toRaw(), object: nil)
+        NodesPM.addObserver(self, selector: "nodeSelected:", notificationType: .NodeSelected)
+        NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)

@@ -27,7 +27,7 @@ class BackgroundControl: UIControl
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         addGestureRecognizer(longPress)
         
-        NodesPM.notificationCentre.addObserver(self, selector: "nodeCreated:", name: NodeNotificationTypes.NodeCreated.toRaw(), object: nil)
+        NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
     }
     
     required init(coder aDecoder: NSCoder)

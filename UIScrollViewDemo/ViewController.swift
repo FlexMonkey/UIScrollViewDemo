@@ -26,10 +26,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         createScrollView()
         createToolbar()
         
-        NodesPM.notificationCentre.addObserver(self, selector: "displayNodeSummary:", name: NodeNotificationTypes.NodeSelected.toRaw(), object: nil)
-        NodesPM.notificationCentre.addObserver(self, selector: "displayNodeSummary:", name: NodeNotificationTypes.NodeMoved.toRaw(), object: nil)
+        NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeSelected)
+        NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeMoved)
         
-        NodesPM.notificationCentre.addObserver(self, selector: "draggingChangedHandler:", name: NodeNotificationTypes.DraggingChanged.toRaw(), object: nil)
+        NodesPM.addObserver(self, selector: "draggingChangedHandler:", notificationType: .DraggingChanged)
     }
 
     func createScrollView()
