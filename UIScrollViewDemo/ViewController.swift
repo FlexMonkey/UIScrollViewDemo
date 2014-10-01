@@ -27,7 +27,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         createToolbar()
         
         NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeSelected)
-        NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeMoved)
+        // NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeMoved)
         
         NodesPM.addObserver(self, selector: "draggingChangedHandler:", notificationType: .DraggingChanged)
     }

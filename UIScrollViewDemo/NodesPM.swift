@@ -79,7 +79,8 @@ struct NodesPM
     {
         selectedNode?.position = position
         
-        postNotification(.NodeMoved, payload: selectedNode!)
+        // postNotification(.NodeMoved, payload: selectedNode!)
+        postNotification(.RelationshipsChanged, payload: nil)
     }
     
     private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject?)
@@ -94,7 +95,7 @@ enum NodeNotificationTypes: String
 {
     case NodeSelected = "nodeSelected"
     case NodeCreated = "nodeCreated"
-    case NodeMoved = "nodeMoved"
+    // case NodeMoved = "nodeMoved"
     case DraggingChanged = "draggingChanged"
     case RelationshipCreationModeChanged = "relationshipCreationModeChanged"
     case RelationshipsChanged = "relationshipsChanged"
