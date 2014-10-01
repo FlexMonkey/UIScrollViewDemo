@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7199E19D93D2700388328 /* NodesPM.swift */; };
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
+		3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */; };
 		BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */; };
 		BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DD019D7D0DB005979EA /* ViewController.swift */; };
 		BEA67DD419D7D0DB005979EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD219D7D0DB005979EA /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		3ED7199E19D93D2700388328 /* NodesPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesPM.swift; sourceTree = "<group>"; };
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
+		3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCurvesLayer.swift; sourceTree = "<group>"; };
 		BEA67DC919D7D0DA005979EA /* UIScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA67DCD19D7D0DB005979EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				BEA67DEE19D7D101005979EA /* BackgroundControl.swift */,
 				BEA67DF119D7D18D005979EA /* BackgroundGrid.swift */,
+				3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */,
 			);
 			name = background;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */,
 				BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */,
 				BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */,
+				3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

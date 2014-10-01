@@ -18,12 +18,28 @@ struct NodesPM
     
     static var selectedNode: NodeVO? = nil
     {
+        willSet
+        {
+            if relationshipCreationMode
+            {
+                if let targetNode = newValue
+                {
+                    if let inputNode = selectedNode
+                    {
+                        targetNode.inputNodes.append(inputNode)
+                        postNotification(.RelationshipsChanged, payload: nil)
+                    }
+                }
+            }
+        }
         didSet
         {
             if let node = selectedNode
             {
                 postNotification(.NodeSelected, payload: node)
             }
+            
+            relationshipCreationMode = false
         }
     }
     
@@ -32,6 +48,14 @@ struct NodesPM
         didSet
         {
             postNotification(.DraggingChanged, payload: isDragging)
+        }
+    }
+    
+    static var relationshipCreationMode: Bool = false
+    {
+        didSet
+        {
+            postNotification(.RelationshipCreationModeChanged, payload: relationshipCreationMode)
         }
     }
     
@@ -58,7 +82,7 @@ struct NodesPM
         postNotification(.NodeMoved, payload: selectedNode!)
     }
     
-    private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject)
+    private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject?)
     {
         let notification = NSNotification(name: notificationType.toRaw(), object: payload)
         
@@ -72,4 +96,6 @@ enum NodeNotificationTypes: String
     case NodeCreated = "nodeCreated"
     case NodeMoved = "nodeMoved"
     case DraggingChanged = "draggingChanged"
+    case RelationshipCreationModeChanged = "relationshipCreationModeChanged"
+    case RelationshipsChanged = "relationshipsChanged"
 }

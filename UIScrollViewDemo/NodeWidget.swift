@@ -35,14 +35,19 @@ class NodeWidget: UIControl
         
         label.frame = CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10)
         label.numberOfLines = 0
-        label.text = "Node: \(node.name)\n\nTotal: \(NodesPM.nodes.count)"
+        populateLabel()
         addSubview(label)
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
         addGestureRecognizer(pan)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
+        addGestureRecognizer(longPress)
      
         NodesPM.addObserver(self, selector: "nodeSelected:", notificationType: .NodeSelected)
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
+        NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
+        NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
@@ -50,9 +55,26 @@ class NodeWidget: UIControl
         NodesPM.selectedNode = node
     }
     
+    func relationshipCreationModeChanged(value : AnyObject)
+    {
+        let relationshipCreationMode = value.object as Bool
+        
+        alpha = relationshipCreationMode ? 0.5 : 1
+    }
+    
+    func relationshipsChanged(value: AnyObject)
+    {
+        populateLabel()
+    }
+    
     func nodeCreated(value: AnyObject)
     {
-       label.text = "Node: \(node.name)\n\nTotal: \(NodesPM.nodes.count)" 
+       populateLabel()
+    }
+    
+    func populateLabel()
+    {
+        label.text = "Node: \(node.name)\n\nTotal: \(NodesPM.nodes.count)\n\nInputs: \(node.inputNodes.count)"
     }
     
     func nodeSelected(value : AnyObject)
@@ -61,6 +83,11 @@ class NodeWidget: UIControl
         
         backgroundColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
         label.textColor = selectedNode == node ? UIColor.blackColor() : UIColor.whiteColor()
+    }
+    
+    func longHoldHandler(recognizer: UILongPressGestureRecognizer)
+    {
+        NodesPM.relationshipCreationMode = true
     }
     
     func panHandler(recognizer: UIPanGestureRecognizer)

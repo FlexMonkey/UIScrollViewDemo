@@ -15,6 +15,7 @@ class NodeVO
     
     var name: String
     var position: CGPoint
+    var inputNodes = [NodeVO]()
     
     init(name: String, position: CGPoint)
     {

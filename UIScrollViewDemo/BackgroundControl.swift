@@ -11,6 +11,7 @@ import UIKit
 class BackgroundControl: UIControl
 {
     let backgroundLayer = BackgroundGrid()
+    let curvesLayer = RelationshipCurvesLayer()
     
     override init(frame: CGRect)
     {
@@ -20,9 +21,12 @@ class BackgroundControl: UIControl
         
         backgroundLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(backgroundLayer)
-        
         backgroundLayer.frame = bounds.rectByInsetting(dx: 0, dy: 0)
         backgroundLayer.setNeedsDisplay()
+        
+        curvesLayer.contentsScale = UIScreen.mainScreen().scale
+        layer.addSublayer(curvesLayer)
+        curvesLayer.frame = bounds.rectByInsetting(dx: 0, dy: 0)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         addGestureRecognizer(longPress)
