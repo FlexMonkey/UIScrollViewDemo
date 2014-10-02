@@ -11,57 +11,41 @@ import UIKit
 
 class RelationshipCurvesLayer: CALayer
 {
-    var relationshipsDirty = false
+    private var curvesDirty: Bool = false
+    var path = UIBezierPath()
     
-    required override init()
+    func redrawRelationshipCurves()
     {
-        super.init()
+        drawsAsynchronously = true
         
-        drawsAsynchronously = false
+        curvesDirty = true
         
-        NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
-        // NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .NodeMoved)
+        setNeedsDisplay()
     }
     
-    func renderRelationships()
+    override func drawInContext(ctx: CGContext!)
     {
-        nodes = NodesPM.nodes
-    }
-    
-    private var nodes: [NodeVO]!
-    {
-        didSet
+        println("draw curves drawInContext")
+        
+        if curvesDirty
         {
-            if !relationshipsDirty
-            {
-                relationshipsDirty = true
-                setNeedsDisplay()
-            }
-        }
-    }
-    
-
-    final override func drawInContext(ctx: CGContext!)
-    {
-        frame = bounds.rectByInsetting(dx: 0, dy: 0)
-        
-        if relationshipsDirty
-        {
-            relationshipsDirty = false
+            curvesDirty = false
             
-            println("renderRelationships")
+            path.removeAllPoints()
             
-            var path = UIBezierPath()
-            
-            for targetNode in nodes
+            for targetNode in NodesPM.nodes
             {
                 for inputNode in targetNode.inputNodes
                 {
                     let targetPosition = CGPoint(x: targetNode.position.x + 75, y: targetNode.position.y)
                     let inputPosition = CGPoint(x: inputNode.position.x + 75, y: inputNode.position.y + 150)
                     
+                    let controlPointOne = CGPoint(x: targetNode.position.x + 75, y: targetNode.position.y - 50)
+                    let controlPointTwo = CGPoint(x: inputNode.position.x + 75, y: inputNode.position.y + 150 + 50)
+                    
                     path.moveToPoint(targetPosition)
-                    path.addLineToPoint(inputPosition)
+                    
+                    path.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
                 }
             }
             
@@ -71,9 +55,5 @@ class RelationshipCurvesLayer: CALayer
             CGContextStrokePath(ctx)
         }
     }
-
-    required init(coder aDecoder: NSCoder)
-    {
-        super.init(coder: aDecoder)
-    }
+    
 }

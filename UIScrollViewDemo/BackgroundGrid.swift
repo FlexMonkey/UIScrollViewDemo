@@ -12,6 +12,8 @@ class BackgroundGrid: CALayer
 {
     override func drawInContext(ctx: CGContext!)
     {
+        println("draw grid: drawInContext")
+        
         let hGap = Int(frame.width / 50)
         let vGap = Int(frame.height / 50)
         

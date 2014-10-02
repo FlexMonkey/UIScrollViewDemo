@@ -32,6 +32,7 @@ class BackgroundControl: UIControl
         addGestureRecognizer(longPress)
         
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
+        NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
     }
     
     required init(coder aDecoder: NSCoder)
@@ -52,12 +53,17 @@ class BackgroundControl: UIControl
         }
     }
     
+    func renderRelationships()
+    {
+        curvesLayer.redrawRelationshipCurves()
+    }
+    
     func nodeCreated(value : AnyObject)
     {
         let newNode = value.object as NodeVO
         
-        let originX = Int( newNode.position.x - 75 )
-        let originY = Int( newNode.position.y - 75 )
+        let originX = Int( newNode.position.x )
+        let originY = Int( newNode.position.y )
         
         let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: 150, height: 150), node: newNode)
         
