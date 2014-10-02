@@ -29,8 +29,8 @@ class NodeWidget: UIControl
     {
         backgroundColor = UIColor.blueColor()
         
-        layer.borderColor = UIColor.blackColor().CGColor
-        layer.borderWidth = 2
+        layer.borderColor = UIColor.yellowColor().CGColor
+        layer.borderWidth = 3
         layer.cornerRadius = 10
         
         label.frame = CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10)
@@ -80,7 +80,7 @@ class NodeWidget: UIControl
     func nodeSelected(value : AnyObject)
     {
         let selectedNode = value.object as NodeVO
-        
+       
         backgroundColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
         label.textColor = selectedNode == node ? UIColor.blackColor() : UIColor.whiteColor()
     }

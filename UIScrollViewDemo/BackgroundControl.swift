@@ -22,7 +22,7 @@ class BackgroundControl: UIControl
         backgroundLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(backgroundLayer)
         backgroundLayer.frame = bounds.rectByInsetting(dx: 0, dy: 0)
-        backgroundLayer.setNeedsDisplay()
+        backgroundLayer.drawGrid()
         
         curvesLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(curvesLayer)
@@ -48,7 +48,7 @@ class BackgroundControl: UIControl
             
             if self.hitTest(gestureLocation, withEvent: nil) is BackgroundControl
             {
-                NodesPM.createNewNode(gestureLocation)
+                NodesPM.createNewNode(CGPoint(x: gestureLocation.x - 75, y: gestureLocation.y - 75))
             }
         }
     }
