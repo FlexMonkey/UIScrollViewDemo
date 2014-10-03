@@ -91,6 +91,15 @@ struct NodesPM
     }
 }
 
+struct NodeConstants
+{
+    static let WidgetWidthInt = 200
+    static let WidgetHeightInt = 75
+    
+    static let WidgetWidthCGFloat = CGFloat(WidgetWidthInt)
+    static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)
+}
+
 enum NodeNotificationTypes: String
 {
     case NodeSelected = "nodeSelected"

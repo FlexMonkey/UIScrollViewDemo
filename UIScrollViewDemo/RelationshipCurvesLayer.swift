@@ -13,6 +13,8 @@ class RelationshipCurvesLayer: CAShapeLayer
 {
     var relationshipCurvesPath = UIBezierPath()
     
+    let controlPointVerticalOffset = CGFloat(100)
+    
     final func redrawRelationshipCurves()
     {
         strokeColor = UIColor.yellowColor().CGColor
@@ -25,11 +27,11 @@ class RelationshipCurvesLayer: CAShapeLayer
         {
             for inputNode in targetNode.inputNodes
             {
-                let targetPosition = CGPoint(x: targetNode.position.x + 75, y: targetNode.position.y)
-                let inputPosition = CGPoint(x: inputNode.position.x + 75, y: inputNode.position.y + 150)
+                let targetPosition = CGPoint(x: targetNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: targetNode.position.y)
+                let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
                 
-                let controlPointOne = CGPoint(x: targetNode.position.x + 75, y: targetNode.position.y - 50)
-                let controlPointTwo = CGPoint(x: inputNode.position.x + 75, y: inputNode.position.y + 150 + 50)
+                let controlPointOne = CGPoint(x: targetNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: targetNode.position.y - controlPointVerticalOffset)
+                let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)
                 
                 relationshipCurvesPath.moveToPoint(targetPosition)
                 

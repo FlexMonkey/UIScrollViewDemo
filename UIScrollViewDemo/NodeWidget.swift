@@ -33,7 +33,7 @@ class NodeWidget: UIControl
         layer.borderWidth = 3
         layer.cornerRadius = 10
         
-        label.frame = CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10)
+        label.frame = bounds.rectByInsetting(dx: 5, dy: 5)
         label.numberOfLines = 0
         populateLabel()
         addSubview(label)
@@ -74,7 +74,7 @@ class NodeWidget: UIControl
     
     func populateLabel()
     {
-        label.text = "Node: \(node.name)\n\nTotal: \(NodesPM.nodes.count)\n\nInputs: \(node.inputNodes.count)"
+        label.text = "Node: \(node.name)\n\nInputs: \(node.inputNodes.count)"
     }
     
     func nodeSelected(value : AnyObject)

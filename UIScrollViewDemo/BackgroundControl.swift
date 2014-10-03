@@ -19,6 +19,9 @@ class BackgroundControl: UIControl
 
         backgroundColor = UIColor.blackColor()
         
+        layer.borderColor = UIColor.lightGrayColor().CGColor
+        layer.borderWidth = 2
+        
         backgroundLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(backgroundLayer)
         backgroundLayer.frame = bounds.rectByInsetting(dx: 0, dy: 0)
@@ -48,7 +51,7 @@ class BackgroundControl: UIControl
             
             if self.hitTest(gestureLocation, withEvent: nil) is BackgroundControl
             {
-                NodesPM.createNewNode(CGPoint(x: gestureLocation.x - 75, y: gestureLocation.y - 75))
+                NodesPM.createNewNode(CGPoint(x: gestureLocation.x - NodeConstants.WidgetWidthCGFloat / 2, y: gestureLocation.y - NodeConstants.WidgetHeightCGFloat / 2))
             }
         }
     }
@@ -65,7 +68,7 @@ class BackgroundControl: UIControl
         let originX = Int( newNode.position.x )
         let originY = Int( newNode.position.y )
         
-        let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: 150, height: 150), node: newNode)
+        let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: NodeConstants.WidgetWidthInt, height: NodeConstants.WidgetHeightInt), node: newNode)
         
         addSubview(nodeWidget)
     }

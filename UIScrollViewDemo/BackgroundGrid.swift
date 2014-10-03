@@ -27,7 +27,7 @@ class BackgroundGrid: CAShapeLayer
         }
         
         strokeColor = UIColor.darkGrayColor().CGColor
-        lineWidth = 3
+        lineWidth = 2
         
         path = gridPath.CGPath
     }

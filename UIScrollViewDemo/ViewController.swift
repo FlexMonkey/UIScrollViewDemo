@@ -26,6 +26,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         createScrollView()
         createToolbar()
         
+        view.backgroundColor = UIColor.darkGrayColor()
+        
         NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeSelected)
         // NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeMoved)
         
@@ -38,13 +40,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.addSubview(backgroundControl)
         
         scrollView.contentSize = backgroundControl.frame.size;
-        scrollView.minimumZoomScale = 0.3
-        scrollView.maximumZoomScale = 2
+        scrollView.minimumZoomScale = 0.25
+        scrollView.maximumZoomScale = 3
         scrollView.zoomScale = 1
-        
-        scrollView.bouncesZoom = false
-        scrollView.bounces = false
-        
+    
         scrollView.delegate = self
         
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
