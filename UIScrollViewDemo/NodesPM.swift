@@ -27,6 +27,7 @@ struct NodesPM
                     if let inputNode = selectedNode
                     {
                         targetNode.inputNodes.append(inputNode)
+                        nodeUpdated(targetNode)
                         postNotification(.RelationshipsChanged, payload: nil)
                     }
                 }
@@ -49,7 +50,7 @@ struct NodesPM
         {
             node.nodeOperator = newOperator
     
-            postNotification(.NodeUpdated, payload: selectedNode)
+            nodeUpdated(node)
         }
     }
     
@@ -75,7 +76,7 @@ struct NodesPM
                 }
             }
             
-            postNotification(.NodeUpdated, payload: selectedNode)
+            nodeUpdated(node)
         }
     }
     
@@ -85,7 +86,26 @@ struct NodesPM
         {
             node.value = newValue
             
-            postNotification(.NodeUpdated, payload: selectedNode)
+            nodeUpdated(node)
+        }
+    }
+    
+    static func nodeUpdated(node: NodeVO)
+    {
+        node.updateValue()
+        postNotification(.NodeUpdated, payload: node)
+        
+        // find all operator nodes that are descendants of this node and update their value...
+        
+        for candidateNode in nodes
+        {
+            for inputNode in candidateNode.inputNodes
+            {
+                if inputNode == node && candidateNode.nodeType == NodeTypes.Operator
+                {
+                    nodeUpdated(candidateNode)
+                }
+            }
         }
     }
     

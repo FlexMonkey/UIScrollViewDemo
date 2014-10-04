@@ -94,7 +94,12 @@ class NodeWidget: UIControl
         else if !NodesPM.relationshipCreationMode
         {
             NodesPM.selectedNode = node
+            NodesPM.isDragging = true
         }
+    }
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
+    {
+        NodesPM.isDragging = false
     }
     
     func relationshipCreationModeChanged(value : AnyObject)
@@ -139,21 +144,13 @@ class NodeWidget: UIControl
     
     func panHandler(recognizer: UIPanGestureRecognizer)
     {
-        if recognizer.state == UIGestureRecognizerState.Began
-        {
-            NodesPM.isDragging = true
-        }
-        else if recognizer.state == UIGestureRecognizerState.Changed
+        if recognizer.state == UIGestureRecognizerState.Changed
         {
             let gestureLocation = recognizer.locationInView(self)
             
             frame.offset(dx: gestureLocation.x - frame.width / 2, dy: gestureLocation.y - frame.height / 2)
             
             NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
-        }
-        else if recognizer.state == UIGestureRecognizerState.Ended
-        {
-            NodesPM.isDragging = false
         }
     }
   

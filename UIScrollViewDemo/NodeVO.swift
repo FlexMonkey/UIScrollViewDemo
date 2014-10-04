@@ -29,6 +29,31 @@ class NodeVO
         self.nodeType = .Number
         self.nodeOperator = .Null
     }
+    
+    func updateValue()
+    {
+        println("update \(name)")
+        
+        if inputNodes.count >= 2
+        {
+            let valueOne = inputNodes[0]
+            let valueTwo = inputNodes[1]
+            
+            switch nodeOperator
+            {
+                case .Null:
+                    value = 0
+                case  .Add:
+                    value = valueOne.value + valueTwo.value
+                case .Subtract:
+                    value = valueOne.value - valueTwo.value
+                case .Multiply:
+                    value = valueOne.value * valueTwo.value
+                case .Divide:
+                    value = valueOne.value / valueTwo.value
+            }
+        }
+    }
 }
 
 enum NodeTypes: String
