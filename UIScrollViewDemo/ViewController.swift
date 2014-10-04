@@ -23,7 +23,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         super.viewDidLoad()
    
         createScrollView()
-        // createToolbar()
+        createToolbar()
         
         view.backgroundColor = UIColor.darkGrayColor()
         
@@ -76,6 +76,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
     }
 
-    
+    override func supportedInterfaceOrientations() -> Int
+    {
+        return Int(UIInterfaceOrientationMask.Landscape.toRaw())
+    }
 }
 

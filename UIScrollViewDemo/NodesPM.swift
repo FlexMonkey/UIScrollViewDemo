@@ -43,6 +43,41 @@ struct NodesPM
         }
     }
     
+    static func changeSelectedNodeOperator(newOperator: NodeOperators)
+    {
+        if let node = selectedNode
+        {
+            node.nodeOperator = newOperator
+    
+            postNotification(.NodeUpdated, payload: selectedNode)
+        }
+    }
+    
+    static func changeSelectedNodeType(newType: NodeTypes)
+    {
+        if let node = selectedNode
+        {
+            node.nodeType = newType
+            
+            if node.nodeType == NodeTypes.Operator && node.nodeOperator == NodeOperators.Null
+            {
+                node.nodeOperator = NodeOperators.Add
+            }
+            
+            postNotification(.NodeUpdated, payload: selectedNode)
+        }
+    }
+    
+    static func changeSelectedNodeValue(newValue: Double)
+    {
+        if let node = selectedNode
+        {
+            node.value = newValue
+            
+            postNotification(.NodeUpdated, payload: selectedNode)
+        }
+    }
+    
     static var isDragging: Bool = false
     {
         didSet
@@ -79,7 +114,6 @@ struct NodesPM
     {
         selectedNode?.position = position
         
-        // postNotification(.NodeMoved, payload: selectedNode!)
         postNotification(.RelationshipsChanged, payload: nil)
     }
     
@@ -104,8 +138,8 @@ enum NodeNotificationTypes: String
 {
     case NodeSelected = "nodeSelected"
     case NodeCreated = "nodeCreated"
-    // case NodeMoved = "nodeMoved"
     case DraggingChanged = "draggingChanged"
     case RelationshipCreationModeChanged = "relationshipCreationModeChanged"
     case RelationshipsChanged = "relationshipsChanged"
+    case NodeUpdated = "nodeUpdated"
 }

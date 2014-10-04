@@ -31,19 +31,19 @@ class NodeVO
     }
 }
 
-enum NodeTypes
+enum NodeTypes: String
 {
-    case Number
-    case Operator
+    case Number = "Number"
+    case Operator = "Operator"
 }
 
-enum NodeOperators
+enum NodeOperators: String
 {
-    case Null
-    case Add
-    case Subtract
-    case Divide
-    case Multiply
+    case Null = ""
+    case Add = "+"
+    case Subtract = "-"
+    case Divide = "÷"
+    case Multiply = "×"
 }
 
 func == (left: NodeVO, right: NodeVO) -> Bool

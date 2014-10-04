@@ -47,8 +47,9 @@ class NodeWidget: UIControl
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         addGestureRecognizer(longPress)
      
+        NodesPM.addObserver(self, selector: "populateLabel", notificationType: .NodeUpdated)
         NodesPM.addObserver(self, selector: "nodeSelected:", notificationType: .NodeSelected)
-        NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
+        NodesPM.addObserver(self, selector: "populateLabel", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
     }
@@ -69,15 +70,12 @@ class NodeWidget: UIControl
     {
         populateLabel()
     }
-    
-    func nodeCreated(value: AnyObject)
-    {
-       populateLabel()
-    }
-    
+
     func populateLabel()
     {
-        label.text = "Node: \(node.name)\n\nInputs: \(node.inputNodes.count)"
+        let valueAsString = NSString(format: "%.2f", node.value);
+        
+        label.text = "Type: \(node.nodeType.toRaw()) \(node.nodeOperator.toRaw())\nValue: \(valueAsString)\nInputs: \(node.inputNodes.count)"
     }
     
     func nodeSelected(value : AnyObject)
