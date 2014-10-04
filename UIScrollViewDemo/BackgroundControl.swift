@@ -34,6 +34,8 @@ class BackgroundControl: UIControl
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         addGestureRecognizer(longPress)
         
+        addTarget(self, action: "backgroundPress", forControlEvents: UIControlEvents.TouchUpInside)
+        
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
     }
@@ -41,6 +43,11 @@ class BackgroundControl: UIControl
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+    }
+    
+    func backgroundPress()
+    {
+        NodesPM.relationshipCreationMode = false
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)

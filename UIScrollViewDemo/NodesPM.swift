@@ -63,6 +63,17 @@ struct NodesPM
             {
                 node.nodeOperator = NodeOperators.Add
             }
+            else if node.nodeType == NodeTypes.Number
+            {
+                node.nodeOperator = NodeOperators.Null
+                
+                if node.inputNodes.count > 0
+                {
+                    node.inputNodes = [NodeVO]()
+                
+                    postNotification(.RelationshipsChanged, payload: nil)
+                }
+            }
             
             postNotification(.NodeUpdated, payload: selectedNode)
         }

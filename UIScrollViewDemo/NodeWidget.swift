@@ -13,8 +13,6 @@ class NodeWidget: UIControl
     var node: NodeVO!
     let label: UILabel = UILabel(frame: CGRectZero)
     
-    
-    
     required init(frame: CGRect, node: NodeVO)
     {
         super.init(frame: frame)
@@ -54,16 +52,50 @@ class NodeWidget: UIControl
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
     }
     
+    var relationshipCreationCandidate: Bool = false
+    {
+        didSet
+        {
+            if NodesPM.relationshipCreationMode
+            {
+                if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
+                {
+                    backgroundColor = UIColor.greenColor()
+                    label.textColor = UIColor.blueColor()
+                }
+                else
+                {
+                    alpha = 0.5
+                    enabled = false
+                }
+            }
+            else
+            {
+                alpha = 1
+                enabled = true
+            
+                setWidgetColors(NodesPM.selectedNode!)
+            }
+        }
+    }
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
-        NodesPM.selectedNode = node
+        if NodesPM.relationshipCreationMode && relationshipCreationCandidate
+        {
+            NodesPM.selectedNode = node
+        }
+        else if !NodesPM.relationshipCreationMode
+        {
+            NodesPM.selectedNode = node
+        }
     }
     
     func relationshipCreationModeChanged(value : AnyObject)
     {
         let relationshipCreationMode = value.object as Bool
         
-        alpha = relationshipCreationMode ? 0.5 : 1
+        relationshipCreationCandidate = node.nodeType == NodeTypes.Operator
     }
     
     func relationshipsChanged(value: AnyObject)
@@ -82,8 +114,13 @@ class NodeWidget: UIControl
     {
         let selectedNode = value.object as NodeVO
        
+        setWidgetColors(selectedNode)
+    }
+    
+    func setWidgetColors(selectedNode: NodeVO)
+    {
         backgroundColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
-        label.textColor = selectedNode == node ? UIColor.blackColor() : UIColor.whiteColor()
+        label.textColor = selectedNode == node ? UIColor.blueColor() : UIColor.whiteColor()
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)
