@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7199E19D93D2700388328 /* NodesPM.swift */; };
+		3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE831FE19DE82E5005FEB3C /* Toolbar.swift */; };
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
 		3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */; };
 		BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		3ED7199E19D93D2700388328 /* NodesPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesPM.swift; sourceTree = "<group>"; };
+		3EE831FE19DE82E5005FEB3C /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
 		3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCurvesLayer.swift; sourceTree = "<group>"; };
 		BEA67DC919D7D0DA005979EA /* UIScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +87,14 @@
 			name = node;
 			sourceTree = "<group>";
 		};
+		3EE831FD19DE82D4005FEB3C /* toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				3EE831FE19DE82E5005FEB3C /* Toolbar.swift */,
+			);
+			name = toolbar;
+			sourceTree = "<group>";
+		};
 		BEA67DC019D7D0DA005979EA = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +116,7 @@
 		BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3EE831FD19DE82D4005FEB3C /* toolbar */,
 				3ED719A019D9E46700388328 /* node */,
 				3ED7199D19D93D0600388328 /* presentationModel */,
 				BEA67DF019D7D154005979EA /* background */,
@@ -254,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */,
 				3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */,
 				3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */,
 				BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */,

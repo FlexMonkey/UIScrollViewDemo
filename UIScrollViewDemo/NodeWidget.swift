@@ -13,6 +13,8 @@ class NodeWidget: UIControl
     var node: NodeVO!
     let label: UILabel = UILabel(frame: CGRectZero)
     
+    
+    
     required init(frame: CGRect, node: NodeVO)
     {
         super.init(frame: frame)
@@ -34,6 +36,7 @@ class NodeWidget: UIControl
         layer.cornerRadius = 10
         
         label.frame = bounds.rectByInsetting(dx: 5, dy: 5)
+        
         label.numberOfLines = 0
         populateLabel()
         addSubview(label)
