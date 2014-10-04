@@ -13,6 +13,8 @@ class NodeWidget: UIControl
     var node: NodeVO!
     let label: UILabel = UILabel(frame: CGRectZero)
     
+    let fadeAnimationDuration = 0.3
+    
     required init(frame: CGRect, node: NodeVO)
     {
         super.init(frame: frame)
@@ -27,6 +29,8 @@ class NodeWidget: UIControl
     
     override func didMoveToSuperview()
     {
+        alpha = 0
+        
         backgroundColor = UIColor.blueColor()
         
         layer.borderColor = UIColor.yellowColor().CGColor
@@ -50,6 +54,8 @@ class NodeWidget: UIControl
         NodesPM.addObserver(self, selector: "populateLabel", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
+        
+        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1})
     }
     
     var relationshipCreationCandidate: Bool = false
@@ -60,18 +66,18 @@ class NodeWidget: UIControl
             {
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
-                    backgroundColor = UIColor.greenColor()
+                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = UIColor.cyanColor()})
                     label.textColor = UIColor.blueColor()
                 }
                 else
                 {
-                    alpha = 0.5
+                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 0.5})
                     enabled = false
                 }
             }
             else
             {
-                alpha = 1
+                UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1.0})
                 enabled = true
             
                 setWidgetColors(NodesPM.selectedNode!)
@@ -119,7 +125,10 @@ class NodeWidget: UIControl
     
     func setWidgetColors(selectedNode: NodeVO)
     {
-        backgroundColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
+        let targetColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
+        
+        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = targetColor})
+        
         label.textColor = selectedNode == node ? UIColor.blueColor() : UIColor.whiteColor()
     }
     

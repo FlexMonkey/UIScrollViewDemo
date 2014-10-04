@@ -12,6 +12,7 @@ class BackgroundControl: UIControl
 {
     let backgroundLayer = BackgroundGrid()
     let curvesLayer = RelationshipCurvesLayer()
+    let veryDarkGrey = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
     
     override init(frame: CGRect)
     {
@@ -38,11 +39,20 @@ class BackgroundControl: UIControl
         
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
+        
+        NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: NodeNotificationTypes.RelationshipCreationModeChanged)
     }
     
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+    }
+    
+    func relationshipCreationModeChanged()
+    {
+        let targetColor = NodesPM.relationshipCreationMode ? veryDarkGrey : UIColor.blackColor()
+        
+        UIView.animateWithDuration(0.25, animations: {self.backgroundColor = targetColor})
     }
     
     func backgroundPress()
