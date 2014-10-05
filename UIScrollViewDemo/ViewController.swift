@@ -30,6 +30,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeSelected)
         
         NodesPM.addObserver(self, selector: "draggingChangedHandler:", notificationType: .DraggingChanged)
+        
+        NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: .RelationshipCreationModeChanged)
     }
 
     func createScrollView()
@@ -50,6 +52,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
     func createToolbar()
     {
         view.addSubview(toolbar)
+    }
+    
+    func relationshipCreationModeChanged()
+    {
+        scrollView.scrollEnabled = !NodesPM.relationshipCreationMode
     }
     
     func draggingChangedHandler(value: AnyObject)

@@ -32,8 +32,6 @@ class NodeVO
     
     func updateValue()
     {
-        println("update \(name)")
-        
         if inputNodes.count >= 2
         {
             let valueOne = inputNodes[0]

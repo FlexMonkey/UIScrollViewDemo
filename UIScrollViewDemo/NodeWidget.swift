@@ -89,6 +89,9 @@ class NodeWidget: UIControl
     {
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
+            let touch = (touches.allObjects[0] as UITouch).locationInView(self)
+            NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
+            
             NodesPM.selectedNode = node
         }
         else if !NodesPM.relationshipCreationMode

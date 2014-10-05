@@ -21,16 +21,28 @@ class RelationshipCurvesLayer: CAShapeLayer
         lineWidth = 3
         fillColor = nil
         
+        shadowOffset = CGSize(width: 0, height: 0)
+        shadowColor = UIColor.blackColor().CGColor
+        shadowOpacity = 1
+        shadowRadius = 3
+        
         relationshipCurvesPath.removeAllPoints()
         
         for targetNode in NodesPM.nodes
         {
-            for inputNode in targetNode.inputNodes
+            let rect = CGRect(x: Int(targetNode.position.x), y: Int(targetNode.position.y), width: NodeConstants.WidgetWidthInt, height: NodeConstants.WidgetHeightInt)
+            let rectPath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
+            
+            relationshipCurvesPath.appendPath(rectPath)
+            
+            for (idx : Int, inputNode: NodeVO) in enumerate(targetNode.inputNodes)
             {
-                let targetPosition = CGPoint(x: targetNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: targetNode.position.y)
+                let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.inputNodes.count + 1)) * (idx + 1))
+                
+                let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
                 let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
                 
-                let controlPointOne = CGPoint(x: targetNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: targetNode.position.y - controlPointVerticalOffset)
+                let controlPointOne = CGPoint(x: targetX, y: targetNode.position.y - controlPointVerticalOffset)
                 let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)
                 
                 relationshipCurvesPath.moveToPoint(targetPosition)

@@ -26,12 +26,21 @@ struct NodesPM
                 {
                     if let inputNode = selectedNode
                     {
-                        targetNode.inputNodes.append(inputNode)
+                        if preferredInputIndex == -1 || preferredInputIndex > targetNode.inputNodes.count - 1 || targetNode.inputNodes.count < 2
+                        {
+                            targetNode.inputNodes.append(inputNode)
+                        }
+                        else
+                        {
+                            targetNode.inputNodes[preferredInputIndex] = inputNode
+                        }
+        
                         nodeUpdated(targetNode)
                         postNotification(.RelationshipsChanged, payload: nil)
                     }
                 }
             }
+            preferredInputIndex = -1
         }
         didSet
         {
@@ -43,6 +52,8 @@ struct NodesPM
             relationshipCreationMode = false
         }
     }
+
+    static var preferredInputIndex: Int = -1
     
     static func changeSelectedNodeOperator(newOperator: NodeOperators)
     {
@@ -137,6 +148,7 @@ struct NodesPM
         nodes.append(newNode)
         
         postNotification(.NodeCreated, payload: newNode)
+        postNotification(.RelationshipsChanged, payload: nil)
         
         selectedNode = newNode
     }
@@ -158,8 +170,8 @@ struct NodesPM
 
 struct NodeConstants
 {
-    static let WidgetWidthInt = 200
-    static let WidgetHeightInt = 75
+    static let WidgetWidthInt: Int = 200
+    static let WidgetHeightInt: Int = 75
     
     static let WidgetWidthCGFloat = CGFloat(WidgetWidthInt)
     static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)
