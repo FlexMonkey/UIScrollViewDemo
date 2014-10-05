@@ -17,15 +17,15 @@ class RelationshipCurvesLayer: CAShapeLayer
     
     final func redrawRelationshipCurves()
     {
-        strokeColor = UIColor.yellowColor().CGColor
+        strokeColor = NodeConstants.curveColor.CGColor
         lineWidth = 2
         fillColor = nil
         
         shadowOffset = CGSize(width: 0, height: 0)
         shadowColor = UIColor.blackColor().CGColor
-        shadowOpacity = 1
-        shadowRadius = 3
-        
+        shadowOpacity = 0.5
+        shadowRadius = 2
+
         relationshipCurvesPath.removeAllPoints()
         
         for targetNode in NodesPM.nodes
@@ -50,7 +50,7 @@ class RelationshipCurvesLayer: CAShapeLayer
                 relationshipCurvesPath.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
             }
         }
-
+        
         path = relationshipCurvesPath.CGPath
     }
     

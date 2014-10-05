@@ -26,7 +26,7 @@ class BackgroundGrid: CAShapeLayer
             gridPath.addLineToPoint((CGPoint(x: Int(frame.width), y: i * vGap)))
         }
         
-        strokeColor = UIColor.lightGrayColor().CGColor
+        strokeColor = UIColor.whiteColor().CGColor
         lineWidth = 1
         
         path = gridPath.CGPath

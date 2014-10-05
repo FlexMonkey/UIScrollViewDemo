@@ -30,17 +30,18 @@ class NodeWidget: UIControl
     override func didMoveToSuperview()
     {
         alpha = 0
-        
-        backgroundColor = UIColor.blueColor()
-        
-        layer.borderColor = UIColor.yellowColor().CGColor
+
+        layer.borderColor = NodeConstants.curveColor.CGColor
         layer.borderWidth = 2
         layer.cornerRadius = 10
         
-        label.frame = bounds.rectByInsetting(dx: 5, dy: 5)
+        label.frame = bounds.rectByInsetting(dx: 2, dy: 2)
         label.textAlignment = NSTextAlignment.Center
-        
+
         label.numberOfLines = 0
+        
+        label.font = UIFont.boldSystemFontOfSize(20)
+        
         populateLabel()
         addSubview(label)
         
@@ -71,7 +72,7 @@ class NodeWidget: UIControl
         }
     }
     
-    
+    // to do - move to PM and prevent circular relationships
     var relationshipCreationCandidate: Bool = false
     {
         didSet
@@ -159,11 +160,11 @@ class NodeWidget: UIControl
     
     func setWidgetColors(selectedNode: NodeVO)
     {
-        let targetColor = selectedNode == node ? UIColor.yellowColor() : UIColor.blueColor()
+        let targetColor = selectedNode == node ? NodeConstants.selectedNodeColor : NodeConstants.unselectedNodeColor
         
         UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = targetColor})
         
-        label.textColor = selectedNode == node ? UIColor.blueColor() : UIColor.whiteColor()
+        label.textColor = selectedNode == node ? UIColor.whiteColor() : UIColor.whiteColor()
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)

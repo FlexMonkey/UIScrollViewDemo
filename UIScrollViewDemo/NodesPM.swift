@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKIt
 
 struct NodesPM
 {
@@ -169,11 +170,17 @@ struct NodesPM
 
 struct NodeConstants
 {
-    static let WidgetWidthInt: Int = 200
-    static let WidgetHeightInt: Int = 75
+    static let WidgetWidthInt: Int = 240
+    static let WidgetHeightInt: Int = 80
     
     static let WidgetWidthCGFloat = CGFloat(WidgetWidthInt)
     static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)
+    
+    static let backgroundColor = UIColor.lightGrayColor()
+    static let curveColor = UIColor.blueColor()
+    
+    static let selectedNodeColor = UIColor.blueColor()
+    static let unselectedNodeColor = UIColor(red: 0.5, green: 0.5, blue: 1, alpha: 0.9)
 }
 
 enum NodeNotificationTypes: String
