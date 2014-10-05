@@ -148,7 +148,6 @@ struct NodesPM
         nodes.append(newNode)
         
         postNotification(.NodeCreated, payload: newNode)
-        postNotification(.RelationshipsChanged, payload: nil)
         
         selectedNode = newNode
     }

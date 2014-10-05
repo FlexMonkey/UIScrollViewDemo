@@ -18,7 +18,7 @@ class RelationshipCurvesLayer: CAShapeLayer
     final func redrawRelationshipCurves()
     {
         strokeColor = UIColor.yellowColor().CGColor
-        lineWidth = 3
+        lineWidth = 2
         fillColor = nil
         
         shadowOffset = CGSize(width: 0, height: 0)
@@ -30,7 +30,7 @@ class RelationshipCurvesLayer: CAShapeLayer
         
         for targetNode in NodesPM.nodes
         {
-            let rect = CGRect(x: Int(targetNode.position.x), y: Int(targetNode.position.y), width: NodeConstants.WidgetWidthInt, height: NodeConstants.WidgetHeightInt)
+            let rect = CGRect(x: CGFloat(targetNode.position.x + 1), y: CGFloat(targetNode.position.y + 1), width: NodeConstants.WidgetWidthCGFloat - 2, height: NodeConstants.WidgetHeightCGFloat - 2)
             let rectPath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
             
             relationshipCurvesPath.appendPath(rectPath)
@@ -50,8 +50,8 @@ class RelationshipCurvesLayer: CAShapeLayer
                 relationshipCurvesPath.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
             }
         }
-        
-        self.path = relationshipCurvesPath.CGPath
+
+        path = relationshipCurvesPath.CGPath
     }
     
     

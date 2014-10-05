@@ -34,10 +34,11 @@ class NodeWidget: UIControl
         backgroundColor = UIColor.blueColor()
         
         layer.borderColor = UIColor.yellowColor().CGColor
-        layer.borderWidth = 3
+        layer.borderWidth = 2
         layer.cornerRadius = 10
         
         label.frame = bounds.rectByInsetting(dx: 5, dy: 5)
+        label.textAlignment = NSTextAlignment.Center
         
         label.numberOfLines = 0
         populateLabel()
@@ -55,8 +56,21 @@ class NodeWidget: UIControl
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
         
-        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1})
+        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1}, completion: fadeInComplete)
+       
+        
     }
+    
+    func fadeInComplete(value: Bool)
+    {
+        if value
+        {
+            frame.offset(dx: 0, dy: 0)
+            
+            NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
+        }
+    }
+    
     
     var relationshipCreationCandidate: Bool = false
     {
@@ -119,8 +133,6 @@ class NodeWidget: UIControl
 
     func populateLabel()
     {
-        label.textAlignment = NSTextAlignment.Center
-        
         if node.nodeType == NodeTypes.Operator
         {
             let valueAsString = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.value) : "??"
@@ -161,18 +173,29 @@ class NodeWidget: UIControl
     
     func panHandler(recognizer: UIPanGestureRecognizer)
     {
-        if recognizer.state == UIGestureRecognizerState.Changed
+        if recognizer.state == UIGestureRecognizerState.Began
+        {
+            if !(NodesPM.selectedNode! == node)
+            {
+                NodesPM.selectedNode = node
+            }
+            
+            NodesPM.isDragging = true
+        }
+        else if recognizer.state == UIGestureRecognizerState.Changed || recognizer.state == UIGestureRecognizerState.Ended
         {
             let gestureLocation = recognizer.locationInView(self)
             
             frame.offset(dx: gestureLocation.x - frame.width / 2, dy: gestureLocation.y - frame.height / 2)
             
             NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
+            
+            if recognizer.state == UIGestureRecognizerState.Ended
+            {
+                NodesPM.isDragging = false
+            }
         }
-        else if recognizer.state == UIGestureRecognizerState.Ended
-        {
-            NodesPM.isDragging = false
-        }
+
     }
   
 }
