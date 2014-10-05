@@ -40,7 +40,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.addSubview(backgroundControl)
         
         scrollView.contentSize = backgroundControl.frame.size;
-        scrollView.minimumZoomScale = 0.25
+        scrollView.minimumZoomScale = 0.2
         scrollView.maximumZoomScale = 1
         scrollView.zoomScale = 1
     

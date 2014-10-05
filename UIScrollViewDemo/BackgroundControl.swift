@@ -12,7 +12,6 @@ class BackgroundControl: UIControl
 {
     let backgroundLayer = BackgroundGrid()
     let curvesLayer = RelationshipCurvesLayer()
-    let veryDarkCyan = UIColor(red: 0.0, green: 0.25, blue: 0.25, alpha: 1)
     
     override init(frame: CGRect)
     {
@@ -47,7 +46,7 @@ class BackgroundControl: UIControl
     
     func relationshipCreationModeChanged()
     {
-        let targetColor = NodesPM.relationshipCreationMode ? veryDarkCyan : NodeConstants.backgroundColor
+        let targetColor = NodesPM.relationshipCreationMode ? UIColor.darkGrayColor() : NodeConstants.backgroundColor
         
         UIView.animateWithDuration(0.25, animations: {self.backgroundColor = targetColor})
     }
