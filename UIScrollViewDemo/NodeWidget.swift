@@ -119,9 +119,23 @@ class NodeWidget: UIControl
 
     func populateLabel()
     {
-        let valueAsString = NSString(format: "%.2f", node.value);
+        label.textAlignment = NSTextAlignment.Center
         
-        label.text = "Type: \(node.nodeType.toRaw()) \(node.nodeOperator.toRaw())\nValue: \(valueAsString)\nInputs: \(node.inputNodes.count)"
+        if node.nodeType == NodeTypes.Operator
+        {
+            let valueAsString = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.value) : "??"
+            
+            let lhs = node.inputNodes.count > 0 ? NSString(format: "%.2f", node.inputNodes[0].value) : "??"
+            let rhs = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.inputNodes[1].value) : "??"
+            
+            label.text = "\(lhs) \(node.nodeOperator.toRaw()) \(rhs)\n\n\(valueAsString)"
+        }
+        else
+        {
+            let valueAsString = NSString(format: "%.2f", node.value);
+            
+            label.text = "\(valueAsString)"
+        }
     }
     
     func nodeSelected(value : AnyObject)
