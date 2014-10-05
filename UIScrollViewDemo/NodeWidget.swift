@@ -169,6 +169,10 @@ class NodeWidget: UIControl
             
             NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
         }
+        else if recognizer.state == UIGestureRecognizerState.Ended
+        {
+            NodesPM.isDragging = false
+        }
     }
   
 }
