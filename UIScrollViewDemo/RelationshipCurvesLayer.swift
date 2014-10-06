@@ -15,6 +15,7 @@ class RelationshipCurvesLayer: CAShapeLayer
     
     let controlPointVerticalOffset = CGFloat(100)
     
+
     final func redrawRelationshipCurves()
     {
         strokeColor = NodeConstants.curveColor.CGColor

@@ -81,7 +81,7 @@ class NodeWidget: UIControl
             {
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
-                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = UIColor.cyanColor()})
+                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
                     label.textColor = UIColor.blueColor()
                 }
                 else

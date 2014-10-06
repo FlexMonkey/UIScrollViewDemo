@@ -133,7 +133,10 @@ struct NodesPM
     {
         didSet
         {
-            postNotification(.RelationshipCreationModeChanged, payload: relationshipCreationMode)
+            if oldValue != relationshipCreationMode
+            {
+                postNotification(.RelationshipCreationModeChanged, payload: relationshipCreationMode)
+            }
         }
     }
     
