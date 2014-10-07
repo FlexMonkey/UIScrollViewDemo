@@ -56,6 +56,8 @@ class Toolbar: UIToolbar
         }
     }
     
+
+    
     func typeButtonHandler(value: UIBarButtonItem)
     {
         if let buttonLabel = value.title
@@ -97,6 +99,7 @@ class Toolbar: UIToolbar
         selectedButton.tintColor = UIColor.yellowColor()
         
         var barButtonItems = [UIBarButtonItem]()
+
         barButtonItems.append(numberButton)
         barButtonItems.append(operatorButton)
         
@@ -137,7 +140,7 @@ class Toolbar: UIToolbar
         let button : UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
         button.layer.borderColor = UIColor.yellowColor().CGColor
         button.layer.borderWidth = 1
-        button.layer.cornerRadius = 3
+        button.layer.cornerRadius = 5
         button.setTitleColor(UIColor.yellowColor(), forState: .Normal)
         
         button.showsTouchWhenHighlighted = true

@@ -26,6 +26,8 @@ class RelationshipCurvesLayer: CAShapeLayer
         shadowColor = UIColor.blackColor().CGColor
         shadowOpacity = 0.5
         shadowRadius = 2
+        
+        drawsAsynchronously = true
 
         relationshipCurvesPath.removeAllPoints()
         

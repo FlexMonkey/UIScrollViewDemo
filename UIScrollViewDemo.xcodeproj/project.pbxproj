@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E3CBA7C19E314B50006DEB4 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3CBA7B19E314B50006DEB4 /* MenuButton.swift */; };
 		3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7199E19D93D2700388328 /* NodesPM.swift */; };
 		3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE831FE19DE82E5005FEB3C /* Toolbar.swift */; };
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E3CBA7B19E314B50006DEB4 /* MenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		3ED7199E19D93D2700388328 /* NodesPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesPM.swift; sourceTree = "<group>"; };
 		3EE831FE19DE82E5005FEB3C /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
@@ -70,6 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E3CBA7A19E314A70006DEB4 /* menuButton */ = {
+			isa = PBXGroup;
+			children = (
+				3E3CBA7B19E314B50006DEB4 /* MenuButton.swift */,
+			);
+			name = menuButton;
+			sourceTree = "<group>";
+		};
 		3ED7199D19D93D0600388328 /* presentationModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +126,7 @@
 		BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3E3CBA7A19E314A70006DEB4 /* menuButton */,
 				3EE831FD19DE82D4005FEB3C /* toolbar */,
 				3ED719A019D9E46700388328 /* node */,
 				3ED7199D19D93D0600388328 /* presentationModel */,
@@ -267,6 +278,7 @@
 			files = (
 				3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */,
 				3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */,
+				3E3CBA7C19E314B50006DEB4 /* MenuButton.swift in Sources */,
 				3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */,
 				BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */,
 				BEA67DF419D7E183005979EA /* NodeWidget.swift in Sources */,

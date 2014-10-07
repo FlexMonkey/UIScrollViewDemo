@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
     let scrollView = UIScrollView(frame: CGRectZero)
     let backgroundControl = BackgroundControl(frame: CGRect(x: 0, y: 0, width: 5000, height: 5000))
     let toolbar = Toolbar(frame: CGRectZero)
+    let menuButton = MenuButton(frame: CGRectZero)
   
     override func viewDidLoad()
     {        
@@ -24,6 +25,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
    
         createScrollView()
         createToolbar()
+        
+        view.addSubview(menuButton)
         
         view.backgroundColor = UIColor.darkGrayColor()
         
@@ -78,6 +81,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
 
     override func viewDidLayoutSubviews()
     {
+        menuButton.frame = CGRect(x: 5, y: topLayoutGuide.length + 5, width: 70, height: 40)
+        
         toolbar.frame = CGRect(x: 0, y: view.frame.height - 40, width: view.frame.width, height: 40)
         
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
