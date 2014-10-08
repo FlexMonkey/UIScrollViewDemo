@@ -12,6 +12,8 @@ class BackgroundControl: UIControl
 {
     let backgroundLayer = BackgroundGrid()
     let curvesLayer = RelationshipCurvesLayer()
+
+    var nodeWidgetPendingDelete: NodeWidget?
     
     override init(frame: CGRect)
     {
@@ -35,7 +37,7 @@ class BackgroundControl: UIControl
         
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
-        
+        NodesPM.addObserver(self, selector: "nodeDeleted:", notificationType: .NodeDeleted)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: NodeNotificationTypes.RelationshipCreationModeChanged)
     }
     
@@ -48,7 +50,7 @@ class BackgroundControl: UIControl
     {
         let targetColor = NodesPM.relationshipCreationMode ? UIColor.darkGrayColor() : NodeConstants.backgroundColor
         
-        UIView.animateWithDuration(0.25, animations: {self.backgroundColor = targetColor})
+        UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = targetColor})
     }
     
     func backgroundPress()
@@ -66,6 +68,30 @@ class BackgroundControl: UIControl
             {
                 NodesPM.createNewNode(CGPoint(x: gestureLocation.x - NodeConstants.WidgetWidthCGFloat / 2, y: gestureLocation.y - NodeConstants.WidgetHeightCGFloat / 2))
             }
+        }
+    }
+    
+    func nodeDeleted(value: AnyObject)
+    {
+        let deletedNode = value.object as NodeVO
+        
+        for (idx: Int, widget: AnyObject) in enumerate(subviews)
+        {
+            if widget is NodeWidget && (widget as NodeWidget).node == deletedNode
+            {
+                nodeWidgetPendingDelete = widget as? NodeWidget
+                
+                UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.nodeWidgetPendingDelete!.alpha = 0}, completion: deleteAnimationComplete)
+            }
+        }
+    }
+    
+    func deleteAnimationComplete(value: Bool)
+    {
+        if (value && nodeWidgetPendingDelete != nil)
+        {
+            nodeWidgetPendingDelete?.removeFromSuperview()
+            nodeWidgetPendingDelete = nil
         }
     }
     

@@ -45,10 +45,7 @@ struct NodesPM
         }
         didSet
         {
-            if let node = selectedNode
-            {
-                postNotification(.NodeSelected, payload: node)
-            }
+            postNotification(.NodeSelected, payload: selectedNode)
             
             relationshipCreationMode = false
         }
@@ -140,9 +137,29 @@ struct NodesPM
         }
     }
     
+    static func removeObserver(observer: AnyObject)
+    {
+        notificationCentre.removeObserver(observer)
+    }
+    
     static func addObserver(observer: AnyObject, selector: Selector, notificationType: NodeNotificationTypes)
     {
         notificationCentre.addObserver(observer, selector: selector, name: notificationType.toRaw(), object: nil)
+    }
+    
+    static func deleteSelectedNode()
+    {
+        for node in nodes
+        {
+            node.inputNodes = node.inputNodes.filter({!($0 == NodesPM.selectedNode!)})
+        }
+
+        nodes = nodes.filter({!($0 == NodesPM.selectedNode!)})
+      
+        postNotification(.NodeDeleted, payload: selectedNode)
+        postNotification(.RelationshipsChanged, payload: nil)
+        
+        selectedNode = nil
     }
     
     static func createNewNode(origin: CGPoint)
@@ -184,12 +201,15 @@ struct NodeConstants
     
     static let selectedNodeColor = UIColor.blueColor()
     static let unselectedNodeColor = UIColor(red: 0.5, green: 0.5, blue: 1, alpha: 0.9)
+    
+    static let animationDuration = 0.25
 }
 
 enum NodeNotificationTypes: String
 {
     case NodeSelected = "nodeSelected"
     case NodeCreated = "nodeCreated"
+    case NodeDeleted = "nodeDeleted"
     case DraggingChanged = "draggingChanged"
     case RelationshipCreationModeChanged = "relationshipCreationModeChanged"
     case RelationshipsChanged = "relationshipsChanged"

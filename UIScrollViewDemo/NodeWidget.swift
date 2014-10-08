@@ -8,12 +8,11 @@
 
 import UIKit
 
-class NodeWidget: UIControl
+class NodeWidget: UIControl, NilLiteralConvertible
 {
     var node: NodeVO!
-    let label: UILabel = UILabel(frame: CGRectZero)
     
-    let fadeAnimationDuration = 0.3
+    let label: UILabel = UILabel(frame: CGRectZero)
     
     required init(frame: CGRect, node: NodeVO)
     {
@@ -25,6 +24,11 @@ class NodeWidget: UIControl
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+    }
+    
+    deinit
+    {
+        NodesPM.removeObserver(self)
     }
     
     override func didMoveToSuperview()
@@ -57,16 +61,14 @@ class NodeWidget: UIControl
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
         
-        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1}, completion: fadeInComplete)
-       
-        
+        UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.alpha = 1}, completion: fadeInComplete)
     }
     
     func fadeInComplete(value: Bool)
     {
         if value
         {
-            frame.offset(dx: 0, dy: 0)
+            frame.offset(dx: 0, dy: 0);
             
             NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
         }
@@ -81,21 +83,21 @@ class NodeWidget: UIControl
             {
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
-                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
+                    UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
                     label.textColor = UIColor.blueColor()
                 }
                 else
                 {
-                    UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 0.5})
+                    UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.alpha = 0.5})
                     enabled = false
                 }
             }
             else
             {
-                UIView.animateWithDuration(fadeAnimationDuration, animations: {self.alpha = 1.0})
+                UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.alpha = 1.0})
                 enabled = true
             
-                setWidgetColors(NodesPM.selectedNode!)
+                setWidgetColors()
             }
         }
     }
@@ -151,20 +153,26 @@ class NodeWidget: UIControl
         }
     }
     
-    func nodeSelected(value : AnyObject)
+   
+    func nodeSelected(value: AnyObject?)
     {
-        let selectedNode = value.object as NodeVO
-       
-        setWidgetColors(selectedNode)
+        setWidgetColors()
     }
     
-    func setWidgetColors(selectedNode: NodeVO)
+    func setWidgetColors()
     {
-        let targetColor = selectedNode == node ? NodeConstants.selectedNodeColor : NodeConstants.unselectedNodeColor
+        var isSelected = !(NodesPM.selectedNode == nil)
         
-        UIView.animateWithDuration(fadeAnimationDuration, animations: {self.backgroundColor = targetColor})
+        if isSelected
+        {
+            isSelected = NodesPM.selectedNode! == node 
+        }
         
-        label.textColor = selectedNode == node ? UIColor.whiteColor() : UIColor.whiteColor()
+        let targetColor = isSelected ? NodeConstants.selectedNodeColor : NodeConstants.unselectedNodeColor
+        
+        UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = targetColor})
+        
+        label.textColor = isSelected ? UIColor.whiteColor() : UIColor.whiteColor()
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)
@@ -197,6 +205,11 @@ class NodeWidget: UIControl
             }
         }
 
+    }
+    
+    class func convertFromNilLiteral() -> Self
+    {
+        return self(frame: CGRectZero, node: NodeVO(name: "NULL_NODE", position: CGPointZero))
     }
   
 }

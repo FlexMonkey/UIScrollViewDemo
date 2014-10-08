@@ -30,10 +30,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         
         view.backgroundColor = UIColor.darkGrayColor()
         
-        NodesPM.addObserver(self, selector: "displayNodeSummary:", notificationType: .NodeSelected)
-        
         NodesPM.addObserver(self, selector: "draggingChangedHandler:", notificationType: .DraggingChanged)
-        
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: .RelationshipCreationModeChanged)
     }
 
@@ -69,10 +66,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.scrollEnabled = !isDragging
     }
     
-    func displayNodeSummary(value: AnyObject)
-    {
-        let selectedNode = value.object as NodeVO
-    }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView!
     {

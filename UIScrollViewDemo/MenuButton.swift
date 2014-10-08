@@ -13,21 +13,29 @@ class MenuButton: UIButton
 {
     var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
     
-    let deleteAlertAction = UIAlertAction(title: "Delete Selected Node", style: UIAlertActionStyle.Default, handler: nil)
+    let deleteAlertAction: UIAlertAction
     let makeNumericAction: UIAlertAction
     let makeOperatorAction: UIAlertAction
     
     override init(frame: CGRect)
     {
-        func changeNodeType (value : UIAlertAction!) -> Void
+        func changeNodeType(value : UIAlertAction!) -> Void
         {
             NodesPM.changeSelectedNodeType(NodeTypes.fromRaw(value.title)!)
         }
         
+        func deleteSelectedNode(value : UIAlertAction!) -> Void
+        {
+            NodesPM.deleteSelectedNode()
+        }
+        
         makeOperatorAction = UIAlertAction(title: NodeTypes.Operator.toRaw(), style: UIAlertActionStyle.Default, handler: changeNodeType)
         makeNumericAction = UIAlertAction(title: NodeTypes.Number.toRaw(), style: UIAlertActionStyle.Default, handler: changeNodeType)
+        deleteAlertAction = UIAlertAction(title: "Delete Selected Node", style: UIAlertActionStyle.Default, handler: deleteSelectedNode)
         
         deleteAlertAction.enabled = false
+        makeNumericAction.enabled = false
+        makeOperatorAction.enabled = false
         
         alertController.addAction(deleteAlertAction)
         alertController.addAction(makeNumericAction)
