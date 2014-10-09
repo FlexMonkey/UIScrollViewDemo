@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-class NodeVO
+class NodeVO: Equatable
 {
     let uuid = NSUUID.UUID().UUIDString
     

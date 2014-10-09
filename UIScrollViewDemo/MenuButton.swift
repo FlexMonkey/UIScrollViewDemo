@@ -57,7 +57,7 @@ class MenuButton: UIButton
         
         layer.borderWidth = 1
         layer.cornerRadius = 5
-        
+        layer.backgroundColor = UIColor.blueColor().CGColor
         layer.borderColor = UIColor.blueColor().CGColor
         
         addTarget(self, action: "menuButtonHandler", forControlEvents: UIControlEvents.TouchDown)
