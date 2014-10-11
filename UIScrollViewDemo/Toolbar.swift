@@ -18,6 +18,25 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     var numericButtons: [UIBarButtonItem]!
     var operatorButtons: [UIBarButtonItem]!
     
+    let numericDialViewController: NumericDialViewController
+    let popoverController: UIPopoverController
+    
+    override init(frame: CGRect)
+    {
+        numericDialViewController = NumericDialViewController()
+        popoverController =  UIPopoverController(contentViewController: numericDialViewController)
+        
+        super.init(frame: frame)
+        
+        numericDialViewController.modalPresentationStyle = .Popover
+        popoverController.delegate = self
+    }
+
+    required init(coder aDecoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMoveToSuperview()
     {
         barStyle = UIBarStyle.Black
@@ -97,32 +116,15 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     {
         if let rootController = UIApplication.sharedApplication().keyWindow.rootViewController?
         {
-            let numericDialViewController = NumericDialViewController()
-            numericDialViewController.modalPresentationStyle = .Popover
-
-            let popoverController =  UIPopoverController(contentViewController: numericDialViewController)
-            popoverController.delegate = self
-            
             popoverController.presentPopoverFromBarButtonItem(value, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-            
-            // enableItems(false)
+
+            enableItems(false)
         }
-    }
-    
-    func popoverControllerShouldDismissPopover(popoverController: UIPopoverController) -> Bool
-    {
-        println("popoverControllerDidDismissPopover")
-        
-        // enableItems(true)
-        
-        return false
     }
     
     func popoverControllerDidDismissPopover(popoverController: UIPopoverController)
     {
-        println("popoverControllerDidDismissPopover")
-        
-        // enableItems(true)
+        enableItems(true)
     }
     
     func enableItems(enable: Bool)
