@@ -15,6 +15,8 @@ struct NodesPM
     static var nodes = [NodeVO]()
     static let instance = NodesPM()
     
+    static let timerTarget = TimerTarget()
+    
     private static let notificationCentre = NSNotificationCenter.defaultCenter()
     
     static var selectedNode: NodeVO? = nil
@@ -108,16 +110,30 @@ struct NodesPM
         
         for candidateNode in nodes
         {
+            var timeInterval = 0.1
+            
             for inputNode in candidateNode.inputNodes
             {
                 if inputNode == node && candidateNode.nodeType == NodeTypes.Operator
                 {
-                    nodeUpdated(candidateNode)
+                    //nodeUpdated(candidateNode)
+                    
+                    var dictionary = NSMutableDictionary()
+                    dictionary.setValue(candidateNode, forKeyPath: "node")
+                    
+                    var timer = NSTimer(timeInterval: timeInterval, target: NodesPM.timerTarget, selector: "timerComplete:", userInfo: dictionary, repeats: false)
+                    
+                    timer.tolerance = 0.2
+                    timeInterval = timeInterval + 0.1
+                    
+                    timer.fire()
+                    
+                    // let timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: NodesPM.timerTarget, selector: "timerComplete:", userInfo: dictionary, repeats: false)
                 }
             }
         }
     }
-    
+ 
     static var isDragging: Bool = false
     {
         didSet
@@ -185,6 +201,18 @@ struct NodesPM
         let notification = NSNotification(name: notificationType.toRaw(), object: payload)
         
         notificationCentre.postNotification(notification)
+    }
+}
+
+class TimerTarget: NSObject
+{
+    func timerComplete(node: AnyObject)
+    {
+        let srcTimer: NSTimer = node as NSTimer
+        
+        let node: NodeVO = srcTimer.userInfo?.valueForKey("node") as NodeVO
+        
+        NodesPM.nodeUpdated(node)
     }
 }
 

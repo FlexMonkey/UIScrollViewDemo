@@ -16,6 +16,7 @@
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
 		3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */; };
 		BE21B56C19E8F69400AF716B /* NumericDialBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */; };
+		BE21B56F19E8FFB200AF716B /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21B56E19E8FFB200AF716B /* Async.swift */; };
 		BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */; };
 		BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DD019D7D0DB005979EA /* ViewController.swift */; };
 		BEA67DD419D7D0DB005979EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD219D7D0DB005979EA /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
 		3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCurvesLayer.swift; sourceTree = "<group>"; };
 		BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericDialBackground.swift; sourceTree = "<group>"; };
+		BE21B56E19E8FFB200AF716B /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		BEA67DC919D7D0DA005979EA /* UIScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA67DCD19D7D0DB005979EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +126,14 @@
 			name = toolbar;
 			sourceTree = "<group>";
 		};
+		BE21B56D19E8FF9900AF716B /* Async */ = {
+			isa = PBXGroup;
+			children = (
+				BE21B56E19E8FFB200AF716B /* Async.swift */,
+			);
+			name = Async;
+			sourceTree = "<group>";
+		};
 		BEA67DC019D7D0DA005979EA = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +155,7 @@
 		BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BE21B56D19E8FF9900AF716B /* Async */,
 				3E3CBA7D19E665A20006DEB4 /* numericDial */,
 				3E3CBA7A19E314A70006DEB4 /* menuButton */,
 				3EE831FD19DE82D4005FEB3C /* toolbar */,
@@ -309,6 +320,7 @@
 				BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */,
 				3E79123F19E7B4F100E3E938 /* NumericDial.swift in Sources */,
 				BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */,
+				BE21B56F19E8FFB200AF716B /* Async.swift in Sources */,
 				3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
