@@ -43,12 +43,14 @@ class NumericDialViewController: UIViewController
     
     func nodeChangeHandler()
     {
-        if let value = NodesPM.selectedNode!.value as Double?
+        if let selectedNode = NodesPM.selectedNode
         {
+            let value = selectedNode.value
+            
             ignoreDialChangeEvents = true
-            
+                
             numericDial.currentValue = value / 100
-            
+                
             ignoreDialChangeEvents = false
         }
     }
