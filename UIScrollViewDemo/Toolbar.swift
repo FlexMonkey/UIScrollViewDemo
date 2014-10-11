@@ -5,11 +5,12 @@
 //  Created by Simon Gladman on 03/10/2014.
 //  Copyright (c) 2014 Simon Gladman. All rights reserved.
 //
+// Thanks to http://makeapppie.com/2014/08/30/the-swift-swift-tutorials-adding-modal-views-and-popovers/
 
 import Foundation
 import UIKit
 
-class Toolbar: UIToolbar
+class Toolbar: UIToolbar, UIPopoverControllerDelegate
 {
     var numberButton: UIBarButtonItem!
     var operatorButton: UIBarButtonItem!
@@ -92,6 +93,50 @@ class Toolbar: UIToolbar
         NodesPM.changeSelectedNodeValue(0.0)
     }
     
+    func showDial(value: UIBarButtonItem)
+    {
+        if let rootController = UIApplication.sharedApplication().keyWindow.rootViewController?
+        {
+            let numericDialViewController = NumericDialViewController()
+            numericDialViewController.modalPresentationStyle = .Popover
+
+            let popoverController =  UIPopoverController(contentViewController: numericDialViewController)
+            popoverController.delegate = self
+            
+            popoverController.presentPopoverFromBarButtonItem(value, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            
+            // enableItems(false)
+        }
+    }
+    
+    func popoverControllerShouldDismissPopover(popoverController: UIPopoverController) -> Bool
+    {
+        println("popoverControllerDidDismissPopover")
+        
+        // enableItems(true)
+        
+        return false
+    }
+    
+    func popoverControllerDidDismissPopover(popoverController: UIPopoverController)
+    {
+        println("popoverControllerDidDismissPopover")
+        
+        // enableItems(true)
+    }
+    
+    func enableItems(enable: Bool)
+    {
+        // userInteractionEnabled doesn't work when set as pop up opened...
+        if let barButtonItems = items
+        {
+            for barButtonItem:AnyObject in barButtonItems
+            {
+                (barButtonItem as UIBarButtonItem).enabled = enable; println(enable)
+            }
+        }
+    }
+    
     func populateToolbar(#buttons: [UIBarButtonItem], selectedButton: UIBarButtonItem)
     {
         numberButton.tintColor = UIColor.blueColor()
@@ -114,6 +159,16 @@ class Toolbar: UIToolbar
     private func createButtons()
     {
         numericButtons = [UIBarButtonItem]()
+        
+        let numericButtonShowDial = UIBarButtonItem(title: "Dial", style: UIBarButtonItemStyle.Plain, target: self, action: "showDial:")
+        numericButtonShowDial.tintColor = UIColor.yellowColor()
+        
+        numericButtons.append(numericButtonShowDial)
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        spacer.width = 15
+        numericButtons.append(spacer)
+        
         for i in 0...9
         {
             let numericButton = Toolbar.createBorderedToolbarButton("\(i)", target: self, action: "numericButtonHandler:")
@@ -121,8 +176,7 @@ class Toolbar: UIToolbar
             numericButtons.append(numericButton)
         }
         
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        spacer.width = 15
+    
         numericButtons.append(spacer)
         
         let numericButtonClear = Toolbar.createBorderedToolbarButton("AC", target: self, action: "clearValue")

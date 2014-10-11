@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NodeWidget: UIControl, NilLiteralConvertible
+class NodeWidget: UIControl
 {
     var node: NodeVO!
     
@@ -28,6 +28,8 @@ class NodeWidget: UIControl, NilLiteralConvertible
     
     deinit
     {
+        println("DEINIT!!!")
+        
         NodesPM.removeObserver(self)
     }
     
@@ -204,14 +206,8 @@ class NodeWidget: UIControl, NilLiteralConvertible
                 NodesPM.isDragging = false
             }
         }
-
     }
     
-    class func convertFromNilLiteral() -> Self
-    {
-        return self(frame: CGRectZero, node: NodeVO(name: "NULL_NODE", position: CGPointZero))
-    }
-  
 }
 
 

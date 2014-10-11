@@ -26,6 +26,7 @@ class NumericDial: UIControl
         
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.blueColor()
+        label.font = UIFont.systemFontOfSize(24)
         self.addSubview(label)
         
         titleLabel.textAlignment = NSTextAlignment.Center

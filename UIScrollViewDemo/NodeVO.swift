@@ -30,7 +30,7 @@ class NodeVO: Equatable
         self.nodeOperator = .Null
     }
     
-    func updateValue()
+    final func updateValue()
     {
         if inputNodes.count >= 2
         {
