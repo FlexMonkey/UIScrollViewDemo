@@ -14,9 +14,7 @@ struct NodesPM
 {
     static var nodes = [NodeVO]()
     static let instance = NodesPM()
-    
-    static let timerTarget = TimerTarget()
-    
+
     private static let notificationCentre = NSNotificationCenter.defaultCenter()
     
     static var selectedNode: NodeVO? = nil
@@ -38,7 +36,7 @@ struct NodesPM
                             targetNode.inputNodes[preferredInputIndex] = inputNode
                         }
         
-                        nodeUpdated(targetNode)
+                        nodeUpdate(targetNode)
                         postNotification(.RelationshipsChanged, payload: nil)
                     }
                 }
@@ -61,7 +59,7 @@ struct NodesPM
         {
             node.nodeOperator = newOperator
     
-            nodeUpdated(node)
+            nodeUpdate(node)
         }
     }
     
@@ -86,8 +84,9 @@ struct NodesPM
                     postNotification(.RelationshipsChanged, payload: nil)
                 }
             }
-            
-            nodeUpdated(node)
+      
+            postNotification(.NodeUpdated, payload: node)
+            nodeUpdate(node)
         }
     }
     
@@ -96,40 +95,44 @@ struct NodesPM
         if let node = selectedNode
         {
             node.value = newValue
-            
-            nodeUpdated(node)
+  
+            nodeUpdate(node)
         }
     }
     
-    static func nodeUpdated(node: NodeVO)
+    static func nodeUpdate(node: NodeVO, isRecursive: Bool = false)
     {
+        var updatedNodes = [NodeVO]()
+      
         node.updateValue()
-        postNotification(.NodeUpdated, payload: node)
-        
+
         // find all operator nodes that are descendants of this node and update their value...
         
-        for candidateNode in nodes
+        for candidateNode in nodes.filter({!($0 == NodesPM.selectedNode!)})
         {
             var timeInterval = 0.1
             
-            for inputNode in candidateNode.inputNodes
+            for inputNode in candidateNode.inputNodes.filter({($0 == node)})
             {
                 if inputNode == node && candidateNode.nodeType == NodeTypes.Operator
                 {
-                    //nodeUpdated(candidateNode)
+                    if updatedNodes.filter({($0 == candidateNode)}).count == 0
+                    {
+                        updatedNodes.append(candidateNode)
+                    }
                     
-                    var dictionary = NSMutableDictionary()
-                    dictionary.setValue(candidateNode, forKeyPath: "node")
-                    
-                    var timer = NSTimer(timeInterval: timeInterval, target: NodesPM.timerTarget, selector: "timerComplete:", userInfo: dictionary, repeats: false)
-                    
-                    timer.tolerance = 0.2
-                    timeInterval = timeInterval + 0.1
-                    
-                    timer.fire()
-                    
-                    // let timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: NodesPM.timerTarget, selector: "timerComplete:", userInfo: dictionary, repeats: false)
+                    nodeUpdate(candidateNode, isRecursive: true)
                 }
+            }
+        }
+        
+        if !isRecursive
+        {
+            // post notifications of all updated nodes
+            
+            for updatedNode in updatedNodes
+            {
+                postNotification(.NodeUpdated, payload: updatedNode)
             }
         }
     }
@@ -204,17 +207,31 @@ struct NodesPM
     }
 }
 
+/*
 class TimerTarget: NSObject
 {
+    /*
+    var dictionary = NSMutableDictionary()
+    dictionary.setValue(candidateNode, forKeyPath: "node")
+    
+    var timer = NSTimer(timeInterval: timeInterval, target: NodesPM.timerTarget, selector: "timerComplete:", userInfo: dictionary, repeats: false)
+    
+    timer.tolerance = 0.2
+    timeInterval = timeInterval + 0.1
+    
+    timer.fire()
+    */
+    
     func timerComplete(node: AnyObject)
     {
         let srcTimer: NSTimer = node as NSTimer
         
         let node: NodeVO = srcTimer.userInfo?.valueForKey("node") as NodeVO
         
-        NodesPM.nodeUpdated(node)
+        NodesPM.nodeUpdate(node)
     }
 }
+*/
 
 struct NodeConstants
 {

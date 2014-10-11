@@ -13,8 +13,6 @@ class NumericDialBackground: CAShapeLayer
     
     final func drawBackgroundCurve()
     {
-        println("drawBackgroundCurve")
-        
         strokeColor = UIColor.lightGrayColor().CGColor
         lineWidth = 40
         fillColor = nil
