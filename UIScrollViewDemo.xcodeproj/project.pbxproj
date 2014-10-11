@@ -15,6 +15,7 @@
 		3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE831FE19DE82E5005FEB3C /* Toolbar.swift */; };
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
 		3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */; };
+		BE21B56C19E8F69400AF716B /* NumericDialBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */; };
 		BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */; };
 		BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA67DD019D7D0DB005979EA /* ViewController.swift */; };
 		BEA67DD419D7D0DB005979EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA67DD219D7D0DB005979EA /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		3EE831FE19DE82E5005FEB3C /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
 		3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCurvesLayer.swift; sourceTree = "<group>"; };
+		BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericDialBackground.swift; sourceTree = "<group>"; };
 		BEA67DC919D7D0DA005979EA /* UIScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA67DCD19D7D0DB005979EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA67DCE19D7D0DB005979EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				3E79123D19E7B4F100E3E938 /* NumericDial.swift */,
 				3E79123E19E7B4F100E3E938 /* NumericDialTrack.swift */,
 				3E3CBA7E19E665B80006DEB4 /* NumericDialViewController.swift */,
+				BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */,
 			);
 			name = numericDial;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				3E3CBA7C19E314B50006DEB4 /* MenuButton.swift in Sources */,
 				3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */,
 				3E3CBA7F19E665B80006DEB4 /* NumericDialViewController.swift in Sources */,
+				BE21B56C19E8F69400AF716B /* NumericDialBackground.swift in Sources */,
 				BEA67DD119D7D0DB005979EA /* ViewController.swift in Sources */,
 				BEA67DF419D7E183005979EA /* NodeWidget.swift in Sources */,
 				3E79124019E7B4F100E3E938 /* NumericDialTrack.swift in Sources */,

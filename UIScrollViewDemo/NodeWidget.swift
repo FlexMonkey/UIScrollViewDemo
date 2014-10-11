@@ -28,8 +28,6 @@ class NodeWidget: UIControl
     
     deinit
     {
-        println("DEINIT!!!")
-        
         NodesPM.removeObserver(self)
     }
     

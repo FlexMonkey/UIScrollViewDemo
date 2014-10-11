@@ -134,7 +134,7 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
         {
             for barButtonItem:AnyObject in barButtonItems
             {
-                (barButtonItem as UIBarButtonItem).enabled = enable; println(enable)
+                (barButtonItem as UIBarButtonItem).enabled = enable;
             }
         }
     }

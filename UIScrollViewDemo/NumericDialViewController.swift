@@ -13,7 +13,8 @@ import CoreGraphics
 class NumericDialViewController: UIViewController
 {
     let numericDial = NumericDial(frame: CGRect(x: 5, y: 5, width: 300, height: 300))
-    
+    var ignoreDialChangeEvents: Bool = false
+
     override func viewDidLoad()
     {
         preferredContentSize = CGSize(width: 310, height: 275)
@@ -28,6 +29,9 @@ class NumericDialViewController: UIViewController
         numericDial.labelFunction = labelFunction
         
         numericDial.addTarget(self, action: "dialChangeHandler:", forControlEvents: .ValueChanged)
+        
+        NodesPM.addObserver(self, selector: "nodeChangeHandler", notificationType: NodeNotificationTypes.NodeSelected)
+        NodesPM.addObserver(self, selector: "nodeChangeHandler", notificationType: NodeNotificationTypes.NodeUpdated)
     }
     
     func labelFunction(value: Double) -> String
@@ -37,10 +41,25 @@ class NumericDialViewController: UIViewController
         return NSString(format: "%.0f", dialValue)
     }
     
+    func nodeChangeHandler()
+    {
+        if let value = NodesPM.selectedNode!.value as Double?
+        {
+            ignoreDialChangeEvents = true
+            
+            numericDial.currentValue = value / 100
+            
+            ignoreDialChangeEvents = false
+        }
+    }
+    
     func dialChangeHandler(numericDial: NumericDial)
     {
         let dialValue = Double(Int(numericDial.currentValue * 100))
         
-        NodesPM.changeSelectedNodeValue(dialValue)
+        if !ignoreDialChangeEvents
+        {
+            NodesPM.changeSelectedNodeValue(dialValue)
+        }
     }
 }

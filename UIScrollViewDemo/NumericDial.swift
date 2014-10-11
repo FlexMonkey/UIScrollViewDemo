@@ -13,12 +13,16 @@ class NumericDial: UIControl
     let minimumValue = 0.0
     let maximumValue = 1.0
     let trackLayer = NumericDialTrack()
+    let background = NumericDialBackground()
     let label = UILabel();
     let titleLabel = UILabel()
     
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        
+        background.contentsScale = UIScreen.mainScreen().scale
+        layer.addSublayer(background)
         
         trackLayer.numericDial = self
         trackLayer.contentsScale = UIScreen.mainScreen().scale
@@ -81,14 +85,9 @@ class NumericDial: UIControl
         {
             currentValue = currentValue < 0 ? 0 : currentValue
             currentValue = currentValue > 1 ? 1 : currentValue
-            
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            
+        
             sendActionsForControlEvents(.ValueChanged)
             drawTrack()
-            
-            CATransaction.commit()
         }
     }
 
@@ -114,13 +113,16 @@ class NumericDial: UIControl
         label.text = labelFunction(currentValue)
         
         trackLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: 0.0)
-        trackLayer.setNeedsDisplay()
+        trackLayer.drawValueCurve()
     }
     
     override var frame: CGRect
     {
         didSet
         {
+            background.frame = bounds.rectByInsetting(dx: 0.0, dy: 0.0)
+            background.drawBackgroundCurve()
+            
             titleLabel.frame = CGRect(x: 0, y: frame.height - 23, width: frame.width, height: 20)
             
             drawTrack()

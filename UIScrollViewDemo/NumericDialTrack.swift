@@ -12,14 +12,26 @@ class NumericDialTrack: CAShapeLayer
 {
     weak var numericDial: NumericDial?
 
-    override func drawInContext(ctx: CGContext!)
+    final func drawValueCurve()
     {
         if let value = numericDial?.currentValue
         {
+            strokeColor = UIColor.blueColor().CGColor
+            lineWidth = 30
+            fillColor = nil
+            self.lineCap = "round"
+            
             let angle : CGFloat = -135 + 270 * CGFloat(value)
             let centre = min(frame.width, frame.height) / 2.0
             let radius = centre - 20
-        
+            
+            let valuePath = UIBezierPath(arcCenter: CGPoint(x: centre, y: centre), radius: radius, startAngle: 135 * CGFloat(M_PI)/180, endAngle: (angle - 90) * CGFloat(M_PI)/180, clockwise: true)
+            
+            
+       
+            path = valuePath.CGPath
+            
+            /*
             let trackPath = UIBezierPath(arcCenter: CGPoint(x: centre, y: centre), radius: radius, startAngle: 135 * CGFloat(M_PI)/180, endAngle: 45 * CGFloat(M_PI)/180, clockwise: true)
 
             // outer path
@@ -46,7 +58,7 @@ class NumericDialTrack: CAShapeLayer
             CGContextStrokePath(ctx)
             
             CGContextSetShadowWithColor(ctx, CGSize(width: 0.0, height: 0.0), 5.0, UIColor.grayColor().CGColor)
-            
+            */
         }
     }
 }
