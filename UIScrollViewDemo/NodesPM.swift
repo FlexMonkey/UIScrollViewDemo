@@ -59,6 +59,7 @@ struct NodesPM
         {
             node.nodeOperator = newOperator
     
+            postNotification(.NodeUpdated, payload: node)
             nodeUpdate(node)
         }
     }
@@ -96,6 +97,7 @@ struct NodesPM
         {
             node.value = newValue
   
+            postNotification(.NodeUpdated, payload: node)
             nodeUpdate(node)
         }
     }
