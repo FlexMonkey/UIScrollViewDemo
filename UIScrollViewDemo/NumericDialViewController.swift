@@ -16,7 +16,7 @@ class NumericDialViewController: UIViewController
     var ignoreDialChangeEvents: Bool = false
 
     override func viewDidLoad()
-    {
+    {        
         preferredContentSize = CGSize(width: 310, height: 275)
         
         view.addSubview(numericDial)

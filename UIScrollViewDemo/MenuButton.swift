@@ -60,8 +60,6 @@ class MenuButton: UIButton
         layer.backgroundColor = UIColor.blueColor().CGColor
         layer.borderColor = UIColor.blueColor().CGColor
         
-        addTarget(self, action: "menuButtonHandler", forControlEvents: UIControlEvents.TouchDown)
-        
         NodesPM.addObserver(self, selector: "selectedNodeChanged:", notificationType: NodeNotificationTypes.NodeSelected)
         NodesPM.addObserver(self, selector: "selectedNodeChanged:", notificationType: NodeNotificationTypes.NodeUpdated)
     }
@@ -82,7 +80,7 @@ class MenuButton: UIButton
         }
     }
     
-    func menuButtonHandler()
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
         if let viewController = UIApplication.sharedApplication().keyWindow.rootViewController
         {
