@@ -60,7 +60,7 @@ enum NodeTypes: String
     case Operator = "Operator"
 }
 
-enum NodeOperators: String // needs to be a NodeOperatorVO with number of inputs (e.g. sin(x) = 1 and divide(x,y) = 2
+enum NodeOperators: String
 {
     case Null = ""
     case Add = "+"
