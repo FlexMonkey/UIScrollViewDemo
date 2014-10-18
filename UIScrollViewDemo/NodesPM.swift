@@ -102,9 +102,14 @@ struct NodesPM
         }
     }
     
+    static var updatedNodes: [NodeVO]!
+    
     static func nodeUpdate(node: NodeVO, isRecursive: Bool = false)
     {
-        var updatedNodes = [NodeVO]()
+        if !isRecursive
+        {
+            updatedNodes = [NodeVO]()
+        }
       
         node.updateValue()
 

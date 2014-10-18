@@ -46,7 +46,7 @@ class NodeWidget: UIControl
         
         label.font = UIFont.boldSystemFontOfSize(20)
         
-        populateLabel()
+        populateLabels()
         addSubview(label)
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
@@ -55,9 +55,9 @@ class NodeWidget: UIControl
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
         addGestureRecognizer(longPress)
      
-        NodesPM.addObserver(self, selector: "populateLabel", notificationType: .NodeUpdated)
+        NodesPM.addObserver(self, selector: "nodeUpdated:", notificationType: .NodeUpdated)
         NodesPM.addObserver(self, selector: "nodeSelected:", notificationType: .NodeSelected)
-        NodesPM.addObserver(self, selector: "populateLabel", notificationType: .NodeCreated)
+        NodesPM.addObserver(self, selector: "nodeUpdated:", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged:", notificationType: .RelationshipCreationModeChanged)
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
         
@@ -131,10 +131,20 @@ class NodeWidget: UIControl
     
     func relationshipsChanged(value: AnyObject)
     {
-        populateLabel()
+        populateLabels()
     }
 
-    func populateLabel()
+    func nodeUpdated(value: AnyObject)
+    {
+        let updatedNode = value.object as NodeVO
+        
+        if updatedNode == node
+        {
+            populateLabels()
+        }
+    }
+    
+    func populateLabels()
     {
         if node.nodeType == NodeTypes.Operator
         {
@@ -152,7 +162,6 @@ class NodeWidget: UIControl
             label.text = "\(valueAsString)"
         }
     }
-    
    
     func nodeSelected(value: AnyObject?)
     {
