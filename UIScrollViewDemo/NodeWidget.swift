@@ -153,7 +153,7 @@ class NodeWidget: UIControl
             let lhs = node.inputNodes.count > 0 ? NSString(format: "%.2f", node.inputNodes[0].value) : "??"
             let rhs = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.inputNodes[1].value) : "??"
             
-            label.text = "\(lhs) \(node.nodeOperator.toRaw()) \(rhs)\n\n\(valueAsString)"
+            label.text = "\(lhs) \(node.nodeOperator.rawValue) \(rhs)\n\n\(valueAsString)"
         }
         else
         {

@@ -83,7 +83,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
 
     override func supportedInterfaceOrientations() -> Int
     {
-        return Int(UIInterfaceOrientationMask.Landscape.toRaw())
+        return Int(UIInterfaceOrientationMask.Landscape.rawValue)
     }
 }
 

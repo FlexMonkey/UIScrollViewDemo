@@ -21,7 +21,7 @@ class MenuButton: UIButton
     {
         func changeNodeType(value : UIAlertAction!) -> Void
         {
-            NodesPM.changeSelectedNodeType(NodeTypes.fromRaw(value.title)!)
+            NodesPM.changeSelectedNodeType(NodeTypes(rawValue: value.title)!)
         }
         
         func deleteSelectedNode(value : UIAlertAction!) -> Void
@@ -29,8 +29,8 @@ class MenuButton: UIButton
             NodesPM.deleteSelectedNode()
         }
         
-        makeOperatorAction = UIAlertAction(title: NodeTypes.Operator.toRaw(), style: UIAlertActionStyle.Default, handler: changeNodeType)
-        makeNumericAction = UIAlertAction(title: NodeTypes.Number.toRaw(), style: UIAlertActionStyle.Default, handler: changeNodeType)
+        makeOperatorAction = UIAlertAction(title: NodeTypes.Operator.rawValue, style: UIAlertActionStyle.Default, handler: changeNodeType)
+        makeNumericAction = UIAlertAction(title: NodeTypes.Number.rawValue, style: UIAlertActionStyle.Default, handler: changeNodeType)
         deleteAlertAction = UIAlertAction(title: "Delete Selected Node", style: UIAlertActionStyle.Default, handler: deleteSelectedNode)
         
         deleteAlertAction.enabled = false
@@ -82,7 +82,7 @@ class MenuButton: UIButton
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
-        if let viewController = UIApplication.sharedApplication().keyWindow.rootViewController
+        if let viewController = UIApplication.sharedApplication().keyWindow!.rootViewController
         {
             if let popoverPresentationController = alertController.popoverPresentationController
             {

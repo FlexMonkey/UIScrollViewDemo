@@ -41,8 +41,8 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     {
         barStyle = UIBarStyle.Black
     
-        numberButton = UIBarButtonItem(title: "\(NodeTypes.Number.toRaw())", style: UIBarButtonItemStyle.Plain, target: self, action: "typeButtonHandler:")
-        operatorButton = UIBarButtonItem(title: "\(NodeTypes.Operator.toRaw())", style: UIBarButtonItemStyle.Plain, target: self, action: "typeButtonHandler:")
+        numberButton = UIBarButtonItem(title: "\(NodeTypes.Number.rawValue)", style: UIBarButtonItemStyle.Plain, target: self, action: "typeButtonHandler:")
+        operatorButton = UIBarButtonItem(title: "\(NodeTypes.Operator.rawValue)", style: UIBarButtonItemStyle.Plain, target: self, action: "typeButtonHandler:")
         
         createButtons()
         
@@ -82,7 +82,7 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     {
         if let buttonLabel = value.title
         {
-            NodesPM.changeSelectedNodeType(NodeTypes.fromRaw(buttonLabel)!)
+            NodesPM.changeSelectedNodeType(NodeTypes(rawValue: buttonLabel)!)
         }
     }
     
@@ -90,7 +90,7 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     {
         if let buttonLabel = value.titleLabel?.text
         {
-            NodesPM.changeSelectedNodeOperator(NodeOperators.fromRaw(buttonLabel)!)
+            NodesPM.changeSelectedNodeOperator(NodeOperators(rawValue: buttonLabel)!)
         }
     }
     
@@ -114,7 +114,7 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
     
     func showDial(value: UIBarButtonItem)
     {
-        if let rootController = UIApplication.sharedApplication().keyWindow.rootViewController?
+        if let rootController = UIApplication.sharedApplication().keyWindow!.rootViewController?
         {
             popoverController.presentPopoverFromBarButtonItem(value, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
 
@@ -184,10 +184,10 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
         let numericButtonClear = Toolbar.createBorderedToolbarButton("AC", target: self, action: "clearValue")
         numericButtons.append(numericButtonClear)
         
-        let operatorButtonAdd = Toolbar.createBorderedToolbarButton(NodeOperators.Add.toRaw(), target: self, action: "operatorButtonHandler:")
-        let operatorButtonSubtract = Toolbar.createBorderedToolbarButton(NodeOperators.Subtract.toRaw(), target: self, action: "operatorButtonHandler:")
-        let operatorButtonMultiply = Toolbar.createBorderedToolbarButton(NodeOperators.Multiply.toRaw(), target: self, action: "operatorButtonHandler:")
-        let operatorButtonDivide = Toolbar.createBorderedToolbarButton(NodeOperators.Divide.toRaw(), target: self, action: "operatorButtonHandler:")
+        let operatorButtonAdd = Toolbar.createBorderedToolbarButton(NodeOperators.Add.rawValue, target: self, action: "operatorButtonHandler:")
+        let operatorButtonSubtract = Toolbar.createBorderedToolbarButton(NodeOperators.Subtract.rawValue, target: self, action: "operatorButtonHandler:")
+        let operatorButtonMultiply = Toolbar.createBorderedToolbarButton(NodeOperators.Multiply.rawValue, target: self, action: "operatorButtonHandler:")
+        let operatorButtonDivide = Toolbar.createBorderedToolbarButton(NodeOperators.Divide.rawValue, target: self, action: "operatorButtonHandler:")
         operatorButtons = [operatorButtonAdd, operatorButtonSubtract, operatorButtonMultiply, operatorButtonDivide]
     }
     

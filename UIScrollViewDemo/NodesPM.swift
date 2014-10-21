@@ -170,7 +170,7 @@ struct NodesPM
     
     static func addObserver(observer: AnyObject, selector: Selector, notificationType: NodeNotificationTypes)
     {
-        notificationCentre.addObserver(observer, selector: selector, name: notificationType.toRaw(), object: nil)
+        notificationCentre.addObserver(observer, selector: selector, name: notificationType.rawValue, object: nil)
     }
     
     static func deleteSelectedNode()
@@ -208,7 +208,7 @@ struct NodesPM
     
     private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject?)
     {
-        let notification = NSNotification(name: notificationType.toRaw(), object: payload)
+        let notification = NSNotification(name: notificationType.rawValue, object: payload)
         
         notificationCentre.postNotification(notification)
     }

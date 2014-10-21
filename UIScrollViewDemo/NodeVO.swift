@@ -11,7 +11,7 @@ import CoreGraphics
 
 class NodeVO: Equatable
 {
-    let uuid = NSUUID.UUID().UUIDString
+    let uuid = NSUUID().UUIDString
     
     var name: String
     var position: CGPoint
@@ -52,7 +52,9 @@ class NodeVO: Equatable
             }
         }
     }
+  
 }
+
 
 enum NodeTypes: String
 {
