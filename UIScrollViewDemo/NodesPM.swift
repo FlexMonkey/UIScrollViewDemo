@@ -108,10 +108,10 @@ struct NodesPM
     {
         if !isRecursive
         {
-            updatedNodes = [NodeVO]()
+            updatedNodes = [node]
         }
       
-        node.updateValue()
+        node.updateValue();
 
         // find all operator nodes that are descendants of this node and update their value...
         
