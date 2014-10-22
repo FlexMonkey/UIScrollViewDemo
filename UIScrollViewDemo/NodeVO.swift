@@ -49,10 +49,33 @@ class NodeVO: Equatable
                     value = valueOne.value * valueTwo.value
                 case .Divide:
                     value = valueOne.value / valueTwo.value
+            case .Squareroot:
+                    value = sqrt(valueOne.value)
             }
         }
     }
-  
+    
+    final func getInputCount() -> Int
+    {
+        var returnValue: Int = 0
+        
+        if nodeType == NodeTypes.Operator
+        {
+            switch nodeOperator
+            {
+                case .Null:
+                    returnValue = 0
+                case  .Add:
+                    returnValue = 5
+                case .Subtract, .Multiply, .Divide:
+                    returnValue = 2
+                case .Squareroot:
+                    returnValue = 1
+            }
+        }
+    
+        return returnValue
+    }
 }
 
 
@@ -69,6 +92,7 @@ enum NodeOperators: String
     case Subtract = "-"
     case Divide = "÷"
     case Multiply = "×"
+    case Squareroot = "sqrt"
 }
 
 func == (left: NodeVO, right: NodeVO) -> Bool

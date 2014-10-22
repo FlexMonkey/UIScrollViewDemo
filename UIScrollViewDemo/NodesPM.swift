@@ -60,6 +60,7 @@ struct NodesPM
             node.nodeOperator = newOperator
     
             postNotification(.NodeUpdated, payload: node)
+            postNotification(.RelationshipsChanged, payload: nil)
             nodeUpdate(node)
         }
     }
@@ -81,12 +82,11 @@ struct NodesPM
                 if node.inputNodes.count > 0
                 {
                     node.inputNodes = [NodeVO]()
-                
-                    postNotification(.RelationshipsChanged, payload: nil)
                 }
             }
       
             postNotification(.NodeUpdated, payload: node)
+            postNotification(.RelationshipsChanged, payload: nil)
             nodeUpdate(node)
         }
     }

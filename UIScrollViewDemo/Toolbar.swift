@@ -188,7 +188,8 @@ class Toolbar: UIToolbar, UIPopoverControllerDelegate
         let operatorButtonSubtract = Toolbar.createBorderedToolbarButton(NodeOperators.Subtract.rawValue, target: self, action: "operatorButtonHandler:")
         let operatorButtonMultiply = Toolbar.createBorderedToolbarButton(NodeOperators.Multiply.rawValue, target: self, action: "operatorButtonHandler:")
         let operatorButtonDivide = Toolbar.createBorderedToolbarButton(NodeOperators.Divide.rawValue, target: self, action: "operatorButtonHandler:")
-        operatorButtons = [operatorButtonAdd, operatorButtonSubtract, operatorButtonMultiply, operatorButtonDivide]
+        let operatorButtonSquareRoot = Toolbar.createBorderedToolbarButton(NodeOperators.Squareroot.rawValue, target: self, action: "operatorButtonHandler:")
+        operatorButtons = [operatorButtonAdd, operatorButtonSubtract, operatorButtonMultiply, operatorButtonDivide, operatorButtonSquareRoot]
     }
     
     class func createBorderedToolbarButton(title: String, target: AnyObject?, action: Selector) -> UIBarButtonItem
