@@ -45,18 +45,21 @@ class RelationshipCurvesLayer: CAShapeLayer
                 drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: targetPosition, clockwise: false)
             }
             
-            for (idx : Int, inputNode: NodeVO) in enumerate(targetNode.inputNodes)
+            for (idx : Int, candidateNode: NodeVO?) in enumerate(targetNode.inputNodes)
             {
-                let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
-                let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.inputNodes.count + 1)) * (idx + 1))
-                let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
-                let controlPointOne = CGPoint(x: targetX, y: targetNode.position.y - controlPointVerticalOffset)
-                let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)
+                if let inputNode = candidateNode
+                {
+                    let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
+                    let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.inputNodes.count + 1)) * (idx + 1))
+                    let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
+                    let controlPointOne = CGPoint(x: targetX, y: targetNode.position.y - controlPointVerticalOffset)
+                    let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)
 
-                drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: inputPosition, clockwise: true)
-                
-                relationshipCurvesPath.moveToPoint(targetPosition)
-                relationshipCurvesPath.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
+                    drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: inputPosition, clockwise: true)
+                    
+                    relationshipCurvesPath.moveToPoint(targetPosition)
+                    relationshipCurvesPath.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
+                }
             }
         }
         

@@ -12,10 +12,11 @@ import CoreGraphics
 class NodeVO: Equatable
 {
     let uuid = NSUUID().UUIDString
+    let maxInputNodeCount: Int = 8
     
     var name: String
     var position: CGPoint
-    var inputNodes = [NodeVO]()
+    var inputNodes: [NodeVO?]
     
     var nodeType: NodeTypes
     var nodeOperator: NodeOperators
@@ -28,29 +29,31 @@ class NodeVO: Equatable
         
         self.nodeType = .Number
         self.nodeOperator = .Null
+        
+        inputNodes = [NodeVO?](count: maxInputNodeCount, repeatedValue: nil)
     }
     
     final func updateValue()
     {
-        if inputNodes.count >= 2
+        if let inputNodeOne = inputNodes[0]
         {
-            let valueOne = inputNodes[0]
-            let valueTwo = inputNodes[1]
-            
-            switch nodeOperator
+            if let inputNodeTwo = inputNodes[1]
             {
-                case .Null:
-                    value = 0
-                case  .Add:
-                    value = valueOne.value + valueTwo.value
-                case .Subtract:
-                    value = valueOne.value - valueTwo.value
-                case .Multiply:
-                    value = valueOne.value * valueTwo.value
-                case .Divide:
-                    value = valueOne.value / valueTwo.value
-            case .Squareroot:
-                    value = sqrt(valueOne.value)
+                switch nodeOperator
+                {
+                    case .Null:
+                        value = 0
+                    case  .Add:
+                        value = inputNodeOne.value + inputNodeTwo.value
+                    case .Subtract:
+                        value = inputNodeOne.value - inputNodeTwo.value
+                    case .Multiply:
+                        value = inputNodeOne.value * inputNodeTwo.value
+                    case .Divide:
+                        value = inputNodeOne.value / inputNodeTwo.value
+                    case .Squareroot:
+                        value = sqrt(inputNodeOne.value)
+                }
             }
         }
     }

@@ -148,10 +148,10 @@ class NodeWidget: UIControl
     {
         if node.nodeType == NodeTypes.Operator
         {
-            let valueAsString = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.value) : "??"
+            let valueAsString = node.getInputCount() > 1 ? NSString(format: "%.2f", node.value) : "??"
             
-            let lhs = node.inputNodes.count > 0 ? NSString(format: "%.2f", node.inputNodes[0].value) : "??"
-            let rhs = node.inputNodes.count > 1 ? NSString(format: "%.2f", node.inputNodes[1].value) : "??"
+            let lhs = node.inputNodes[0] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[0]!.value)
+            let rhs = node.inputNodes[1] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[1]!.value)
             
             label.text = "\(lhs) \(node.nodeOperator.rawValue) \(rhs)\n\n\(valueAsString)"
         }
