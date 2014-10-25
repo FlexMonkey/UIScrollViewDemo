@@ -50,7 +50,7 @@ class RelationshipCurvesLayer: CAShapeLayer
                 if let inputNode = candidateNode
                 {
                     let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
-                    let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.inputNodes.count + 1)) * (idx + 1))
+                    let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.getInputCount() + 1)) * (idx + 1))
                     let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
                     let controlPointOne = CGPoint(x: targetX, y: targetNode.position.y - controlPointVerticalOffset)
                     let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)

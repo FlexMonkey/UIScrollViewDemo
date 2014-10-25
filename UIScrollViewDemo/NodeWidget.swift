@@ -109,6 +109,10 @@ class NodeWidget: UIControl
             let touch = (touches.allObjects[0] as UITouch).locationInView(self)
             NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
             
+            // if input count = 1, preferredInputIndex = 1
+            // if any inputs are nil, preferredInputIndex = index of first nil
+            // otherwise pop up action sheet to allow user to select input...
+            
             NodesPM.selectedNode = node
         }
         else if !NodesPM.relationshipCreationMode

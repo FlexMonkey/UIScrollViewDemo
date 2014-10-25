@@ -59,6 +59,12 @@ struct NodesPM
         {
             node.nodeOperator = newOperator
     
+            // delete unwanted inputs
+            for i in node.getInputCount() ..< node.maxInputNodeCount
+            {
+                node.inputNodes[i] = nil
+            }
+            
             postNotification(.NodeUpdated, payload: node)
             postNotification(.RelationshipsChanged, payload: nil)
             nodeUpdate(node)
