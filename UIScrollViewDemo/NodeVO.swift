@@ -69,7 +69,7 @@ class NodeVO: Equatable
                 case .Null:
                     returnValue = 0
                 case  .Add:
-                    returnValue = 2
+                    returnValue = 5
                 case .Subtract, .Multiply, .Divide:
                     returnValue = 2
                 case .Squareroot:

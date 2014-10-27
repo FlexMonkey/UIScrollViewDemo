@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NodeWidget: UIControl
+class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
 {
     var node: NodeVO!
     
@@ -23,9 +23,9 @@ class NodeWidget: UIControl
 
     required init(coder aDecoder: NSCoder)
     {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit
     {
         NodesPM.removeObserver(self)
@@ -102,10 +102,12 @@ class NodeWidget: UIControl
         }
     }
     
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
+            /*
             let touch = (touches.allObjects[0] as UITouch).locationInView(self)
             NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
             
@@ -114,6 +116,9 @@ class NodeWidget: UIControl
             // otherwise pop up action sheet to allow user to select input...
             
             NodesPM.selectedNode = node
+            */
+            
+            displayInputSelectPopOver()
         }
         else if !NodesPM.relationshipCreationMode
         {
@@ -121,6 +126,7 @@ class NodeWidget: UIControl
             NodesPM.isDragging = true
         }
     }
+    
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
     {
         NodesPM.isDragging = false
@@ -146,6 +152,60 @@ class NodeWidget: UIControl
         {
             populateLabels()
         }
+    }
+    
+    func displayInputSelectPopOver()
+    {
+        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        alertController.message = "Select Input Channel"
+        alertController.popoverPresentationController?.delegate = self
+        
+        func inputSelectHandler(value : UIAlertAction!) -> Void
+        {
+            var targetIndex: Int = -1
+            
+            for (idx: Int, action: AnyObject) in enumerate(alertController.actions)
+            {
+                if action === value
+                {
+                    targetIndex = idx
+                }
+            }
+            
+            if targetIndex != -1
+            {
+                NodesPM.preferredInputIndex = targetIndex
+                NodesPM.selectedNode = node
+            }
+            else
+            {
+                NodesPM.relationshipCreationMode = false
+            }
+        }
+        
+        for i: Int in 1 ... node.getInputCount()
+        {
+            let inputSelectAction = UIAlertAction(title: "Input \(i)", style: UIAlertActionStyle.Default, handler: inputSelectHandler)
+            
+            alertController.addAction(inputSelectAction)
+        }
+        
+        if let viewController = UIApplication.sharedApplication().keyWindow!.rootViewController
+        {
+            if let popoverPresentationController = alertController.popoverPresentationController
+            {
+                popoverPresentationController.sourceRect = frame
+                popoverPresentationController.sourceView = viewController.view
+                
+                viewController.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
+    {
+         NodesPM.relationshipCreationMode = false
     }
     
     func populateLabels()
