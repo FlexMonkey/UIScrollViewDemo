@@ -27,6 +27,7 @@ struct NodesPM
                 {
                     if let inputNode = selectedNode
                     {
+                        /*
                         if preferredInputIndex == -1 || preferredInputIndex > targetNode.inputNodes.count - 1 || targetNode.inputNodes.count < 2
                         {
                             targetNode.inputNodes.append(inputNode)
@@ -35,7 +36,8 @@ struct NodesPM
                         {
                             targetNode.inputNodes[preferredInputIndex] = inputNode
                         }
-        
+                        */
+                        targetNode.inputNodes[preferredInputIndex] = inputNode
                         nodeUpdate(targetNode)
                         postNotification(.RelationshipsChanged, payload: nil)
                     }
@@ -87,7 +89,7 @@ struct NodesPM
                 
                 if node.inputNodes.count > 0
                 {
-                    node.inputNodes = [NodeVO]()
+                    node.inputNodes = [NodeVO?](count: node.maxInputNodeCount, repeatedValue: nil)
                 }
             }
       

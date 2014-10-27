@@ -35,27 +35,51 @@ class NodeVO: Equatable
     
     final func updateValue()
     {
+        if nodeType != NodeTypes.Operator
+        {
+            return
+        }
+        
+        var inputValueOne: Double = 0.0
+        var inputValueTwo: Double = 0.0
+        
         if let inputNodeOne = inputNodes[0]
         {
-            if let inputNodeTwo = inputNodes[1]
-            {
-                switch nodeOperator
-                {
-                    case .Null:
-                        value = 0
-                    case  .Add:
-                        value = inputNodeOne.value + inputNodeTwo.value
-                    case .Subtract:
-                        value = inputNodeOne.value - inputNodeTwo.value
-                    case .Multiply:
-                        value = inputNodeOne.value * inputNodeTwo.value
-                    case .Divide:
-                        value = inputNodeOne.value / inputNodeTwo.value
-                    case .Squareroot:
-                        value = sqrt(inputNodeOne.value)
-                }
-            }
+            inputValueOne = inputNodeOne.value
         }
+        
+        if let inputNodeTwo = inputNodes[1]
+        {
+            inputValueTwo = inputNodeTwo.value
+        }
+        
+        switch nodeOperator
+        {
+            case .Null:
+                value = 0
+            case  .Add:
+                var accum: Double = 0.0
+                
+                for var i: Int = 0; i < getInputCount(); i++
+                {
+                    if let input = inputNodes[i]
+                    {
+                        accum += input.value
+                    }
+                }
+                
+                value = accum
+                
+            case .Subtract:
+                value = inputValueOne - inputValueTwo
+            case .Multiply:
+                value = inputValueOne * inputValueTwo
+            case .Divide:
+                value = inputValueOne / inputValueTwo
+            case .Squareroot:
+                value = sqrt(inputValueOne)
+        }
+        
     }
     
     final func getInputCount() -> Int
