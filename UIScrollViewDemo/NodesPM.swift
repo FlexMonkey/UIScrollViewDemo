@@ -183,13 +183,28 @@ struct NodesPM
     
     static func deleteSelectedNode()
     {
+        var updatedNodes = [NodeVO]()
+        
         for node in nodes
         {
-            node.inputNodes = node.inputNodes.filter({!($0 == NodesPM.selectedNode!)})
+            for (i: Int, inputNode: NodeVO?) in enumerate(node.inputNodes)
+            {
+                if inputNode == selectedNode
+                {
+                    node.inputNodes[i] = nil
+                    
+                    updatedNodes.append(node)
+                }
+            }
         }
 
         nodes = nodes.filter({!($0 == NodesPM.selectedNode!)})
       
+        for updatedNode in updatedNodes
+        {
+            updatedNode.updateValue()
+        }
+        
         postNotification(.NodeDeleted, payload: selectedNode)
         postNotification(.RelationshipsChanged, payload: nil)
         
