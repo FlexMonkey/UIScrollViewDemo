@@ -107,16 +107,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     {
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
-            /*
-            let touch = (touches.allObjects[0] as UITouch).locationInView(self)
-            NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
-            
-            // if input count = 1, preferredInputIndex = 1
-            // if any inputs are nil, preferredInputIndex = index of first nil
-            // otherwise pop up action sheet to allow user to select input...
-            
-            NodesPM.selectedNode = node
-            */
+
             
             displayInputSelectPopOver()
         }
@@ -156,6 +147,17 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func displayInputSelectPopOver()
     {
+        /*
+        let touch = (touches.allObjects[0] as UITouch).locationInView(self)
+        NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
+        
+        // if input count = 1, preferredInputIndex = 1
+        // if any inputs are nil, preferredInputIndex = index of first nil
+        // otherwise pop up action sheet to allow user to select input...
+        
+        NodesPM.selectedNode = node
+        */
+        
         var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alertController.message = "Select Input Channel"
@@ -186,7 +188,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         for i: Int in 1 ... node.getInputCount()
         {
-            let inputSelectAction = UIAlertAction(title: "Input \(i)", style: UIAlertActionStyle.Default, handler: inputSelectHandler)
+            let style = node.inputNodes[i - 1] == nil ? UIAlertActionStyle.Default : UIAlertActionStyle.Destructive
+            
+            let inputSelectAction = UIAlertAction(title: "Input \(i)", style: style, handler: inputSelectHandler)
             
             alertController.addAction(inputSelectAction)
         }
