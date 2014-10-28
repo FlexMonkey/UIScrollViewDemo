@@ -40,18 +40,8 @@ class NodeVO: Equatable
             return
         }
         
-        var inputValueOne: Double = 0.0
-        var inputValueTwo: Double = 0.0
-        
-        if let inputNodeOne = inputNodes[0]
-        {
-            inputValueOne = inputNodeOne.value
-        }
-        
-        if let inputNodeTwo = inputNodes[1]
-        {
-            inputValueTwo = inputNodeTwo.value
-        }
+        let inputValueOne = inputNodes[0]?.value ?? 0.0
+        let inputValueTwo = inputNodes[1]?.value ?? 0.0
         
         switch nodeOperator
         {
