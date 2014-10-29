@@ -216,12 +216,32 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     {
         if node.nodeType == NodeTypes.Operator
         {
-            let valueAsString = node.getInputCount() > 1 ? NSString(format: "%.2f", node.value) : "??"
+            let valueAsString = NSString(format: "%.2f", node.value)
             
-            let lhs = node.inputNodes[0] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[0]!.value)
-            let rhs = node.inputNodes[1] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[1]!.value)
-            
-            label.text = "\(lhs) \(node.nodeOperator.rawValue) \(rhs)\n\n\(valueAsString)"
+            if node.getInputCount() == 1
+            {
+                let inputValueAsString = node.inputNodes[0] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[0]!.value)
+                
+                let labelText = "\(node.nodeOperator.rawValue)(\(inputValueAsString))\n\n\(valueAsString)"
+                
+                label.text = labelText
+            }
+            else
+            {
+                var labelText = ""
+                
+                let inputs = node.inputNodes.filter({($0 != nil)})
+                
+                for (i: Int, inputNode: NodeVO?) in enumerate(inputs)
+                {
+                    labelText += NSString(format: "%.2f", inputNode!.value)
+                    labelText += (i != inputs.count - 1) ? (" " + node.nodeOperator.rawValue + " ") : ""
+                }
+                
+                labelText += "\n\n\(valueAsString)"
+                
+                label.text = labelText
+            }
         }
         else
         {
