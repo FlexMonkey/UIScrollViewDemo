@@ -43,8 +43,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         label.textAlignment = NSTextAlignment.Center
 
         label.numberOfLines = 0
-        
         label.font = UIFont.boldSystemFontOfSize(20)
+        label.adjustsFontSizeToFitWidth = true
         
         populateLabels()
         addSubview(label)
@@ -107,8 +107,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     {
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
-
-            
             displayInputSelectPopOver()
         }
         else if !NodesPM.relationshipCreationMode
