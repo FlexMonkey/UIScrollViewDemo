@@ -240,7 +240,7 @@ struct NodesPM
 struct NodeConstants
 {
     static let WidgetWidthInt: Int = 240
-    static let WidgetHeightInt: Int = 80
+    static let WidgetHeightInt: Int = 240
     
     static let WidgetWidthCGFloat = CGFloat(WidgetWidthInt)
     static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)

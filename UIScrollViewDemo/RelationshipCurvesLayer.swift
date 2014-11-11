@@ -40,22 +40,27 @@ class RelationshipCurvesLayer: CAShapeLayer
             
             for idx in 0 ..< targetNode.getInputCount()
             {
-                let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.getInputCount() + 1)) * (idx + 1))
-                let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
-                drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: targetPosition, clockwise: false)
+                let targetY = targetNode.position.y + CGFloat((NodeConstants.WidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
+                let targetPosition = CGPoint(x: targetNode.position.x, y: targetY)
+                
+                drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: targetPosition, clockwise: true)
             }
             
             for (idx : Int, candidateNode: NodeVO?) in enumerate(targetNode.inputNodes)
             {
                 if let inputNode = candidateNode
                 {
-                    let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat)
-                    let targetX = targetNode.position.x + CGFloat((NodeConstants.WidgetWidthInt / (targetNode.getInputCount() + 1)) * (idx + 1))
-                    let targetPosition = CGPoint(x: targetX, y: targetNode.position.y)
-                    let controlPointOne = CGPoint(x: targetX, y: targetNode.position.y - controlPointVerticalOffset)
-                    let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat / 2, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat + controlPointVerticalOffset)
-
-                    drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: inputPosition, clockwise: true)
+                    let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat / 2)
+                    
+                    let targetY = targetNode.position.y + CGFloat((NodeConstants.WidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
+                    
+                    let targetPosition = CGPoint(x: targetNode.position.x, y: targetY)
+                    
+                    let controlPointOne = CGPoint(x: targetNode.position.x - controlPointVerticalOffset, y: targetY)
+                                        
+                    let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat + controlPointVerticalOffset, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat / 2)
+                    
+                    drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: inputPosition, clockwise: false)
                     
                     relationshipCurvesPath.moveToPoint(targetPosition)
                     relationshipCurvesPath.addCurveToPoint(inputPosition, controlPoint1: controlPointOne, controlPoint2: controlPointTwo)
@@ -68,13 +73,14 @@ class RelationshipCurvesLayer: CAShapeLayer
 
     func drawSemiCircle(#relationshipCurvesPath: UIBezierPath, position: CGPoint, clockwise: Bool)
     {
+        let quarterCircle = CGFloat(M_PI) / 2
         let halfCircle = CGFloat(M_PI)
         
         relationshipCurvesPath.moveToPoint(position)
         
         for i in 1...3
         {
-            relationshipCurvesPath.addArcWithCenter(position, radius: CGFloat(i * 2), startAngle: 0, endAngle: halfCircle, clockwise: clockwise)
+            relationshipCurvesPath.addArcWithCenter(position, radius: CGFloat(i * 2), startAngle: quarterCircle, endAngle: halfCircle + quarterCircle, clockwise: clockwise)
         }
     }
     

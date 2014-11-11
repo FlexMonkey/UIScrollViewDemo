@@ -145,17 +145,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func displayInputSelectPopOver()
     {
-        /*
-        let touch = (touches.allObjects[0] as UITouch).locationInView(self)
-        NodesPM.preferredInputIndex = touch.x < self.frame.width / 2 ? 0 : 1
-        
-        // if input count = 1, preferredInputIndex = 1
-        // if any inputs are nil, preferredInputIndex = index of first nil
-        // otherwise pop up action sheet to allow user to select input...
-        
-        NodesPM.selectedNode = node
-        */
-        
         var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alertController.message = "Select Input Channel"
@@ -197,7 +186,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         {
             if let popoverPresentationController = alertController.popoverPresentationController
             {
-                popoverPresentationController.sourceRect = frame
+                popoverPresentationController.sourceRect = frame.rectByOffsetting(dx: superview!.frame.origin.x, dy: superview!.frame.origin.y)
                 popoverPresentationController.sourceView = viewController.view
                 
                 viewController.presentViewController(alertController, animated: true, completion: nil)
