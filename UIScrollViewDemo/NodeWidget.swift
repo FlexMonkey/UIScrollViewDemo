@@ -139,8 +139,22 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         if updatedNode == node
         {
+            let targetHeight = CGFloat(node.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
+            
+            if targetHeight != frame.size.height
+            {
+                NodesPM.resizingNode = node
+            
+                UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.frame.size.height = targetHeight}, completion: resizeComplete)
+            }
+            
             populateLabels()
         }
+    }
+    
+    func resizeComplete(value: Bool)
+    {
+        NodesPM.resizingNode = nil
     }
     
     func displayInputSelectPopOver()

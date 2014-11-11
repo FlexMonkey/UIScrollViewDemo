@@ -66,7 +66,9 @@ class BackgroundControl: UIControl
             
             if self.hitTest(gestureLocation, withEvent: nil) is BackgroundControl
             {
-                NodesPM.createNewNode(CGPoint(x: gestureLocation.x - NodeConstants.WidgetWidthCGFloat / 2, y: gestureLocation.y - NodeConstants.WidgetHeightCGFloat / 2))
+                let widgetHeight = CGFloat(NodeConstants.WidgetRowHeight)
+                
+                NodesPM.createNewNode(CGPoint(x: gestureLocation.x - NodeConstants.WidgetWidthCGFloat / 2, y: gestureLocation.y - widgetHeight / 2))
             }
         }
     }
@@ -107,7 +109,9 @@ class BackgroundControl: UIControl
         let originX = Int( newNode.position.x )
         let originY = Int( newNode.position.y )
         
-        let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: NodeConstants.WidgetWidthInt, height: NodeConstants.WidgetHeightInt), node: newNode)
+        let widgetHeight = newNode.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight
+        
+        let nodeWidget = NodeWidget(frame: CGRect(x: originX, y: originY, width: NodeConstants.WidgetWidthInt, height: widgetHeight), node: newNode)
         
         addSubview(nodeWidget)
     }

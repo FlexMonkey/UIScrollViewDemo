@@ -31,16 +31,18 @@ class RelationshipCurvesLayer: CAShapeLayer
 
         relationshipCurvesPath.removeAllPoints()
         
-        for targetNode in NodesPM.nodes
+        for targetNode in NodesPM.nodes.filter({$0 != NodesPM.resizingNode})
         {
-            let rect = CGRect(x: CGFloat(targetNode.position.x + 1), y: CGFloat(targetNode.position.y + 1), width: NodeConstants.WidgetWidthCGFloat - 2, height: NodeConstants.WidgetHeightCGFloat - 2)
-            let rectPath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
+            let targetWidgetHeight = CGFloat(targetNode.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
+            let targetWidgetHeightInt = Int(targetWidgetHeight)
             
+            let rect = CGRect(x: CGFloat(targetNode.position.x + 1), y: CGFloat(targetNode.position.y + 1), width: NodeConstants.WidgetWidthCGFloat - 2, height: targetWidgetHeight - 2)
+            let rectPath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
             relationshipCurvesPath.appendPath(rectPath)
             
             for idx in 0 ..< targetNode.getInputCount()
             {
-                let targetY = targetNode.position.y + CGFloat((NodeConstants.WidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
+                let targetY = targetNode.position.y + CGFloat((targetWidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
                 let targetPosition = CGPoint(x: targetNode.position.x, y: targetY)
                 
                 drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: targetPosition, clockwise: true)
@@ -50,15 +52,18 @@ class RelationshipCurvesLayer: CAShapeLayer
             {
                 if let inputNode = candidateNode
                 {
-                    let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat / 2)
+                    let inputWidgetHeight = CGFloat(inputNode.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
+                    let inputWidgetHeightInt = Int(inputWidgetHeight)
                     
-                    let targetY = targetNode.position.y + CGFloat((NodeConstants.WidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
+                    let inputPosition = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat, y: inputNode.position.y + inputWidgetHeight / 2)
+                    
+                    let targetY = targetNode.position.y + CGFloat((targetWidgetHeightInt / (targetNode.getInputCount() + 1)) * (idx + 1))
                     
                     let targetPosition = CGPoint(x: targetNode.position.x, y: targetY)
                     
                     let controlPointOne = CGPoint(x: targetNode.position.x - controlPointVerticalOffset, y: targetY)
                                         
-                    let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat + controlPointVerticalOffset, y: inputNode.position.y + NodeConstants.WidgetHeightCGFloat / 2)
+                    let controlPointTwo = CGPoint(x: inputNode.position.x + NodeConstants.WidgetWidthCGFloat + controlPointVerticalOffset, y: inputNode.position.y + inputWidgetHeight / 2)
                     
                     drawSemiCircle(relationshipCurvesPath: relationshipCurvesPath, position: inputPosition, clockwise: false)
                     

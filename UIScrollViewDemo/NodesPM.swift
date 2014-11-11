@@ -110,6 +110,17 @@ struct NodesPM
         }
     }
     
+    static var resizingNode: NodeVO?
+    {
+        didSet
+        {
+            if oldValue != resizingNode
+            {
+               postNotification(.RelationshipsChanged, payload: nil) 
+            }
+        }
+    }
+    
     static var updatedNodes: [NodeVO]!
     
     static func nodeUpdate(node: NodeVO, isRecursive: Bool = false)
@@ -239,11 +250,13 @@ struct NodesPM
 
 struct NodeConstants
 {
+    static let WidgetRowHeight = 30
+    
     static let WidgetWidthInt: Int = 240
-    static let WidgetHeightInt: Int = 240
+    // static let WidgetHeightInt: Int = 240
     
     static let WidgetWidthCGFloat = CGFloat(WidgetWidthInt)
-    static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)
+    // static let WidgetHeightCGFloat = CGFloat(WidgetHeightInt)
     
     static let backgroundColor = UIColor.lightGrayColor()
     static let curveColor = UIColor.blueColor()
