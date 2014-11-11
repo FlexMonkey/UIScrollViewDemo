@@ -133,23 +133,31 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         populateLabels()
     }
 
+    var targetHeight: CGFloat = 0
+    
     func nodeUpdated(value: AnyObject)
     {
         let updatedNode = value.object as NodeVO
         
         if updatedNode == node
         {
-            let targetHeight = CGFloat(node.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
+            targetHeight = CGFloat(node.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
             
             if targetHeight != frame.size.height
             {
                 NodesPM.resizingNode = node
             
-                UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.frame.size.height = targetHeight}, completion: resizeComplete)
+                UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.doResize()}, completion: resizeComplete)
             }
             
             populateLabels()
         }
+    }
+    
+    func doResize()
+    {
+        frame.size.height = targetHeight
+        label.frame.size.height = targetHeight
     }
     
     func resizeComplete(value: Bool)
@@ -278,6 +286,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         NodesPM.relationshipCreationMode = true
     }
     
+    var previousPanPoint = CGPointZero
+    
     func panHandler(recognizer: UIPanGestureRecognizer)
     {
         if recognizer.state == UIGestureRecognizerState.Began
@@ -287,15 +297,22 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
                 NodesPM.selectedNode = node
             }
             
+            previousPanPoint = recognizer.locationInView(UIApplication.sharedApplication().keyWindow)
+            
             NodesPM.isDragging = true
         }
         else if recognizer.state == UIGestureRecognizerState.Changed || recognizer.state == UIGestureRecognizerState.Ended
         {
-            let gestureLocation = recognizer.locationInView(self)
+            let gestureLocation = recognizer.locationInView(UIApplication.sharedApplication().keyWindow)
             
-            frame.offset(dx: gestureLocation.x - frame.width / 2, dy: gestureLocation.y - frame.height / 2)
+            let newPosition = CGPoint(x: frame.origin.x + gestureLocation.x - previousPanPoint.x, y: frame.origin.y + gestureLocation.y - previousPanPoint.y)
             
-            NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
+            frame.origin.x = newPosition.x
+            frame.origin.y = newPosition.y
+            
+            NodesPM.moveSelectedNode(CGPoint(x: newPosition.x, y: newPosition.y))
+            
+            previousPanPoint = recognizer.locationInView(UIApplication.sharedApplication().keyWindow)
             
             if recognizer.state == UIGestureRecognizerState.Ended
             {
