@@ -12,7 +12,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
 {
     var node: NodeVO!
     
-    let outputLabel: UILabel = UILabel(frame: CGRectZero)
+    let operatorLabel = UILabel(frame: CGRectZero)
+    let outputLabel = UILabel(frame: CGRectZero)
     
     var inputLabels = [UILabel]()
     
@@ -51,6 +52,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         // label.adjustsFontSizeToFitWidth = true
         
         populateLabels()
+        addSubview(operatorLabel)
         addSubview(outputLabel)
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
@@ -145,7 +147,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         if updatedNode == node
         {
-            targetHeight = CGFloat(node.getInputCount() * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight)
+            targetHeight = CGFloat(node.getInputCount() * NodeConstants.WidgetRowHeight + (NodeConstants.WidgetRowHeight * 2))
             
             if targetHeight != frame.size.height
             {
@@ -237,7 +239,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         for var i: Int = 0; i < node.getInputCount(); i++
         {
-            let label = UILabel(frame: CGRect(x: 5, y: i * NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight))
+            let label = UILabel(frame: CGRect(x: 5, y: i * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight))
             
             var labelText = "Input \(i + 1)"
             
@@ -255,7 +257,17 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
             inputLabels.append(label)
         }
         
-        outputLabel.frame = CGRect(x: 0, y: node.getInputCount() * NodeConstants.WidgetRowHeight, width: Int(frame.width) - 5, height: NodeConstants.WidgetRowHeight)
+        operatorLabel.frame = CGRect(x: 2, y: 0, width: Int(frame.width - 4), height: NodeConstants.WidgetRowHeight)
+        operatorLabel.text = node.nodeType == NodeTypes.Operator ? node.nodeOperator.rawValue : node.nodeType.rawValue
+        operatorLabel.textAlignment = NSTextAlignment.Center
+        operatorLabel.layer.backgroundColor = UIColor.whiteColor().CGColor
+        operatorLabel.alpha = 0.75
+        operatorLabel.layer.cornerRadius = 5
+        operatorLabel.textColor = UIColor.blueColor()
+        operatorLabel.font = UIFont.boldSystemFontOfSize(20)
+        operatorLabel.adjustsFontSizeToFitWidth = true
+        
+        outputLabel.frame = CGRect(x: 0, y: NodeConstants.WidgetRowHeight + node.getInputCount() * NodeConstants.WidgetRowHeight, width: Int(frame.width) - 5, height: NodeConstants.WidgetRowHeight)
         outputLabel.textAlignment = NSTextAlignment.Right
         outputLabel.textColor = UIColor.whiteColor()
         outputLabel.font = UIFont.boldSystemFontOfSize(20)
