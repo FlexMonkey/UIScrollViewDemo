@@ -12,7 +12,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
 {
     var node: NodeVO!
     
-    let label: UILabel = UILabel(frame: CGRectZero)
+    let outputLabel: UILabel = UILabel(frame: CGRectZero)
+    
+    var inputLabels = [UILabel]()
     
     required init(frame: CGRect, node: NodeVO)
     {
@@ -39,15 +41,15 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         layer.borderWidth = 2
         layer.cornerRadius = 10
         
-        label.frame = bounds.rectByInsetting(dx: 2, dy: 2)
-        label.textAlignment = NSTextAlignment.Center
+        // label.frame = bounds.rectByInsetting(dx: 2, dy: 2)
+        // label.textAlignment = NSTextAlignment.Center
 
-        label.numberOfLines = 0
-        label.font = UIFont.boldSystemFontOfSize(20)
-        label.adjustsFontSizeToFitWidth = true
+        // label.numberOfLines = 0
+        // label.font = UIFont.boldSystemFontOfSize(20)
+        // label.adjustsFontSizeToFitWidth = true
         
         populateLabels()
-        addSubview(label)
+        addSubview(outputLabel)
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
         addGestureRecognizer(pan)
@@ -84,7 +86,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
                     UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
-                    label.textColor = UIColor.blueColor()
+                    // label.textColor = UIColor.blueColor()
                 }
                 else
                 {
@@ -157,7 +159,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     func doResize()
     {
         frame.size.height = targetHeight
-        label.frame.size.height = targetHeight
+        // label.frame.size.height = targetHeight
+        populateLabels()
     }
     
     func resizeComplete(value: Bool)
@@ -223,6 +226,34 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func populateLabels()
     {
+        for oldLabel in inputLabels
+        {
+            oldLabel.removeFromSuperview()
+        }
+        
+        inputLabels = [UILabel]()
+        
+        for var i: Int = 0; i < node.getInputCount(); i++
+        {
+            let label = UILabel(frame: CGRect(x: 5, y: i * NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight))
+            label.text = "Input \(i + 1)"
+            
+            label.textColor = UIColor.whiteColor()
+            label.font = UIFont.boldSystemFontOfSize(20)
+            label.adjustsFontSizeToFitWidth = true
+            
+            addSubview(label)
+            inputLabels.append(label)
+        }
+        
+        outputLabel.frame = CGRect(x: 0, y: node.getInputCount() * NodeConstants.WidgetRowHeight, width: Int(frame.width) - 5, height: NodeConstants.WidgetRowHeight)
+        outputLabel.textAlignment = NSTextAlignment.Right
+        outputLabel.textColor = UIColor.whiteColor()
+        outputLabel.font = UIFont.boldSystemFontOfSize(20)
+        outputLabel.adjustsFontSizeToFitWidth = true
+        outputLabel.text = "Output"
+        
+        /*
         if node.nodeType == NodeTypes.Operator
         {
             let valueAsString = NSString(format: "%.2f", node.value)
@@ -258,6 +289,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
             
             label.text = "\(valueAsString)"
         }
+        */
     }
    
     func nodeSelected(value: AnyObject?)
@@ -278,7 +310,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = targetColor})
         
-        label.textColor = isSelected ? UIColor.whiteColor() : UIColor.whiteColor()
+        // label.textColor = isSelected ? UIColor.whiteColor() : UIColor.whiteColor()
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)
