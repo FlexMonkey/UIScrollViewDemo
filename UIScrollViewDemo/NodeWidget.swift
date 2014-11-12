@@ -21,6 +21,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         super.init(frame: frame)
         
         self.node = node
+        
+        self.clipsToBounds = true
     }
 
     required init(coder aDecoder: NSCoder)
@@ -236,8 +238,15 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         for var i: Int = 0; i < node.getInputCount(); i++
         {
             let label = UILabel(frame: CGRect(x: 5, y: i * NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight))
-            label.text = "Input \(i + 1)"
             
+            var labelText = "Input \(i + 1)"
+            
+            if let inputNode = node.inputNodes[i]
+            {
+                labelText += ": " + NSString(format: "%.2f", inputNode.value)
+            }
+            
+            label.text = labelText
             label.textColor = UIColor.whiteColor()
             label.font = UIFont.boldSystemFontOfSize(20)
             label.adjustsFontSizeToFitWidth = true
@@ -251,7 +260,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         outputLabel.textColor = UIColor.whiteColor()
         outputLabel.font = UIFont.boldSystemFontOfSize(20)
         outputLabel.adjustsFontSizeToFitWidth = true
-        outputLabel.text = "Output"
+        
+        let valueAsString = NSString(format: "%.2f", node.value)
+        outputLabel.text = "Output: \(valueAsString)"
         
         /*
         if node.nodeType == NodeTypes.Operator
