@@ -133,33 +133,38 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
+        
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
-            var targetIndex = -1
-            let xyz: UITouch = touches.allObjects[0] as UITouch
-            
-            for (i: Int, inputLabel: UILabel) in enumerate(inputLabels)
+            if NodesPM.zoomScale > 0.75
             {
-                let touchLocationInView = xyz.locationInView(inputLabel)
+                var targetIndex = -1
+                let touch: UITouch = touches.allObjects[0] as UITouch
                 
-                if touchLocationInView.x > 0 && touchLocationInView.y > 0 && touchLocationInView.x < inputLabel.frame.width && touchLocationInView.y < inputLabel.frame.height
+                for (i: Int, inputLabel: UILabel) in enumerate(inputLabels)
                 {
-                    println("Match -- \(inputLabel.text)")
-                    targetIndex = i
+                    let touchLocationInView = touch.locationInView(inputLabel)
+                    
+                    if touchLocationInView.x > 0 && touchLocationInView.y > 0 && touchLocationInView.x < inputLabel.frame.width && touchLocationInView.y < inputLabel.frame.height
+                    {
+                        targetIndex = i
+                    }
                 }
-            }
-            
-            if targetIndex != -1
-            {
-                NodesPM.preferredInputIndex = targetIndex
-                NodesPM.selectedNode = node
+                
+                if targetIndex != -1
+                {
+                    NodesPM.preferredInputIndex = targetIndex
+                    NodesPM.selectedNode = node
+                }
+                else
+                {
+                    NodesPM.relationshipCreationMode = false
+                }
             }
             else
             {
-                NodesPM.relationshipCreationMode = false
+                displayInputSelectPopOver()
             }
-            
-            //displayInputSelectPopOver()
         }
         else if !NodesPM.relationshipCreationMode
         {
@@ -220,7 +225,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func displayInputSelectPopOver()
     {
-        /*
         var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alertController.message = "Select Input Channel"
@@ -262,13 +266,13 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         {
             if let popoverPresentationController = alertController.popoverPresentationController
             {
-                popoverPresentationController.sourceRect = frame.rectByOffsetting(dx: superview!.frame.origin.x, dy: superview!.frame.origin.y)
+                popoverPresentationController.sourceRect = CGRect(x: frame.origin.x * NodesPM.zoomScale, y: frame.origin.y * NodesPM.zoomScale, width: frame.width * NodesPM.zoomScale, height: frame.height * NodesPM.zoomScale).rectByOffsetting(dx: superview!.frame.origin.x, dy: superview!.frame.origin.y)
+                
                 popoverPresentationController.sourceView = viewController.view
                 
                 viewController.presentViewController(alertController, animated: true, completion: nil)
             }
         }
-        */
     }
     
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
@@ -278,16 +282,31 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func populateLabels()
     {
-        for oldLabel in inputLabels
+        if inputLabels.count != node.getInputCount()
         {
-            oldLabel.removeFromSuperview()
+            for oldLabel in inputLabels
+            {
+                oldLabel.removeFromSuperview()
+            }
+            
+            inputLabels = [UILabel]()
+            
+            for var i: Int = 0; i < node.getInputCount(); i++
+            {
+                let label = UILabel(frame: CGRect(x: 0, y: i * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight).rectByInsetting(dx: 5, dy: 2))
+                
+                label.textColor = UIColor.whiteColor()
+                label.font = UIFont.boldSystemFontOfSize(20)
+                label.adjustsFontSizeToFitWidth = true
+                
+                addSubview(label)
+                inputLabels.append(label)
+            }
         }
-        
-        inputLabels = [UILabel]()
         
         for var i: Int = 0; i < node.getInputCount(); i++
         {
-            let label = UILabel(frame: CGRect(x: 0, y: i * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight).rectByInsetting(dx: 5, dy: 2))
+            let label = inputLabels[i]
             
             var labelText = "Input \(i + 1)"
             
@@ -297,12 +316,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
             }
             
             label.text = labelText
-            label.textColor = UIColor.whiteColor()
-            label.font = UIFont.boldSystemFontOfSize(20)
-            label.adjustsFontSizeToFitWidth = true
-            
-            addSubview(label)
-            inputLabels.append(label)
         }
         
         operatorLabel.frame = CGRect(x: 2, y: 0, width: Int(frame.width - 4), height: NodeConstants.WidgetRowHeight)
@@ -408,7 +421,10 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         {
             let gestureLocation = recognizer.locationInView(UIApplication.sharedApplication().keyWindow)
             
-            let newPosition = CGPoint(x: frame.origin.x + gestureLocation.x - previousPanPoint.x, y: frame.origin.y + gestureLocation.y - previousPanPoint.y)
+            let deltaX = (gestureLocation.x - previousPanPoint.x) / NodesPM.zoomScale
+            let deltaY = (gestureLocation.y - previousPanPoint.y) / NodesPM.zoomScale
+            
+            let newPosition = CGPoint(x: frame.origin.x + deltaX, y: frame.origin.y + deltaY)
             
             frame.origin.x = newPosition.x
             frame.origin.y = newPosition.y
@@ -425,5 +441,3 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     }
     
 }
-
-

@@ -66,6 +66,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.scrollEnabled = !isDragging
     }
     
+    func scrollViewDidZoom(scrollView: UIScrollView)
+    {
+        NodesPM.zoomScale = scrollView.zoomScale
+    }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView!
     {

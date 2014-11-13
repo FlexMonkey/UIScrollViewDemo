@@ -53,6 +53,8 @@ struct NodesPM
         }
     }
 
+    static var zoomScale: CGFloat = 1
+    
     static var preferredInputIndex: Int = -1
     
     static func changeSelectedNodeOperator(newOperator: NodeOperators)
@@ -250,7 +252,7 @@ struct NodesPM
 
 struct NodeConstants
 {
-    static let WidgetRowHeight = 30
+    static let WidgetRowHeight = 40
     
     static let WidgetWidthInt: Int = 240
     // static let WidgetHeightInt: Int = 240
