@@ -89,8 +89,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
             {
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
-                    UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
+                    //UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
                     // label.textColor = UIColor.blueColor()
+                    enableLabelsAsButtons()
                 }
                 else
                 {
@@ -103,17 +104,62 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
                 UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.alpha = 1.0})
                 enabled = true
             
+                enableLabelsAsButtons()
                 setWidgetColors()
             }
         }
     }
     
+    func enableLabelsAsButtons()
+    {
+        for inputLabel in inputLabels
+        {
+            if relationshipCreationCandidate && NodesPM.relationshipCreationMode
+            {
+                inputLabel.textColor = UIColor.blueColor()
+                inputLabel.layer.borderWidth = 1
+                inputLabel.layer.cornerRadius = 5
+                inputLabel.layer.borderColor = UIColor.blueColor().CGColor
+                inputLabel.layer.backgroundColor = UIColor.yellowColor().CGColor
+            }
+            else
+            {
+                inputLabel.textColor = UIColor.whiteColor()
+                inputLabel.layer.borderWidth = 0
+                inputLabel.layer.backgroundColor = UIColor.clearColor().CGColor
+            }
+        }
+    }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
         {
-            displayInputSelectPopOver()
+            var targetIndex = -1
+            let xyz: UITouch = touches.allObjects[0] as UITouch
+            
+            for (i: Int, inputLabel: UILabel) in enumerate(inputLabels)
+            {
+                let touchLocationInView = xyz.locationInView(inputLabel)
+                
+                if touchLocationInView.x > 0 && touchLocationInView.y > 0 && touchLocationInView.x < inputLabel.frame.width && touchLocationInView.y < inputLabel.frame.height
+                {
+                    println("Match -- \(inputLabel.text)")
+                    targetIndex = i
+                }
+            }
+            
+            if targetIndex != -1
+            {
+                NodesPM.preferredInputIndex = targetIndex
+                NodesPM.selectedNode = node
+            }
+            else
+            {
+                NodesPM.relationshipCreationMode = false
+            }
+            
+            //displayInputSelectPopOver()
         }
         else if !NodesPM.relationshipCreationMode
         {
@@ -174,6 +220,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
     
     func displayInputSelectPopOver()
     {
+        /*
         var alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alertController.message = "Select Input Channel"
@@ -221,6 +268,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
                 viewController.presentViewController(alertController, animated: true, completion: nil)
             }
         }
+        */
     }
     
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
@@ -239,7 +287,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         for var i: Int = 0; i < node.getInputCount(); i++
         {
-            let label = UILabel(frame: CGRect(x: 5, y: i * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight))
+            let label = UILabel(frame: CGRect(x: 0, y: i * NodeConstants.WidgetRowHeight + NodeConstants.WidgetRowHeight, width: Int(frame.width), height: NodeConstants.WidgetRowHeight).rectByInsetting(dx: 5, dy: 2))
             
             var labelText = "Input \(i + 1)"
             
