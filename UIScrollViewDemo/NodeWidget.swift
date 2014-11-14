@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
+class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate
 {
     var node: NodeVO!
     
@@ -55,7 +55,8 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         addSubview(operatorLabel)
         addSubview(outputLabel)
         
-        let pan = UIPanGestureRecognizer(target: self, action: "panHandler:");
+        let pan = UIPanGestureRecognizer(target: self, action: "panHandler:")
+        pan.delegate = self
         addGestureRecognizer(pan)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "longHoldHandler:")
@@ -79,6 +80,12 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
             NodesPM.moveSelectedNode(CGPoint(x: frame.origin.x, y: frame.origin.y))
         }
     }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool
+    {
+        return true
+    }
+    
     
     // to do - move to PM and prevent circular relationships
     var relationshipCreationCandidate: Bool = false
@@ -336,44 +343,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate
         
         let valueAsString = NSString(format: "%.2f", node.value)
         outputLabel.text = "Output: \(valueAsString)"
-        
-        /*
-        if node.nodeType == NodeTypes.Operator
-        {
-            let valueAsString = NSString(format: "%.2f", node.value)
-            
-            if node.getInputCount() == 1
-            {
-                let inputValueAsString = node.inputNodes[0] == nil ? "??" : NSString(format: "%.2f", node.inputNodes[0]!.value)
-                
-                let labelText = "\(node.nodeOperator.rawValue)(\(inputValueAsString))\n\n\(valueAsString)"
-                
-                label.text = labelText
-            }
-            else
-            {
-                var labelText = ""
-                
-                let inputs = node.inputNodes.filter({($0 != nil)})
-                
-                for (i: Int, inputNode: NodeVO?) in enumerate(inputs)
-                {
-                    labelText += NSString(format: "%.2f", inputNode!.value)
-                    labelText += (i != inputs.count - 1) ? (" " + node.nodeOperator.rawValue + " ") : ""
-                }
-                
-                labelText += "\n\n\(valueAsString)"
-                
-                label.text = labelText
-            }
-        }
-        else
-        {
-            let valueAsString = NSString(format: "%.2f", node.value);
-            
-            label.text = "\(valueAsString)"
-        }
-        */
     }
    
     func nodeSelected(value: AnyObject?)
