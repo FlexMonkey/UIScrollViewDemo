@@ -15,6 +15,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
     let operatorLabel = UILabel(frame: CGRectZero)
     let outputLabel = UILabel(frame: CGRectZero)
     
+    var previousPanPoint = CGPointZero
     var inputLabels = [UILabel]()
     
     required init(frame: CGRect, node: NodeVO)
@@ -44,13 +45,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         layer.borderWidth = 2
         layer.cornerRadius = 10
         
-        // label.frame = bounds.rectByInsetting(dx: 2, dy: 2)
-        // label.textAlignment = NSTextAlignment.Center
-
-        // label.numberOfLines = 0
-        // label.font = UIFont.boldSystemFontOfSize(20)
-        // label.adjustsFontSizeToFitWidth = true
-        
+        setUpPersistentLabels()
         populateLabels()
         addSubview(operatorLabel)
         addSubview(outputLabel)
@@ -69,6 +64,22 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         NodesPM.addObserver(self, selector: "relationshipsChanged:", notificationType: .RelationshipsChanged)
         
         UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.alpha = 1}, completion: fadeInComplete)
+    }
+    
+    func setUpPersistentLabels()
+    {
+        operatorLabel.textAlignment = NSTextAlignment.Center
+        operatorLabel.layer.backgroundColor = UIColor.whiteColor().CGColor
+        operatorLabel.alpha = 0.75
+        operatorLabel.layer.cornerRadius = 5
+        operatorLabel.textColor = UIColor.blueColor()
+        operatorLabel.font = UIFont.boldSystemFontOfSize(20)
+        operatorLabel.adjustsFontSizeToFitWidth = true
+        
+        outputLabel.textAlignment = NSTextAlignment.Right
+        outputLabel.textColor = UIColor.whiteColor()
+        outputLabel.font = UIFont.boldSystemFontOfSize(20)
+        outputLabel.adjustsFontSizeToFitWidth = true
     }
     
     func fadeInComplete(value: Bool)
@@ -96,8 +107,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
             {
                 if relationshipCreationCandidate && !(NodesPM.selectedNode! == node)
                 {
-                    //UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = UIColor.yellowColor()})
-                    // label.textColor = UIColor.blueColor()
                     enableLabelsAsButtons()
                 }
                 else
@@ -221,7 +230,6 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
     func doResize()
     {
         frame.size.height = targetHeight
-        // label.frame.size.height = targetHeight
         populateLabels()
     }
     
@@ -327,19 +335,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         
         operatorLabel.frame = CGRect(x: 2, y: 0, width: Int(frame.width - 4), height: NodeConstants.WidgetRowHeight)
         operatorLabel.text = node.nodeType == NodeTypes.Operator ? node.nodeOperator.rawValue : node.nodeType.rawValue
-        operatorLabel.textAlignment = NSTextAlignment.Center
-        operatorLabel.layer.backgroundColor = UIColor.whiteColor().CGColor
-        operatorLabel.alpha = 0.75
-        operatorLabel.layer.cornerRadius = 5
-        operatorLabel.textColor = UIColor.blueColor()
-        operatorLabel.font = UIFont.boldSystemFontOfSize(20)
-        operatorLabel.adjustsFontSizeToFitWidth = true
         
         outputLabel.frame = CGRect(x: 0, y: NodeConstants.WidgetRowHeight + node.getInputCount() * NodeConstants.WidgetRowHeight, width: Int(frame.width) - 5, height: NodeConstants.WidgetRowHeight)
         outputLabel.textAlignment = NSTextAlignment.Right
-        outputLabel.textColor = UIColor.whiteColor()
-        outputLabel.font = UIFont.boldSystemFontOfSize(20)
-        outputLabel.adjustsFontSizeToFitWidth = true
         
         let valueAsString = NSString(format: "%.2f", node.value)
         outputLabel.text = "Output: \(valueAsString)"
@@ -362,16 +360,12 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         let targetColor = isSelected ? NodeConstants.selectedNodeColor : NodeConstants.unselectedNodeColor
         
         UIView.animateWithDuration(NodeConstants.animationDuration, animations: {self.backgroundColor = targetColor})
-        
-        // label.textColor = isSelected ? UIColor.whiteColor() : UIColor.whiteColor()
     }
     
     func longHoldHandler(recognizer: UILongPressGestureRecognizer)
     {
         NodesPM.relationshipCreationMode = true
     }
-    
-    var previousPanPoint = CGPointZero
     
     func panHandler(recognizer: UIPanGestureRecognizer)
     {
