@@ -134,18 +134,24 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
     
     func enableLabelsAsButtons()
     {
-        for inputLabel in inputLabels
+        for (idx: Int, inputLabel: UILabel) in enumerate(inputLabels)
         {
             if relationshipCreationCandidate && NodesPM.relationshipCreationMode
             {
+                let isValidInput = node.getInputTypes()[idx] == NodesPM.selectedNode?.getOutputType()
+                
+                inputLabel.enabled = isValidInput
+                
                 inputLabel.textColor = UIColor.blueColor()
                 inputLabel.layer.borderWidth = 1
                 inputLabel.layer.cornerRadius = 5
                 inputLabel.layer.borderColor = UIColor.blueColor().CGColor
-                inputLabel.layer.backgroundColor = UIColor.yellowColor().CGColor
+                inputLabel.layer.backgroundColor = isValidInput ? UIColor.yellowColor().CGColor : UIColor(red: 0.75, green: 0.75, blue: 0.0, alpha: 1.0).CGColor
             }
             else
             {
+                inputLabel.enabled = true
+                
                 inputLabel.textColor = UIColor.whiteColor()
                 inputLabel.layer.borderWidth = 0
                 inputLabel.layer.backgroundColor = UIColor.clearColor().CGColor
@@ -167,7 +173,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
                 {
                     let touchLocationInView = touch.locationInView(inputLabel)
                     
-                    if touchLocationInView.x > 0 && touchLocationInView.y > 0 && touchLocationInView.x < inputLabel.frame.width && touchLocationInView.y < inputLabel.frame.height
+                    if inputLabel.enabled && touchLocationInView.x > 0 && touchLocationInView.y > 0 && touchLocationInView.x < inputLabel.frame.width && touchLocationInView.y < inputLabel.frame.height
                     {
                         targetIndex = i
                     }
@@ -279,6 +285,9 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
             let style = node.inputNodes[i] == nil ? UIAlertActionStyle.Default : UIAlertActionStyle.Destructive
             
             let inputSelectAction = UIAlertAction(title: node.getInputLabelOfIndex(i), style: style, handler: inputSelectHandler) // TODO - common code with buttons
+            
+            let isValidInput = node.getInputTypes()[i] == NodesPM.selectedNode?.getOutputType()
+            inputSelectAction.enabled = isValidInput
             
             alertController.addAction(inputSelectAction)
         }

@@ -24,12 +24,6 @@ class NodeVO: Equatable
     
     var value : Double = 0
     var colorValue: UIColor = UIColor.blackColor()
-    {
-        didSet
-        {
-            print("color set to \(colorValue)")
-        }
-    }
     
     init(name: String, position: CGPoint)
     {
