@@ -23,7 +23,7 @@ class NumericDialViewController: UIViewController
         
         if let value = NodesPM.selectedNode!.value as Double?
         {
-            numericDial.currentValue = value / 100
+            numericDial.currentValue = value
         }
         
         numericDial.labelFunction = labelFunction
@@ -36,9 +36,9 @@ class NumericDialViewController: UIViewController
     
     func labelFunction(value: Double) -> String
     {
-        let dialValue = Double(Int(value * 100))
+        let dialValue = value
         
-        return NSString(format: "%.0f", dialValue)
+        return NSString(format: "%.2f", dialValue)
     }
     
     func nodeChangeHandler()
@@ -49,7 +49,7 @@ class NumericDialViewController: UIViewController
             
             ignoreDialChangeEvents = true
                 
-            numericDial.currentValue = value / 100
+            numericDial.currentValue = value
                 
             ignoreDialChangeEvents = false
         }
@@ -57,7 +57,7 @@ class NumericDialViewController: UIViewController
     
     func dialChangeHandler(numericDial: NumericDial)
     {
-        let dialValue = Double(Int(numericDial.currentValue * 100))
+        let dialValue = numericDial.currentValue
         
         if !ignoreDialChangeEvents
         {

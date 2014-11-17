@@ -13,6 +13,7 @@
 		3E79124019E7B4F100E3E938 /* NumericDialTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79123E19E7B4F100E3E938 /* NumericDialTrack.swift */; };
 		3ED7199F19D93D2700388328 /* NodesPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7199E19D93D2700388328 /* NodesPM.swift */; };
 		3EE831FF19DE82E5005FEB3C /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE831FE19DE82E5005FEB3C /* Toolbar.swift */; };
+		3EEACE411A19E3FA002C019C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEACE401A19E3FA002C019C /* Extensions.swift */; };
 		3EF374A419D9F43F004DC90F /* NodeVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A319D9F43F004DC90F /* NodeVO.swift */; };
 		3EF374A619DB24D8004DC90F /* RelationshipCurvesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */; };
 		BE21B56C19E8F69400AF716B /* NumericDialBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */; };
@@ -45,6 +46,7 @@
 		3E79123E19E7B4F100E3E938 /* NumericDialTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericDialTrack.swift; sourceTree = "<group>"; };
 		3ED7199E19D93D2700388328 /* NodesPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesPM.swift; sourceTree = "<group>"; };
 		3EE831FE19DE82E5005FEB3C /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
+		3EEACE401A19E3FA002C019C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3EF374A319D9F43F004DC90F /* NodeVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVO.swift; sourceTree = "<group>"; };
 		3EF374A519DB24D8004DC90F /* RelationshipCurvesLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCurvesLayer.swift; sourceTree = "<group>"; };
 		BE21B56B19E8F69400AF716B /* NumericDialBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericDialBackground.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 		BEA67DC019D7D0DA005979EA = {
 			isa = PBXGroup;
 			children = (
+				3EEACE401A19E3FA002C019C /* Extensions.swift */,
 				BEA67DCB19D7D0DA005979EA /* UIScrollViewDemo */,
 				BEA67DE119D7D0DB005979EA /* UIScrollViewDemoTests */,
 				BEA67DCA19D7D0DA005979EA /* Products */,
@@ -318,6 +321,7 @@
 				3E79124019E7B4F100E3E938 /* NumericDialTrack.swift in Sources */,
 				BEA67DF219D7D18D005979EA /* BackgroundGrid.swift in Sources */,
 				BEA67DEF19D7D101005979EA /* BackgroundControl.swift in Sources */,
+				3EEACE411A19E3FA002C019C /* Extensions.swift in Sources */,
 				3E79123F19E7B4F100E3E938 /* NumericDial.swift in Sources */,
 				BEA67DCF19D7D0DB005979EA /* AppDelegate.swift in Sources */,
 				BE21B56F19E8FFB200AF716B /* Async.swift in Sources */,

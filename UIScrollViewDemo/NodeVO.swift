@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 class NodeVO: Equatable
 {
@@ -20,7 +21,15 @@ class NodeVO: Equatable
     
     var nodeType: NodeTypes
     var nodeOperator: NodeOperators
+    
     var value : Double = 0
+    var colorValue: UIColor = UIColor.blackColor()
+    {
+        didSet
+        {
+            print("color set to \(colorValue)")
+        }
+    }
     
     init(name: String, position: CGPoint)
     {
@@ -42,6 +51,7 @@ class NodeVO: Equatable
         
         let inputValueOne = inputNodes[0]?.value ?? 0.0
         let inputValueTwo = inputNodes[1]?.value ?? 0.0
+        let inputValueThree = inputNodes[2]?.value ?? 0.0
         
         switch nodeOperator
         {
@@ -68,6 +78,9 @@ class NodeVO: Equatable
                 value = inputValueOne / inputValueTwo
             case .Squareroot:
                 value = sqrt(inputValueOne)
+            case .Color:
+                let candidateColor = UIColor.colorFromDoubles(redComponent: inputValueOne, greenComponent: inputValueTwo, blueComponent: inputValueThree)
+                colorValue = candidateColor ?? UIColor.blackColor()
         }
         
     }
@@ -88,10 +101,103 @@ class NodeVO: Equatable
                     returnValue = 2
                 case .Squareroot:
                     returnValue = 1
+                case .Color:
+                    returnValue = 3
             }
         }
     
         return returnValue
+    }
+    
+    final func getInputTypes() -> [InputOutputTypes]
+    {
+        var returnArray = [InputOutputTypes.Null]
+        
+        if nodeType == NodeTypes.Operator
+        {
+            switch nodeOperator
+            {
+                case .Null:
+                    returnArray = [InputOutputTypes.Null]
+                case  .Add, .Subtract, .Multiply, .Divide, .Squareroot, .Color:
+                    returnArray = [InputOutputTypes](count: getInputCount(), repeatedValue: InputOutputTypes.Numeric)
+            }
+        }
+        
+        return returnArray
+    }
+    
+    final func getOutputType() -> InputOutputTypes
+    {
+        var returnInputOutputType: InputOutputTypes!
+        
+        switch nodeType
+        {
+            case .Number:
+                returnInputOutputType = .Numeric
+            case .Operator:
+                returnInputOutputType = getOutputTypeOfOperator(nodeOperator)
+        }
+        
+        return returnInputOutputType
+    }
+    
+    final func getOutputTypeOfOperator(nodeOperator: NodeOperators) -> InputOutputTypes
+    {
+        var returnInputOutputType: InputOutputTypes!
+        
+        switch nodeOperator
+        {
+            case .Null:
+                returnInputOutputType = InputOutputTypes.Null
+            case  .Add, .Subtract, .Multiply, .Divide, .Squareroot:
+                returnInputOutputType = InputOutputTypes.Numeric
+            case .Color:
+                returnInputOutputType = InputOutputTypes.Color
+        }
+        
+        return returnInputOutputType
+    }
+    
+    final func getOutputLabel() -> String
+    {
+        var valueAsString = ""
+        var returnString = ""
+        
+        if getOutputType() == InputOutputTypes.Numeric
+        {
+            valueAsString = NSString(format: "%.2f", value)
+        }
+        else if getOutputType() == InputOutputTypes.Color
+        {
+            valueAsString = colorValue.getHex()
+        }
+        
+        returnString = "\(getOutputType().rawValue): \(valueAsString)"
+        
+        return returnString
+    }
+    
+    final func getInputLabelOfIndex(idx: Int) -> String
+    {
+        var returnString = ""
+        
+        switch nodeOperator
+        {
+            case .Color:
+                returnString = ["red", "green", "blue"][idx] + ": "
+            default:    
+                returnString = ""
+        }
+        
+        returnString += getInputTypes()[idx].rawValue
+        
+        if let inputNode = inputNodes[idx]
+        {
+            returnString += " = " + NSString(format: "%.2f", inputNode.value)
+        }
+        
+        return returnString
     }
 }
 
@@ -102,6 +208,13 @@ enum NodeTypes: String
     case Operator = "Operator"
 }
 
+enum InputOutputTypes: String
+{
+    case Null = ""
+    case Numeric = "Number"
+    case Color = "Color"
+}
+
 enum NodeOperators: String
 {
     case Null = ""
@@ -110,6 +223,7 @@ enum NodeOperators: String
     case Divide = "÷"
     case Multiply = "×"
     case Squareroot = "sqrt"
+    case Color = "rgb color"
 }
 
 func == (left: NodeVO, right: NodeVO) -> Bool

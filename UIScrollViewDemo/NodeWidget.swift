@@ -14,6 +14,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
     
     let operatorLabel = UILabel(frame: CGRectZero)
     let outputLabel = UILabel(frame: CGRectZero)
+    let colorSwatch = UIControl(frame: CGRectZero)
     
     var previousPanPoint = CGPointZero
     var inputLabels = [UILabel]()
@@ -49,6 +50,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         populateLabels()
         addSubview(operatorLabel)
         addSubview(outputLabel)
+        addSubview(colorSwatch)
         
         let pan = UIPanGestureRecognizer(target: self, action: "panHandler:")
         pan.delegate = self
@@ -80,6 +82,10 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         outputLabel.textColor = UIColor.whiteColor()
         outputLabel.font = UIFont.boldSystemFontOfSize(20)
         outputLabel.adjustsFontSizeToFitWidth = true
+        
+        colorSwatch.layer.borderColor = UIColor.blueColor().CGColor
+        colorSwatch.layer.cornerRadius = 10
+        colorSwatch.layer.borderWidth = 2
     }
     
     func fadeInComplete(value: Bool)
@@ -268,11 +274,11 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
             }
         }
         
-        for i: Int in 1 ... node.getInputCount()
+        for i: Int in 0 ..< node.getInputCount()
         {
-            let style = node.inputNodes[i - 1] == nil ? UIAlertActionStyle.Default : UIAlertActionStyle.Destructive
+            let style = node.inputNodes[i] == nil ? UIAlertActionStyle.Default : UIAlertActionStyle.Destructive
             
-            let inputSelectAction = UIAlertAction(title: "Input \(i)", style: style, handler: inputSelectHandler)
+            let inputSelectAction = UIAlertAction(title: node.getInputLabelOfIndex(i), style: style, handler: inputSelectHandler) // TODO - common code with buttons
             
             alertController.addAction(inputSelectAction)
         }
@@ -323,24 +329,29 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         {
             let label = inputLabels[i]
             
-            var labelText = "Input \(i + 1)"
-            
-            if let inputNode = node.inputNodes[i]
-            {
-                labelText += ": " + NSString(format: "%.2f", inputNode.value)
-            }
-            
-            label.text = labelText
+            label.text = node.getInputLabelOfIndex(i)
         }
+        
+        if node.nodeType == NodeTypes.Operator && node.nodeOperator == NodeOperators.Color
+        {
+            colorSwatch.frame = CGRect(x: 0, y: NodeConstants.WidgetRowHeight + node.getInputCount() * NodeConstants.WidgetRowHeight, width: NodeConstants.WidgetRowHeight * 2, height: NodeConstants.WidgetRowHeight)
+            colorSwatch.alpha = 1
+            colorSwatch.backgroundColor = node.colorValue
+        }
+        else
+        {
+            colorSwatch.alpha = 0
+        }
+        
         
         operatorLabel.frame = CGRect(x: 2, y: 0, width: Int(frame.width - 4), height: NodeConstants.WidgetRowHeight)
         operatorLabel.text = node.nodeType == NodeTypes.Operator ? node.nodeOperator.rawValue : node.nodeType.rawValue
         
         outputLabel.frame = CGRect(x: 0, y: NodeConstants.WidgetRowHeight + node.getInputCount() * NodeConstants.WidgetRowHeight, width: Int(frame.width) - 5, height: NodeConstants.WidgetRowHeight)
         outputLabel.textAlignment = NSTextAlignment.Right
+        outputLabel.adjustsFontSizeToFitWidth = true
         
-        let valueAsString = NSString(format: "%.2f", node.value)
-        outputLabel.text = "Output: \(valueAsString)"
+        outputLabel.text = node.getOutputLabel()
     }
    
     func nodeSelected(value: AnyObject?)
