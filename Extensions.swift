@@ -26,13 +26,22 @@ extension UIColor
         return UIColor(red: CGFloat(redComponent), green: CGFloat(greenComponent), blue: CGFloat(blueComponent), alpha: 1.0)
     }
     
+    func multiply(value: Double) -> UIColor
+    {
+        let newRed = CGFloat(getRGB().redComponent * Float(value))
+        let newGreen = CGFloat(getRGB().greenComponent * Float(value))
+        let newBlue = CGFloat(getRGB().blueComponent * Float(value))
+        
+        return UIColor(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
+    }
+    
     func getRGB() -> (redComponent: Float, greenComponent: Float, blueComponent: Float)
     {
         let colorRef = CGColorGetComponents(self.CGColor);
         
-        let redComponent = Float(colorRef[0])
-        let greenComponent = Float(colorRef[1])
-        let blueComponent = Float(colorRef[2])
+        let redComponent = Float(colorRef[0]) ?? 0.0
+        let greenComponent = Float(colorRef[1]) ?? 0.0
+        let blueComponent = Float(colorRef[2]) ?? 0.0
         
         return (redComponent: redComponent, greenComponent: greenComponent, blueComponent: blueComponent)
     }

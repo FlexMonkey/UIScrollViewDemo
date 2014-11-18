@@ -27,16 +27,6 @@ struct NodesPM
                 {
                     if let inputNode = selectedNode
                     {
-                        /*
-                        if preferredInputIndex == -1 || preferredInputIndex > targetNode.inputNodes.count - 1 || targetNode.inputNodes.count < 2
-                        {
-                            targetNode.inputNodes.append(inputNode)
-                        }
-                        else
-                        {
-                            targetNode.inputNodes[preferredInputIndex] = inputNode
-                        }
-                        */
                         targetNode.inputNodes[preferredInputIndex] = inputNode
                         nodeUpdate(targetNode)
                         postNotification(.RelationshipsChanged, payload: nil)

@@ -341,7 +341,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
             label.text = node.getInputLabelOfIndex(i)
         }
         
-        if node.nodeType == NodeTypes.Operator && node.nodeOperator == NodeOperators.Color
+        if node.nodeType == NodeTypes.Operator && node.getOutputType() == InputOutputTypes.Color
         {
             colorSwatch.frame = CGRect(x: 0, y: NodeConstants.WidgetRowHeight + node.getInputCount() * NodeConstants.WidgetRowHeight, width: NodeConstants.WidgetRowHeight * 2, height: NodeConstants.WidgetRowHeight)
             colorSwatch.alpha = 1

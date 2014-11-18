@@ -47,6 +47,8 @@ class NodeVO: Equatable
         let inputValueTwo = inputNodes[1]?.value ?? 0.0
         let inputValueThree = inputNodes[2]?.value ?? 0.0
         
+        
+        
         switch nodeOperator
         {
             case .Null:
@@ -75,6 +77,10 @@ class NodeVO: Equatable
             case .Color:
                 let candidateColor = UIColor.colorFromDoubles(redComponent: inputValueOne, greenComponent: inputValueTwo, blueComponent: inputValueThree)
                 colorValue = candidateColor ?? UIColor.blackColor()
+            case .ColorMultiply:
+                let inputColor = inputNodes[1]?.colorValue ?? UIColor.blackColor()
+                colorValue = inputColor.multiply(inputValueOne)
+                println("col mult \(colorValue.getRGB())   \(inputValueTwo)")
         }
         
     }
@@ -91,7 +97,7 @@ class NodeVO: Equatable
                     returnValue = 0
                 case  .Add:
                     returnValue = 5
-                case .Subtract, .Multiply, .Divide:
+                case .Subtract, .Multiply, .Divide, .ColorMultiply:
                     returnValue = 2
                 case .Squareroot:
                     returnValue = 1
@@ -115,6 +121,8 @@ class NodeVO: Equatable
                     returnArray = [InputOutputTypes.Null]
                 case  .Add, .Subtract, .Multiply, .Divide, .Squareroot, .Color:
                     returnArray = [InputOutputTypes](count: getInputCount(), repeatedValue: InputOutputTypes.Numeric)
+                case .ColorMultiply:
+                    returnArray = [InputOutputTypes.Numeric, InputOutputTypes.Color]
             }
         }
         
@@ -146,7 +154,7 @@ class NodeVO: Equatable
                 returnInputOutputType = InputOutputTypes.Null
             case  .Add, .Subtract, .Multiply, .Divide, .Squareroot:
                 returnInputOutputType = InputOutputTypes.Numeric
-            case .Color:
+            case .Color, .ColorMultiply:
                 returnInputOutputType = InputOutputTypes.Color
         }
         
@@ -167,7 +175,7 @@ class NodeVO: Equatable
             valueAsString = colorValue.getHex()
         }
         
-        returnString = "\(getOutputType().rawValue): \(valueAsString)"
+        returnString = "\(getOutputType().rawValue) = \(valueAsString)"
         
         return returnString
     }
@@ -179,16 +187,20 @@ class NodeVO: Equatable
         switch nodeOperator
         {
             case .Color:
-                returnString = ["red", "green", "blue"][idx] + ": "
-            default:    
+                returnString = ["red", "green", "blue"][idx]
+            case .ColorMultiply:
+                returnString = ["muliplier", "color"][idx]
+            default:
                 returnString = ""
         }
         
-        returnString += getInputTypes()[idx].rawValue
-        
         if let inputNode = inputNodes[idx]
         {
-            returnString += " = " + NSString(format: "%.2f", inputNode.value)
+            returnString += (returnString == "" ? "" : ": ") + inputNode.getOutputLabel()
+        }
+        else
+        {
+            returnString += (returnString == "" ? "" : ": ") + getInputTypes()[idx].rawValue
         }
         
         return returnString
@@ -217,7 +229,8 @@ enum NodeOperators: String
     case Divide = "÷"
     case Multiply = "×"
     case Squareroot = "sqrt"
-    case Color = "rgb color"
+    case Color = "RGB Color"
+    case ColorMultiply = "Color Multiply"
 }
 
 func == (left: NodeVO, right: NodeVO) -> Bool
