@@ -37,15 +37,20 @@ extension UIColor
     
     func getRGB() -> (redComponent: Float, greenComponent: Float, blueComponent: Float)
     {
-        let colorRef = CGColorGetComponents(self.CGColor);
-        
-        println("\(self.CGColor) -- \(Float(colorRef[0]))  \(Float(colorRef[1]))  \(Float(colorRef[2]))")
-        
-        let redComponent = Float(colorRef[0])
-        let greenComponent = Float(colorRef[1])
-        let blueComponent = Float(colorRef[2]) 
-        
-        return (redComponent: redComponent, greenComponent: greenComponent, blueComponent: blueComponent)
+        if CGColorGetNumberOfComponents(self.CGColor) == 4
+        {
+            let colorRef = CGColorGetComponents(self.CGColor);
+            
+            let redComponent = Float(colorRef[0])
+            let greenComponent = Float(colorRef[1])
+            let blueComponent = Float(colorRef[2]) 
+            
+            return (redComponent: redComponent, greenComponent: greenComponent, blueComponent: blueComponent)
+        }
+        else
+        {
+            return (redComponent: 0, greenComponent: 0, blueComponent: 0)
+        }
     }
     
     func getHex() -> String

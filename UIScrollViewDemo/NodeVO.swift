@@ -47,8 +47,6 @@ class NodeVO: Equatable
         let inputValueTwo = inputNodes[1]?.value ?? 0.0
         let inputValueThree = inputNodes[2]?.value ?? 0.0
         
-        
-        
         switch nodeOperator
         {
             case .Null:
@@ -77,10 +75,12 @@ class NodeVO: Equatable
             case .Color:
                 let candidateColor = UIColor.colorFromDoubles(redComponent: inputValueOne, greenComponent: inputValueTwo, blueComponent: inputValueThree)
                 colorValue = candidateColor ?? UIColor.blackColor()
+            case .HSLColor:
+                let candidateColor = UIColor(hue: CGFloat(inputValueOne), saturation: CGFloat(inputValueTwo), brightness: CGFloat(inputValueThree), alpha: 1.0)
+                colorValue = candidateColor ?? UIColor.blackColor()
             case .ColorMultiply:
                 let inputColor = inputNodes[1]?.colorValue ?? UIColor.blackColor()
                 colorValue = inputColor.multiply(inputValueOne)
-                println("col mult \(colorValue.getRGB())   \(inputValueTwo)")
         }
         
     }
@@ -101,7 +101,7 @@ class NodeVO: Equatable
                     returnValue = 2
                 case .Squareroot:
                     returnValue = 1
-                case .Color:
+                case .Color, .HSLColor:
                     returnValue = 3
             }
         }
@@ -119,7 +119,7 @@ class NodeVO: Equatable
             {
                 case .Null:
                     returnArray = [InputOutputTypes.Null]
-                case  .Add, .Subtract, .Multiply, .Divide, .Squareroot, .Color:
+                case  .Add, .Subtract, .Multiply, .Divide, .Squareroot, .Color, .HSLColor:
                     returnArray = [InputOutputTypes](count: getInputCount(), repeatedValue: InputOutputTypes.Numeric)
                 case .ColorMultiply:
                     returnArray = [InputOutputTypes.Numeric, InputOutputTypes.Color]
@@ -154,7 +154,7 @@ class NodeVO: Equatable
                 returnInputOutputType = InputOutputTypes.Null
             case  .Add, .Subtract, .Multiply, .Divide, .Squareroot:
                 returnInputOutputType = InputOutputTypes.Numeric
-            case .Color, .ColorMultiply:
+            case .Color, .ColorMultiply, .HSLColor:
                 returnInputOutputType = InputOutputTypes.Color
         }
         
@@ -190,6 +190,8 @@ class NodeVO: Equatable
                 returnString = ["red", "green", "blue"][idx]
             case .ColorMultiply:
                 returnString = ["muliplier", "color"][idx]
+            case .HSLColor:
+                returnString = ["hue", "saturation", "brightness"][idx]
             default:
                 returnString = ""
         }
@@ -230,6 +232,7 @@ enum NodeOperators: String
     case Multiply = "×"
     case Squareroot = "sqrt"
     case Color = "RGB Color"
+    case HSLColor = "HSL Color"
     case ColorMultiply = "Color Multiply"
 }
 
