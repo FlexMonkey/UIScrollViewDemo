@@ -1,7 +1,7 @@
 UIScrollViewDemo
 ================
 
-![](http://1.bp.blogspot.com/-Jr4gZzL3wvI/VDkNFoiILsI/AAAAAAAAFbw/1__3SzuI1Hk/s1600/IMG_0458.PNG)
+![](http://www.flexmonkey.co.uk/swift/IMG_0492.PNG)
 
 ####A Node Based User Interface implemented with the Presentation Model Pattern
 
