@@ -37,6 +37,7 @@ class BackgroundControl: UIControl
         
         NodesPM.addObserver(self, selector: "nodeCreated:", notificationType: .NodeCreated)
         NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .RelationshipsChanged)
+        NodesPM.addObserver(self, selector: "renderRelationships", notificationType: .NodesMoved)
         NodesPM.addObserver(self, selector: "nodeDeleted:", notificationType: .NodeDeleted)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: NodeNotificationTypes.RelationshipCreationModeChanged)
     }

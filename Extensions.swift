@@ -39,9 +39,11 @@ extension UIColor
     {
         let colorRef = CGColorGetComponents(self.CGColor);
         
-        let redComponent = Float(colorRef[0]) ?? 0.0
-        let greenComponent = Float(colorRef[1]) ?? 0.0
-        let blueComponent = Float(colorRef[2]) ?? 0.0
+        println("\(self.CGColor) -- \(Float(colorRef[0]))  \(Float(colorRef[1]))  \(Float(colorRef[2]))")
+        
+        let redComponent = Float(colorRef[0])
+        let greenComponent = Float(colorRef[1])
+        let blueComponent = Float(colorRef[2]) 
         
         return (redComponent: redComponent, greenComponent: greenComponent, blueComponent: blueComponent)
     }

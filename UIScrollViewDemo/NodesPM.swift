@@ -229,7 +229,7 @@ struct NodesPM
     {
         selectedNode?.position = position
         
-        postNotification(.RelationshipsChanged, payload: nil)
+        postNotification(.NodesMoved, payload: nil)
     }
     
     private static func postNotification(notificationType: NodeNotificationTypes, payload: AnyObject?)
@@ -267,5 +267,6 @@ enum NodeNotificationTypes: String
     case DraggingChanged = "draggingChanged"
     case RelationshipCreationModeChanged = "relationshipCreationModeChanged"
     case RelationshipsChanged = "relationshipsChanged"
+    case NodesMoved = "nodesMoved"
     case NodeUpdated = "nodeUpdated"
 }
