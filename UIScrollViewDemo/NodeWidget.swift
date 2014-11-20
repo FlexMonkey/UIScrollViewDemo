@@ -284,7 +284,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         {
             let style = node.inputNodes[i] == nil ? UIAlertActionStyle.Default : UIAlertActionStyle.Destructive
             
-            let inputSelectAction = UIAlertAction(title: node.getInputLabelOfIndex(i), style: style, handler: inputSelectHandler) // TODO - common code with buttons
+            let inputSelectAction = UIAlertAction(title: node.getInputLabelOfIndex(i), style: style, handler: inputSelectHandler)
             
             let isValidInput = node.getInputTypes()[i] == NodesPM.selectedNode?.getOutputType()
             inputSelectAction.enabled = isValidInput
@@ -296,7 +296,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         {
             if let popoverPresentationController = alertController.popoverPresentationController
             {
-                popoverPresentationController.sourceRect = CGRect(x: frame.origin.x * NodesPM.zoomScale, y: frame.origin.y * NodesPM.zoomScale, width: frame.width * NodesPM.zoomScale, height: frame.height * NodesPM.zoomScale).rectByOffsetting(dx: superview!.frame.origin.x, dy: superview!.frame.origin.y)
+                popoverPresentationController.sourceRect = CGRect(x: frame.origin.x * NodesPM.zoomScale, y: frame.origin.y * NodesPM.zoomScale, width: frame.width * NodesPM.zoomScale, height: frame.height * NodesPM.zoomScale).rectByOffsetting(dx: -NodesPM.contentOffset.x, dy: -NodesPM.contentOffset.y)
                 
                 popoverPresentationController.sourceView = viewController.view
                 

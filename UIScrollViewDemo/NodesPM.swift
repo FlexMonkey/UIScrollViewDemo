@@ -43,6 +43,8 @@ struct NodesPM
         }
     }
 
+    static var contentOffset: CGPoint = CGPointZero
+    
     static var zoomScale: CGFloat = 1
     
     static var preferredInputIndex: Int = -1
@@ -57,6 +59,15 @@ struct NodesPM
             for i in node.getInputCount() ..< node.maxInputNodeCount
             {
                 node.inputNodes[i] = nil
+            }
+            
+            // delete wrong relationships
+            for i in 0 ..< node.getInputCount()
+            {
+                if node.inputNodes[i]?.getOutputType() != node.getInputTypes()[i]
+                {
+                    node.inputNodes[i] = nil
+                }
             }
             
             postNotification(.NodeUpdated, payload: node)

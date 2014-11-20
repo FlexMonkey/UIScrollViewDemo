@@ -66,6 +66,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         scrollView.scrollEnabled = !isDragging
     }
     
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    {
+        NodesPM.contentOffset = scrollView.contentOffset
+    }
+    
     func scrollViewDidZoom(scrollView: UIScrollView)
     {
         NodesPM.zoomScale = scrollView.zoomScale
