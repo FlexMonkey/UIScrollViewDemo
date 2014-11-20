@@ -80,7 +80,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
     {
         menuButton.frame = CGRect(x: 5, y: topLayoutGuide.length + 5, width: 70, height: 40)
         
-        toolbar.frame = CGRect(x: 0, y: view.frame.height - 40, width: view.frame.width, height: 40)
+        toolbar.frame = CGRect(x: 0, y: view.frame.height - 80, width: view.frame.width, height: 80)
         
         scrollView.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: view.frame.height - topLayoutGuide.length)
     }
