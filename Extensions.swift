@@ -41,15 +41,27 @@ extension UIColor
         {
             let colorRef = CGColorGetComponents(self.CGColor);
             
-            let redComponent = Float(colorRef[0])
-            let greenComponent = Float(colorRef[1])
-            let blueComponent = Float(colorRef[2]) 
-            
+            let redComponent = zeroIfDodgy(Float(colorRef[0]))
+            let greenComponent = zeroIfDodgy(Float(colorRef[1]))
+            let blueComponent = zeroIfDodgy(Float(colorRef[2]))
+
             return (redComponent: redComponent, greenComponent: greenComponent, blueComponent: blueComponent)
         }
         else
         {
             return (redComponent: 0, greenComponent: 0, blueComponent: 0)
+        }
+    }
+    
+    func zeroIfDodgy(value: Float) ->Float
+    {
+        if isnan(value) || isinf(value)
+        {
+            return 0
+        }
+        else
+        {
+            return value
         }
     }
     
