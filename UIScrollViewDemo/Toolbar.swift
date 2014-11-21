@@ -15,7 +15,7 @@ class Toolbar: UIControl
     var numberButton: UIBarButtonItem!
     var operatorButton: UIBarButtonItem!
     
-    let numericOperators = [NodeOperators.Add.rawValue, NodeOperators.Subtract.rawValue, NodeOperators.Multiply.rawValue, NodeOperators.Divide.rawValue]
+    let numericOperators = [NodeOperators.Add.rawValue, NodeOperators.Subtract.rawValue, NodeOperators.Multiply.rawValue, NodeOperators.Divide.rawValue, NodeOperators.Squareroot.rawValue]
     let colorOperators = [NodeOperators.Color.rawValue, NodeOperators.HSLColor.rawValue, NodeOperators.ColorMultiply.rawValue]
     
     let buttons: [[String]]!
