@@ -37,7 +37,7 @@ class Toolbar: UIControl
         addSubview(categorySegmentedControl)
         
         categorySegmentedControl.addTarget(self, action: "categorySegmentedControlChangeHandler", forControlEvents: UIControlEvents.ValueChanged)
-        
+   
         valueSlider.addTarget(self, action: "valueSliderChangeHandler", forControlEvents: UIControlEvents.ValueChanged)
         
         alpha = 0
@@ -70,10 +70,12 @@ class Toolbar: UIControl
                 
                 operatorsSegmentedControl.addTarget(self, action: "operatorsSegmentedControlChangeHandler", forControlEvents: UIControlEvents.ValueChanged)
                 
+                operatorsSegmentedControl.layer.borderColor = UIColor.blueColor().CGColor
+                operatorsSegmentedControl.layer.borderWidth = 1
                 operatorsSegmentedControl.layer.backgroundColor = UIColor.whiteColor().CGColor
                 // operatorsSegmentedControl.tintColor = UIColor.whiteColor()
                 operatorsSegmentedControl.alpha = 0.95
-                operatorsSegmentedControl.frame = CGRect(x: 0, y: 40, width: frame.width, height: 40)
+                operatorsSegmentedControl.frame = CGRect(x: 0, y: 39, width: frame.width, height: 41)
                 
                 if categoryIndex == 0
                 {
@@ -152,10 +154,10 @@ class Toolbar: UIControl
     
     override func layoutSubviews()
     {
-        categorySegmentedControl.frame = CGRect(x: 0, y: 0, width: frame.width, height: 40)
+        categorySegmentedControl.frame = CGRect(x: 0, y: 0, width: frame.width, height: 40).rectByInsetting(dx: -3, dy: 0)
 
-        operatorsSegmentedControl.frame = CGRect(x: 0, y: 40, width: frame.width, height: 40)
-        valueSlider.frame = CGRect(x: 0, y: 40, width: frame.width, height: 40)
+        operatorsSegmentedControl.frame = CGRect(x: 0, y: 39, width: frame.width, height: 41).rectByInsetting(dx: -3, dy: 0)
+        valueSlider.frame = CGRect(x: 0, y: 39, width: frame.width, height: 41).rectByInsetting(dx: 5, dy: 0)
     }
     
     class func getOperatorsForSegmentedControlItem(controlItem: SegmentedControlItems) -> [NodeOperators]

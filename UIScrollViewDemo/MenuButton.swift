@@ -58,7 +58,7 @@ class MenuButton: UIButton
         layer.borderWidth = 1
         layer.cornerRadius = 5
         layer.backgroundColor = UIColor.blueColor().CGColor
-        layer.borderColor = UIColor.blueColor().CGColor
+        layer.borderColor = UIColor.whiteColor().CGColor
         
         NodesPM.addObserver(self, selector: "selectedNodeChanged:", notificationType: NodeNotificationTypes.NodeSelected)
         NodesPM.addObserver(self, selector: "selectedNodeChanged:", notificationType: NodeNotificationTypes.NodeUpdated)

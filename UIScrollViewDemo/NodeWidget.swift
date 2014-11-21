@@ -296,9 +296,10 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         {
             if let popoverPresentationController = alertController.popoverPresentationController
             {
-                popoverPresentationController.sourceRect = CGRect(x: frame.origin.x * NodesPM.zoomScale, y: frame.origin.y * NodesPM.zoomScale, width: frame.width * NodesPM.zoomScale, height: frame.height * NodesPM.zoomScale).rectByOffsetting(dx: -NodesPM.contentOffset.x, dy: -NodesPM.contentOffset.y)
-                
+                popoverPresentationController.sourceRect = CGRect(x: frame.origin.x * NodesPM.zoomScale - NodesPM.contentOffset.x, y: frame.origin.y * NodesPM.zoomScale - NodesPM.contentOffset.y, width: frame.width * NodesPM.zoomScale, height: frame.height * NodesPM.zoomScale)
                 popoverPresentationController.sourceView = viewController.view
+                
+                
                 
                 viewController.presentViewController(alertController, animated: true, completion: nil)
             }

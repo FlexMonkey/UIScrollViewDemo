@@ -15,7 +15,7 @@ import UIKit
 class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
 {
     let scrollView = UIScrollView(frame: CGRectZero)
-    let backgroundControl = BackgroundControl(frame: CGRect(x: 0, y: 0, width: 5000, height: 5000))
+    let backgroundControl = BackgroundControl(frame: CGRect(x: 0, y: 0, width: 6000, height: 6000))
     let toolbar = Toolbar(frame: CGRectZero)
     let menuButton = MenuButton(frame: CGRectZero)
   
@@ -24,14 +24,20 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         super.viewDidLoad()
    
         createScrollView()
+        
         createToolbar()
         
+        menuButton.layer.shadowColor = UIColor.blackColor().CGColor
+        menuButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        menuButton.layer.shadowOpacity = 1
         view.addSubview(menuButton)
         
         view.backgroundColor = UIColor.darkGrayColor()
         
         NodesPM.addObserver(self, selector: "draggingChangedHandler:", notificationType: .DraggingChanged)
         NodesPM.addObserver(self, selector: "relationshipCreationModeChanged", notificationType: .RelationshipCreationModeChanged)
+        
+        scrollView.contentOffset = CGPoint(x: 500, y: 500)
     }
 
     func createScrollView()
@@ -51,6 +57,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
     
     func createToolbar()
     {
+        toolbar.layer.shadowColor = UIColor.blackColor().CGColor
+        toolbar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        toolbar.layer.shadowOpacity = 1
+        
         view.addSubview(toolbar)
     }
     
