@@ -71,7 +71,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
     
     func draggingChangedHandler(value: AnyObject)
     {
-        let isDragging = value.object as Bool
+        let isDragging = value.object as! Bool
         
         scrollView.scrollEnabled = !isDragging
     }
@@ -86,7 +86,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIToolbarDelegate
         NodesPM.zoomScale = scrollView.zoomScale
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView!
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView?
     {
         return backgroundControl
     }

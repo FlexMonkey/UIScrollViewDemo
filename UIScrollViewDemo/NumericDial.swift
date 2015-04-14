@@ -147,6 +147,6 @@ class NumericDial: UIControl
     
     class func defaultLabelFunction(value : Double) -> String
     {
-        return NSString(format: "%.4f", value)
+        return NSString(format: "%.4f", value) as String
     }
 }

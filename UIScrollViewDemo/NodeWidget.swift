@@ -159,7 +159,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
     {
         
         if NodesPM.relationshipCreationMode && relationshipCreationCandidate
@@ -167,7 +167,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
             if NodesPM.zoomScale > 0.75
             {
                 var targetIndex = -1
-                let touch: UITouch = touches.allObjects[0] as UITouch
+                let touch: UITouch = touches.first as! UITouch
                 
                 for (i: Int, inputLabel: UILabel) in enumerate(inputLabels)
                 {
@@ -201,14 +201,14 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent)
     {
         NodesPM.isDragging = false
     }
     
     func relationshipCreationModeChanged(value : AnyObject)
     {
-        let relationshipCreationMode = value.object as Bool
+        let relationshipCreationMode = value.object as! Bool
         
         relationshipCreationCandidate = node.nodeType == NodeTypes.Operator
     }
@@ -222,7 +222,7 @@ class NodeWidget: UIControl, UIPopoverPresentationControllerDelegate, UIGestureR
     
     func nodeUpdated(value: AnyObject)
     {
-        let updatedNode = value.object as NodeVO
+        let updatedNode = value.object as! NodeVO
         
         if updatedNode == node
         {

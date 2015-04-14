@@ -168,7 +168,7 @@ class NodeVO: Equatable
         
         if getOutputType() == InputOutputTypes.Numeric
         {
-            valueAsString = NSString(format: "%.2f", value)
+            valueAsString = NSString(format: "%.2f", value) as String
         }
         else if getOutputType() == InputOutputTypes.Color
         {

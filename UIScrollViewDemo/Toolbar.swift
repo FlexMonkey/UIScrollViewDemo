@@ -26,10 +26,10 @@ class Toolbar: UIControl
 
     override init(frame: CGRect)
     {
-        super.init(frame: frame)
-        
         buttons = [[], numericOperators, colorOperators]
         
+        super.init(frame: frame)
+   
         categorySegmentedControl.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         categorySegmentedControl.tintColor = UIColor.whiteColor()
         categorySegmentedControl.alpha = 0.95

@@ -75,7 +75,7 @@ extension UIColor
         let green = NSString(format: "%02X", Int(rgb.greenComponent * 255))
         let blue = NSString(format: "%02X", Int(rgb.blueComponent * 255))
         
-        return red + green + blue
+        return (red as String) + (green as String) + (blue as String)
     }
     
     func makeDarker() -> UIColor

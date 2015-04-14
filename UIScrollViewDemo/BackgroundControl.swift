@@ -76,11 +76,11 @@ class BackgroundControl: UIControl
     
     func nodeDeleted(value: AnyObject)
     {
-        let deletedNode = value.object as NodeVO
+        let deletedNode = value.object as! NodeVO
         
         for (idx: Int, widget: AnyObject) in enumerate(subviews)
         {
-            if widget is NodeWidget && (widget as NodeWidget).node == deletedNode
+            if widget is NodeWidget && (widget as! NodeWidget).node == deletedNode
             {
                 nodeWidgetPendingDelete = widget as? NodeWidget
                 
@@ -105,7 +105,7 @@ class BackgroundControl: UIControl
     
     func nodeCreated(value : AnyObject)
     {
-        let newNode = value.object as NodeVO
+        let newNode = value.object as! NodeVO
         
         let originX = Int( newNode.position.x )
         let originY = Int( newNode.position.y )

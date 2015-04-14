@@ -38,7 +38,7 @@ class NumericDialViewController: UIViewController
     {
         let dialValue = value
         
-        return NSString(format: "%.2f", dialValue)
+        return NSString(format: "%.2f", dialValue) as String
     }
     
     func nodeChangeHandler()
